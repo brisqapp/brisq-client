@@ -15,6 +15,6 @@ jobs:
           username: brisqapp
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: brisqapp/brisq-client
+          repository: brisqapp/publish-packages/brisq-client
           tag_with_sha: true
 
