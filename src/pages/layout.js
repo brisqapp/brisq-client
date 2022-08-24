@@ -60,11 +60,12 @@ const Layout = () => {
             onClick={() => navigateClick("/")}
             sx={{
               mr: 2,
+              fontSize: '2.5rem',
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'Nova Round',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: '#DA118A',
+              color: '#FFFFFF',
               textDecoration: 'none',
             }}
           >
@@ -112,7 +113,6 @@ const Layout = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -122,14 +122,14 @@ const Layout = () => {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: 'Nova Round',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            LOGO
+            brisq
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
