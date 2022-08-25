@@ -1,14 +1,14 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Layout from "./pages/layout";
+import Layout from "./pages/layout/layout";
 import Employee from "./pages/manageEmployee";
 import Home from "./pages/home";
 import Blogs from "./pages/blogs";
 import Profile from "./pages/profile";
 import Contact from "./pages/contact";
-import NoPage from "./pages/noPage";
-import Login from "./pages/login";
-import Register from "./pages/register";
+import NoPage from "./pages/layout/noPage";
+import Login from "./pages/authentification/login";
+import Register from "./pages/authentification/register";
 
 import './index.css';
 import getToken from "./auth/index.js";

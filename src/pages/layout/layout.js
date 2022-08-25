@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import getToken from '../auth';
+import getToken from '../../auth';
 
 import { Outlet, Link, useNavigate } from "react-router-dom";
 
