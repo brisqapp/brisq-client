@@ -1,5 +1,6 @@
 import { Paper, Typography, TextField, Button, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../auth";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -8,10 +9,8 @@ const Login = () => {
         navigate(link, {replace: true})
     };
 
-    const login = (event) => {
-
-        localStorage.setItem("token", "asdf");
-        window.location.replace("/");
+    const handleLogin = (event) => {
+        login();
     }
     return (
         <Paper elevation={2} style={{
@@ -32,7 +31,7 @@ const Login = () => {
             <TextField id="password" type="password" label="Mot de passe" variant="filled" />
             <br />
             <br />
-            <Button variant="contained" onClick={login} style={{width: "100%"}}>Se connecter</Button>
+            <Button variant="contained" onClick={handleLogin} style={{width: "100%"}}>Se connecter</Button>
             <br />
             <br />
             <Link style={{cursor: "pointer"}} onClick={() => navigateClick("/register")}>Ou créer un compte</Link>

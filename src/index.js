@@ -11,7 +11,7 @@ import Login from "./pages/authentification/login";
 import Register from "./pages/authentification/register";
 
 import './index.css';
-import getToken from "./auth/index.js";
+import { getToken } from "./auth/index.js";
 
 const token = getToken();
 

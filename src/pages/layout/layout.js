@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import getToken from '../../auth';
+import { getToken, getUser } from '../../auth';
 
 import { Outlet, Link, useNavigate } from "react-router-dom";
 
@@ -25,6 +25,7 @@ const pages = [
 const Layout = () => {
   const navigate = useNavigate();
   const token = getToken();
+  const user = getUser();
   
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -169,7 +170,7 @@ const Layout = () => {
                 </div>
                 :
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt={user?.name} src="/static/images/avatar/2.jpg" />
                 </IconButton>
               }
             </Tooltip>
