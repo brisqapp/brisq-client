@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import getToken from '../auth';
 
 import { Outlet, Link, useNavigate } from "react-router-dom";
 
@@ -22,13 +22,17 @@ const pages = [
   {link: 'contact', text: 'Contact'}
 ];
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 const Layout = () => {
   const navigate = useNavigate();
+  const token = getToken();
   
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const logout = (envent) => {
+    localStorage.removeItem("token");
+    window.location.replace("/login");
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -119,7 +123,7 @@ const Layout = () => {
             variant="h5"
             noWrap
             component="a"
-            href=""
+            onClick={() => navigateClick("/")}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -145,11 +149,29 @@ const Layout = () => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
+          <Box sx={{ flexGrow: 0 }} style={{display: "inherit"}}>
+            <Tooltip title="Open settings" style={{display: "inherit"}}>
+              {
+                token == null ?
+                <div>
+                  <Button 
+                    onClick={() => navigateClick("/login")}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    Se connecter
+                  </Button> 
+                  <Button 
+                    onClick={() => navigateClick("/register")}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    Créer un compte
+                  </Button> 
+                </div>
+                :
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              }
             </Tooltip>
             <Menu
               sx={{ mt: '45px' }}
@@ -167,11 +189,13 @@ const Layout = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+
+              <MenuItem key={"profile"} onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Profile</Typography>
+              </MenuItem>
+              <MenuItem key={"logout"} onClick={logout}>
+                <Typography textAlign="center">Se déconnecter</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
