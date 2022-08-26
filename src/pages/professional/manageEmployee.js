@@ -11,8 +11,6 @@ const employee = {
     name: ""
 };
 
-let text = "<ul>";
-
 const employeesList = []
 
 const EmployeeManagement = () => {
@@ -27,7 +25,7 @@ const EmployeeManagement = () => {
     };
 
     const [employee, setEmployee] = React.useState({
-        nom: "last name"
+        nom: ""
     });
 
     const handleNewEmployee = (newEmployee) => {
@@ -36,6 +34,12 @@ const EmployeeManagement = () => {
         });
         employeesList.push(newEmployee.target.value);
     };
+
+    const listItems = employeesList.map((employee) =>
+        <li key={employee.toString()}>
+            {employee}
+        </li>
+    );
 
 
     return (
@@ -57,8 +61,9 @@ const EmployeeManagement = () => {
                     <h5 style={{textAlign: "left"}}>
                         Employees list
                         <br />
-                        <ul>{employeesList}</ul>
-                       
+
+                        <ul>{listItems}</ul>
+
                     </h5>
                 </Typography>           
 
