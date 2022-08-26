@@ -15,14 +15,44 @@ import { getToken, getUser } from '../auth';
 
 import { Outlet, Link, useNavigate } from "react-router-dom";
 
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Drawer } from "@mui/material";
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+
 const pages = [
-  {link: 'home', text: 'Home'},
+  {link: 'home', text: 'Home', icon: <InboxIcon />},
   {link: 'manageEmployee', text: 'Employee'},
   {link: 'profile', text: 'Profile'},
   {link: 'contact', text: 'Contact'}
 ];
 
+
 const Layout = () => {
+
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+  
+  const list = (anchor) => (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer}
+      onKeyDown={toggleDrawer}
+    >
+      <List>
+        {pages.map((page, index) => (
+          <ListItem key={page.link} onClick={() => navigateClick(page.link)} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {page.icon}
+              </ListItemIcon>
+              <ListItemText primary={page.text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
   const navigate = useNavigate();
   const token = getToken();
   const user = getUser();
@@ -34,6 +64,10 @@ const Layout = () => {
     localStorage.removeItem("token");
     window.location.replace("/login");
   }
+  
+  const toggleDrawer = (event) => { 
+    setOpenDrawer(!openDrawer);
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -56,7 +90,15 @@ const Layout = () => {
   };
 
   return (
-    <>
+    <>    
+    <Drawer
+      anchor={"left"}
+      open={openDrawer}
+      onClose={toggleDrawer}
+    >
+      {list("left")}
+    </Drawer>
+
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -82,44 +124,13 @@ const Layout = () => {
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={toggleDrawer}
               color="inherit"
             >
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page.link} onClick={handleCloseNavMenu}>
-                  <Link
-                    to={page.link}
-                    key={page.link}
-                  >
-                    {page.text}
-                  </Link>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
+
           <Typography
             variant="h5"
             noWrap
@@ -138,6 +149,7 @@ const Layout = () => {
           >
             brisq
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -154,7 +166,7 @@ const Layout = () => {
             <Tooltip title="Open settings" style={{display: "inherit"}}>
               {
                 token == null ?
-                <div>
+                <Box sx={{ display: {xs: 'none', md: 'flex'} }}>
                   <Button 
                     onClick={() => navigateClick("/login")}
                     sx={{ my: 2, color: 'white', display: 'block' }}
@@ -163,17 +175,18 @@ const Layout = () => {
                   </Button> 
                   <Button 
                     onClick={() => navigateClick("/register")}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
+                    sx={{ my: 2, color: 'white', display: {xs: 'none', md: 'block' }}}
                   >
                     Créer un compte
                   </Button> 
-                </div>
+                </Box>
                 :
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt={user?.name} src="/static/images/avatar/2.jpg" />
                 </IconButton>
               }
             </Tooltip>
+            
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
