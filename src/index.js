@@ -4,7 +4,7 @@ import Layout from "./pages/layout";
 import Employee from "./pages/professional/manageEmployee";
 import Home from "./pages/home";
 import Blogs from "./pages/blogs";
-import Profile from "./pages/profile";
+import Profile from "./pages/professional/profile";
 import Contact from "./pages/contact";
 import NoPage from "./pages/noPage";
 import FormDialog from "./pages/professional/popup";
