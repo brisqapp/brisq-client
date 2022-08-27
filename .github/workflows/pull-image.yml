@@ -25,4 +25,4 @@ jobs:
           docker pull ghcr.io/brisqapp/brisq-client:main
           echo "pull works" > ~/works
           docker stop brisq-client_dev
-          echo >> "container stop works" > ~/works
+          echo "container stop works" >> ~/works
