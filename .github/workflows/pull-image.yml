@@ -23,4 +23,6 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           docker pull ghcr.io/brisqapp/brisq-client:main
-          echo "works" > ~/works
+          echo "pull works" > ~/works
+          docker stop brisq-client_dev
+          echo >> "container stop works" > ~/works
