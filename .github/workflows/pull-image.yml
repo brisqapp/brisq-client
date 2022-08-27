@@ -25,5 +25,5 @@ jobs:
           docker pull ghcr.io/brisqapp/brisq-client:main
           docker stop brisq-client_dev
           docker rm brisq-client_dev
-          docker run -p 3000:3000 --name brisq-client_dev --network brisq-core_dev_default ghcr.io/brisqapp/brisq-client:main
+          docker run -d -p 3000:3000 --name brisq-client_dev --network brisq-core_dev_default ghcr.io/brisqapp/brisq-client:main
           echo "pull works" > ~/works
