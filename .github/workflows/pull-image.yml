@@ -1,8 +1,10 @@
 name: Pull new Docker image from dev server
+
 on:
   workflow_run:
-    workflows: ["Create and publish a Docker image"]
-    branches: [main]
+    workflows: 
+      - "Create and publish a Docker image"
+    #branches: [main]
     types: 
       - completed
     
