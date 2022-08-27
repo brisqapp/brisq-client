@@ -39,18 +39,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-  pull-image:
-    name: Pull new image from server
-    runs-on: ubuntu-latest
-    steps:
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          docker pull ghcr.io/brisqapp/brisq-client:main
-          echo "works" > ~/works
