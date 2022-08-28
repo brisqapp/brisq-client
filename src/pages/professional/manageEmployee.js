@@ -11,7 +11,7 @@ const employee = {
     name: ""
 };
 
-const employeesList = []
+const employeesList = ["abc", "dee"]
 
 const EmployeeManagement = () => {
     const [open, setOpen] = React.useState(false);
@@ -33,6 +33,7 @@ const EmployeeManagement = () => {
             name: newEmployee.target.value
         });
         employeesList.push(newEmployee.target.value);
+        handleClose();
     };
 
     const listItems = employeesList.map((employee) =>
@@ -85,12 +86,12 @@ const EmployeeManagement = () => {
                             id="name"
                             fullWidth
                             variant="standard"
-                            onChange={(handleNewEmployee)}
+                            // onChange={(handleNewEmployee)}
                         />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={handleClose}>Add</Button>
+                        <Button onClick={handleNewEmployee}>Add</Button>
                     </DialogActions>
                 </Dialog>
             </div>
