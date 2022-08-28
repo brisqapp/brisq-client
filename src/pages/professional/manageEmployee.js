@@ -11,7 +11,7 @@ const employee = {
     name: ""
 };
 
-const employeesList = ["abc", "dee"]
+const employeesList = ["a"]
 
 const EmployeeManagement = () => {
     const [open, setOpen] = React.useState(false);
@@ -29,10 +29,13 @@ const EmployeeManagement = () => {
     });
 
     const handleNewEmployee = (newEmployee) => {
+        this.setState({
+            employee: newEmployee
+          });
         setEmployee({
             name: newEmployee.target.value
         });
-        employeesList.push(newEmployee.target.value);
+        employeesList.push(newEmployee.name);
         handleClose();
     };
 
@@ -45,7 +48,7 @@ const EmployeeManagement = () => {
 
     return (
         <div>
-            <Paper textAlign="center" variant="outlined" style={{
+            <Paper textalign="center" variant="outlined" style={{
                 marginTop: "50px",
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -80,6 +83,7 @@ const EmployeeManagement = () => {
                         <DialogContentText>
                             Enter employee's name
                         </DialogContentText>
+                        <input onInput={e => handleNewEmployee(e)} />
                         <TextField
                             autoFocus
                             margin="dense"
