@@ -11,10 +11,14 @@ const employee = {
     name: ""
 };
 
-const employeesList = ["a"]
+const employeesList = ["a", "aa"]
 
 const EmployeeManagement = () => {
     const [open, setOpen] = React.useState(false);
+
+    const [employeList, setEmployeList] = React.useState(employeesList);
+
+    const [tempEmployeName, setTempEmployeName] = React.useState("");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -24,22 +28,19 @@ const EmployeeManagement = () => {
         setOpen(false);
     };
 
-    const [employee, setEmployee] = React.useState({
-        nom: ""
-    });
+    const handleChangeEmploye = (event) => {
+        setTempEmployeName(event.target.value);
+    }
 
     const handleNewEmployee = (newEmployee) => {
-        this.setState({
-            employee: newEmployee
-          });
-        setEmployee({
-            name: newEmployee.target.value
-        });
-        employeesList.push(newEmployee.name);
+        const tempList = employeList;
+        tempList.push(tempEmployeName);
+        setEmployeList(tempList);
+        setTempEmployeName("");
         handleClose();
     };
 
-    const listItems = employeesList.map((employee) =>
+    const listItems = employeList.map((employee) =>
         <li key={employee.toString()}>
             {employee}
         </li>
@@ -60,16 +61,12 @@ const EmployeeManagement = () => {
                 <Typography variant="h2"> Manage employee
                 </Typography>
                 <br />
+                <h5 style={{textAlign: "left"}}>
+                    Employees list
+                </h5>     
+                <br />
 
-                <Typography>
-                    <h5 style={{textAlign: "left"}}>
-                        Employees list
-                        <br />
-
-                        <ul>{listItems}</ul>
-
-                    </h5>
-                </Typography>           
+                <ul>{listItems}</ul>    
 
                 <Button variant="contained" onClick={handleClickOpen} >Add employee</Button>
                 <br /><br />
@@ -83,19 +80,19 @@ const EmployeeManagement = () => {
                         <DialogContentText>
                             Enter employee's name
                         </DialogContentText>
-                        <input onInput={e => handleNewEmployee(e)} />
                         <TextField
                             autoFocus
                             margin="dense"
                             id="name"
                             fullWidth
+                            value={tempEmployeName}
                             variant="standard"
-                            // onChange={(handleNewEmployee)}
+                            onChange={handleChangeEmploye}
                         />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={handleNewEmployee}>Add</Button>
+                        <Button onClick={handleNewEmployee} >Add</Button>
                     </DialogActions>
                 </Dialog>
             </div>
