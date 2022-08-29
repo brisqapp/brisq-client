@@ -5,8 +5,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import { DataGrid } from '@mui/x-data-grid';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import ModeIcon from '@mui/icons-material/Mode';
 import { Typography, Button, Paper } from "@mui/material";
+
 
 const employee = {
     name: ""
@@ -48,8 +52,17 @@ const EmployeeManagement = () => {
 
     const columns = [
         { field: 'id', headerName: 'Id'},
-        { field: 'name', headerName: 'Name' }
-
+        { field: 'name', headerName: 'Name' },
+        { field: 'actions', headerName: 'Actions',  
+        renderCell: (cellValues) => {
+            return (
+                <Box>
+                    <IconButton aria-label="delete"><ModeIcon /></IconButton>
+                    <IconButton aria-label="delete"><DeleteIcon /></IconButton>
+                </Box>
+            );
+          }
+        }
     ];
 
 
