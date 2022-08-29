@@ -4,6 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import { DataGrid } from '@mui/x-data-grid';
 
 import { Typography, Button, Paper } from "@mui/material";
 
@@ -11,7 +12,10 @@ const employee = {
     name: ""
 };
 
-const employeesList = ["a", "aa"]
+const employeesList = [
+    {id: 1, name: "test"},
+    {id: 2, name: "test2"}
+]
 
 const EmployeeManagement = () => {
     const [open, setOpen] = React.useState(false);
@@ -33,18 +37,20 @@ const EmployeeManagement = () => {
     }
 
     const handleNewEmployee = (newEmployee) => {
-        const tempList = employeList;
-        tempList.push(tempEmployeName);
+        let tempList = employeList;
+        const emp = {id: 3, name: tempEmployeName};
+        console.log(emp);
+        tempList = [...tempList, emp];
         setEmployeList(tempList);
         setTempEmployeName("");
         handleClose();
     };
 
-    const listItems = employeList.map((employee) =>
-        <li key={employee.toString()}>
-            {employee}
-        </li>
-    );
+    const columns = [
+        { field: 'id', headerName: 'Id'},
+        { field: 'name', headerName: 'Name' }
+
+    ];
 
 
     return (
@@ -61,12 +67,14 @@ const EmployeeManagement = () => {
                 <Typography variant="h2"> Manage employee
                 </Typography>
                 <br />
-                <h5 style={{textAlign: "left"}}>
-                    Employees list
-                </h5>     
-                <br />
-
-                <ul>{listItems}</ul>    
+                <div style={{ height: 300, width: '100%' }}>
+                    <DataGrid
+                        rows={employeList}
+                        columns={columns}
+                        pageSize={3}
+                        rowsPerPageOptions={[3]}
+                    />
+                </div>
 
                 <Button variant="contained" onClick={handleClickOpen} >Add employee</Button>
                 <br /><br />
