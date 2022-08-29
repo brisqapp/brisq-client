@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import ModeIcon from '@mui/icons-material/Mode';
+import { DataGridPro, useGridApiRef } from '@mui/x-data-grid-pro';
 import { Typography, Button, Paper } from "@mui/material";
 
 
@@ -16,12 +17,16 @@ const employee = {
     name: ""
 };
 
+
+
 const employeesList = [
-    {id: 1, name: "test"},
-    {id: 2, name: "test2"}
+    {id: 1, name: "nom1"},
+    {id: 2, name: "nom2"}
 ]
 
 const EmployeeManagement = () => {
+    const apiRef = useGridApiRef();
+
     const [open, setOpen] = React.useState(false);
 
     const [employeList, setEmployeList] = React.useState(employeesList);
@@ -50,15 +55,25 @@ const EmployeeManagement = () => {
         handleClose();
     };
 
+    const handleDeleteRow = () => {
+        setEmployeList(() => {
+          const rowToDeleteIndex = 1;
+          return [
+            ...employeList.slice(0, rowToDeleteIndex),
+            ...employeList.slice(rowToDeleteIndex + 1),
+          ];
+        });
+      };
+
     const columns = [
-        { field: 'id', headerName: 'Id'},
-        { field: 'name', headerName: 'Name' },
-        { field: 'actions', headerName: 'Actions',  
+        { field: 'id', headerName: 'Id', flex:0.2},
+        { field: 'name', headerName: 'Name', flex: 0.5, editable:true},
+        { field: 'actions', headerName: 'Actions', flex:0.2,  
         renderCell: (cellValues) => {
             return (
                 <Box>
                     <IconButton aria-label="delete"><ModeIcon /></IconButton>
-                    <IconButton aria-label="delete"><DeleteIcon /></IconButton>
+                    <IconButton aria-label="delete" onClick={handleDeleteRow} ><DeleteIcon /></IconButton>
                 </Box>
             );
           }
@@ -84,8 +99,8 @@ const EmployeeManagement = () => {
                     <DataGrid
                         rows={employeList}
                         columns={columns}
-                        pageSize={3}
-                        rowsPerPageOptions={[3]}
+                        pageSize={5}
+                        rowsPerPageOptions={[5]}
                     />
                 </div>
 
