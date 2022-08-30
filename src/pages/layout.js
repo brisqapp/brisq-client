@@ -11,6 +11,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import HomeIcon from '@mui/icons-material/Home';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { getToken, getUser } from '../auth';
 
 import { Outlet, Link, useNavigate } from "react-router-dom";
@@ -20,9 +22,8 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
 const pages = [
-  {link: 'home', text: 'Home', icon: <InboxIcon />},
-  {link: 'manageEmployee', text: 'Employee'},
-  {link: 'profile', text: 'Profile'}
+  {link: 'home', text: 'Home', icon: <HomeIcon />},
+  {link: 'manageEmployee', text: 'Employés', icon: <PeopleAltIcon />},
 ];
 
 

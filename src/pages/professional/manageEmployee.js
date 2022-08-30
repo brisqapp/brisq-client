@@ -6,12 +6,10 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useGridApiRef } from '@mui/x-data-grid-pro';
 import { Typography, Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box } from "@mui/material";
 import { FormatAlignJustify } from '@mui/icons-material';
+import { getEmployes } from '../../api/employe';
 
 
-const employeesList = [
-    {id: 1, name: "nom1"},
-    {id: 2, name: "nom2"}
-]
+const employeesList = getEmployes();
 
 const EmployeeManagement = () => {
 
