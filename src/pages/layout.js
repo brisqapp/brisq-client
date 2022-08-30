@@ -31,12 +31,13 @@ const Layout = () => {
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
   
-  const list = (anchor) => (
+  const list = (mobile) => (
+    
     <Box
       sx={{ width: 250 }}
       role="presentation"
-      onClick={toggleDrawer}
-      onKeyDown={toggleDrawer}
+      onClick={mobile == false ? () => {} : toggleDrawer}
+      onKeyDown={mobile == false ? () => {} : toggleDrawer}
     >
       <List>
         {pages.map((page, index) => (
@@ -95,11 +96,20 @@ const Layout = () => {
       anchor={"left"}
       open={openDrawer}
       onClose={toggleDrawer}
+      sx={{
+        width: "260px",
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: { width: "260px", boxSizing: 'border-box' },
+        display : {xs: 'block', md: 'none' }
+      }}
     >
-      {list("left")}
+    <Toolbar />
+      <Box sx={{ overflow: 'auto' }}>
+        {list(true)}
+      </Box>
     </Drawer>
 
-    <AppBar position="static">
+    <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -151,15 +161,6 @@ const Layout = () => {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.link}
-                onClick={() => navigateClick(page.link)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page.text}
-              </Button>
-            ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }} style={{display: "inherit"}}>
@@ -215,6 +216,21 @@ const Layout = () => {
         </Toolbar>
       </Container>
     </AppBar>
+    <Drawer
+        variant="permanent"
+        key="desktop"
+        sx={{
+          width: "260px",
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: { width: "260px", boxSizing: 'border-box' },
+          display : {xs: 'none', md: 'block' }
+        }}
+    >
+      <Toolbar />
+        <Box sx={{ overflow: 'auto' }}>
+          {list(false)}
+        </Box>
+    </Drawer>
     <Outlet />
     </>
   );
