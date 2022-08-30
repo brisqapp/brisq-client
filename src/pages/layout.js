@@ -22,8 +22,7 @@ import MailIcon from '@mui/icons-material/Mail';
 const pages = [
   {link: 'home', text: 'Home', icon: <InboxIcon />},
   {link: 'manageEmployee', text: 'Employee'},
-  {link: 'profile', text: 'Profile'},
-  {link: 'contact', text: 'Contact'}
+  {link: 'profile', text: 'Profile'}
 ];
 
 

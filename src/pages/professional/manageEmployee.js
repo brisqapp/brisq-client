@@ -69,7 +69,7 @@ const EmployeeManagement = () => {
         { field: 'id', headerName: 'Id', flex:0.2},
         { field: 'name', headerName: 'Name', flex: 0.5, editable:true},
         { field: 'actions', headerName: 'Actions', flex:0.2,  
-        renderCell: (cellValues) => {
+        renderCell: () => {
             return (
                 <Box>
                     <IconButton aria-label="delete"><ModeIcon /></IconButton>
