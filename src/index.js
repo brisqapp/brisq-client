@@ -1,13 +1,10 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./pages/layout";
-import Employee from "./pages/professional/manageEmployee";
-import Home from "./pages/home";
-import Blogs from "./pages/blogs";
+import EmployeeManagement from "./pages/professional/manageEmployee";
+import Home from "./pages/professional/home";
 import Profile from "./pages/professional/profile";
-import Contact from "./pages/contact";
 import NoPage from "./pages/noPage";
-import FormDialog from "./pages/professional/popup";
 import Login from "./pages/authentification/login";
 import Register from "./pages/authentification/register";
 import './index.css';
@@ -24,11 +21,8 @@ export default function App() {
           <Route path="register" element={<Register />} />
           <Route index element={<Home />} />
           <Route path="home" element={<Home />} />
-          <Route path="popup" element={<FormDialog />} />
-          <Route path="manageEmployee" element={<Employee />} />
+          <Route path="manageEmployee" element={<EmployeeManagement />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="blogs" element = {token == null ? <Navigate to="/login" /> : <Blogs /> } />
-          <Route path="contact" element={<Contact />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
