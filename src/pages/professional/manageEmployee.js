@@ -2,8 +2,10 @@ import * as React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeIcon from '@mui/icons-material/Mode';
 import { DataGrid } from '@mui/x-data-grid';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useGridApiRef } from '@mui/x-data-grid-pro';
 import { Typography, Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box } from "@mui/material";
+import { FormatAlignJustify } from '@mui/icons-material';
 
 
 const employeesList = [
@@ -12,7 +14,6 @@ const employeesList = [
 ]
 
 const EmployeeManagement = () => {
-    const apiRef = useGridApiRef();
 
     const [open, setOpen] = React.useState(false);
 
@@ -32,7 +33,7 @@ const EmployeeManagement = () => {
         setTempEmployeName(event.target.value);
     }
 
-    const handleNewEmployee = (newEmployee) => {
+    const handleNewEmployee = () => {
         let tempList = employeList;
         const emp = {id: 3, name: tempEmployeName};
         console.log(emp);
@@ -54,7 +55,8 @@ const EmployeeManagement = () => {
 
     const columns = [
         { field: 'id', headerName: 'Id', flex:0.2},
-        { field: 'name', headerName: 'Name', flex: 0.5, editable:true},
+        { field: 'name', headerName: 'Nom', flex: 0.5},
+        { field: 'services', headerName: 'Services', flex: 0.5 },
         { field: 'actions', headerName: 'Actions', flex:0.2,  
         renderCell: () => {
             return (
@@ -69,17 +71,19 @@ const EmployeeManagement = () => {
 
 
     return (
-        <div>
+        <div style={{ width: "100%"  }}>
             <Paper textalign="center" variant="outlined" style={{
                 marginTop: "50px",
-                marginLeft: "auto",
-                marginRight: "auto",
+                marginLeft: "20px",
+                marginRight: "20px",
                 padding: "30px 45px 30px 45px",
-                width: "fit-content",
                 display: "block",
                 textAlign: "center"
             }} >
-                <Typography variant="h2"> Manage employee
+                <Typography variant="h2" style={{  display:"flex", justifyContent: "space-between"}}> Liste des employés
+                <Button style={{blockSize:"fit-content", alignSelf:"end"}}  variant="outlined" onClick={handleClickOpen} startIcon={<AddCircleIcon />}>
+                    Ajouter
+                </Button>
                 </Typography>
                 <br />
                 <div style={{ height: 300, width: '100%' }}>
@@ -91,9 +95,6 @@ const EmployeeManagement = () => {
                     />
                 </div>
 
-                <Button variant="contained" onClick={handleClickOpen} >Add employee</Button>
-                <br /><br />
-                <Button variant="contained" >Save</Button>
                 <br />
             </Paper>
 
