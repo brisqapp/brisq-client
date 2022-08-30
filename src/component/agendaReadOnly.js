@@ -16,13 +16,14 @@ import {
   DateNavigator,
   Appointments,
   DayView,
+  MonthView,
   ViewSwitcher,
   Resources,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-import { appointments } from '../../../demo-data/appointments';
+import { salon } from './data/example';
 
-const LOCATIONS = ['Room 1', 'Room 2', 'Room 3'];
+const LOCATIONS = salon.employe;
 const LOCATIONS_SHORT = [1, 2, 3];
 const resources = [{
   fieldName: 'location',
@@ -141,28 +142,6 @@ const StyledToolbarFlexibleSpace = styled(Toolbar.FlexibleSpace)(() => ({
     alignItems: 'center',
   },
 }));
-// #FOLD_BLOCK
-const StyledWeekViewTimeTableCell = styled(WeekView.TimeTableCell)(({
-  theme: { palette },
-}) => ({
-  [`&.${classes.weekendCell}`]: {
-    backgroundColor: alpha(palette.action.disabledBackground, 0.04),
-    '&:hover': {
-      backgroundColor: alpha(palette.action.disabledBackground, 0.04),
-    },
-    '&:focus': {
-      backgroundColor: alpha(palette.action.disabledBackground, 0.04),
-    },
-  },
-}));
-// #FOLD_BLOCK
-const StyledWeekViewDayScaleCell = styled(WeekView.DayScaleCell)(({
-  theme: { palette },
-}) => ({
-  [`&.${classes.weekEnd}`]: {
-    backgroundColor: alpha(palette.action.disabledBackground, 0.06),
-  },
-}));
 
 const AppointmentContent = ({
   data, formatDate, ...restProps
@@ -222,10 +201,10 @@ const LocationSelector = ({ onLocationsChange, locations }) => (
       <Button
         className={classNames(classes.button, getButtonClass(locations, location))}
         onClick={() => onLocationsChange(handleButtonClick(location, locations))}
+        style={{width:"150px"}}
         key={location}
       >
         <React.Fragment>
-          <span className={classes.shortButtonText}>{LOCATIONS_SHORT[index]}</span>
           <span className={classes.longButtonText}>{location}</span>
         </React.Fragment>
       </Button>
@@ -235,28 +214,9 @@ const LocationSelector = ({ onLocationsChange, locations }) => (
 
 const FlexibleSpace = ({ props }) => (
   <StyledToolbarFlexibleSpace {...props} className={classes.flexibleSpace}>
-    <ReduxFilterContainer />
     <ReduxLocationSelector />
   </StyledToolbarFlexibleSpace>
 );
-
-const isRestTime = date => (
-  date.getDay() === 0 || date.getDay() === 6 || date.getHours() < 9 || date.getHours() >= 18
-);
-
-const TimeTableCell = (({ ...restProps }) => {
-  const { startDate } = restProps;
-  if (isRestTime(startDate)) {
-    return <StyledWeekViewTimeTableCell {...restProps} className={classes.weekendCell} />;
-  } return <StyledWeekViewTimeTableCell {...restProps} />;
-});
-
-const DayScaleCell = (({ ...restProps }) => {
-  const { startDate } = restProps;
-  if (startDate.getDay() === 0 || startDate.getDay() === 6) {
-    return <StyledWeekViewDayScaleCell {...restProps} className={classes.weekEnd} />;
-  } return <StyledWeekViewDayScaleCell {...restProps} />;
-});
 
 const SCHEDULER_STATE_CHANGE_ACTION = 'SCHEDULER_STATE_CHANGE';
 
@@ -268,7 +228,7 @@ const SchedulerContainer = ({
   <Paper>
     <Scheduler
       data={data}
-      height={660}
+      height={700}
     >
       <ViewState
         currentDate={currentDate}
@@ -277,15 +237,15 @@ const SchedulerContainer = ({
         onCurrentViewNameChange={onCurrentViewNameChange}
       />
       <DayView
-        startDayHour={9}
+        startDayHour={7}
         endDayHour={19}
       />
       <WeekView
-        startDayHour={8}
+        startDayHour={7}
         endDayHour={19}
-        timeTableCellComponent={TimeTableCell}
-        dayScaleCellComponent={DayScaleCell}
+        cellDuration={60}
       />
+      <MonthView/>
 
       <Appointments
         appointmentContentComponent={AppointmentContent}
@@ -302,7 +262,7 @@ const SchedulerContainer = ({
 );
 
 const schedulerInitialState = {
-  data: appointments,
+  data: salon.appointments,
   currentDate: '2018-06-27',
   currentViewName: 'Week',
   currentFilter: '',
@@ -360,6 +320,6 @@ const store = createStore(
 
 export default () => (
   <Provider store={store}>
-    <ReduxSchedulerContainer />
+    <ReduxSchedulerContainer/>
   </Provider>
 );
