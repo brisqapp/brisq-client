@@ -1,22 +1,9 @@
 import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import { DataGrid } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
-import Box from '@mui/material/Box';
 import ModeIcon from '@mui/icons-material/Mode';
-import { DataGridPro, useGridApiRef } from '@mui/x-data-grid-pro';
-import { Typography, Button, Paper } from "@mui/material";
-
-
-const employee = {
-    name: ""
-};
-
+import { DataGrid } from '@mui/x-data-grid';
+import { useGridApiRef } from '@mui/x-data-grid-pro';
+import { Typography, Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box } from "@mui/material";
 
 
 const employeesList = [
