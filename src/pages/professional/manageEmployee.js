@@ -88,11 +88,11 @@ const EmployeeManagement = () => {
                 display: "block",
                 textAlign: "center"
             }} >
-                <Typography variant="h2" style={{ display: "flex", justifyContent: "space-between", fontFamily: "cursive" }}> Liste des employés
+                <h1 style={{ display: "flex", justifyContent: "space-between", fontSize: "2.5em"}}> Liste des employés
                     <Button style={{ blockSize: "fit-content", alignSelf: "end" }} variant="outlined" onClick={handleClickOpen} startIcon={<AddCircleIcon />}>
                         Ajouter
                     </Button>
-                </Typography>
+                </h1>
                 <br />
                 <div style={{ height: 300, width: '100%' }}>
                     <DataGrid
