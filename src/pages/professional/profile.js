@@ -3,12 +3,12 @@ import SettingsIcon from '@mui/icons-material/Settings';
 
 const Profile = () => {
 
-   return <Box sx={{
-      '& .MuiTextField-root': { m: 3, width: '50ch' }, margin:3
+   return <Box pl={6} pt={4} sx={{ 
+      '& .MuiTextField-root': { mt: 5, width: '50ch' }, 
    }}>
       <h1>Profile</h1>
       <div>
-      <Button variant="contained">Gestion des employés <SettingsIcon></SettingsIcon></Button>
+      <Button style={{justifyContent:"space-between", minWidth:"250px"}} variant="contained">Gestion des employés <SettingsIcon></SettingsIcon></Button>
       <br />
          <TextField
             id="email"
