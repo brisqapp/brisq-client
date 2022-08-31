@@ -1,5 +1,7 @@
 import { TextField, Box, Button, Stack } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { Link } from "react-router-dom";
+
 
 const Profile = () => {
 
@@ -10,7 +12,7 @@ const Profile = () => {
    }}>
       <h1>Profile</h1>
       <div>
-         <Button style={{ justifyContent: "space-between", minWidth: "250px" }} variant="contained">Gestion des employés <SettingsIcon></SettingsIcon></Button>
+         <Button component={Link} to="/manageEmployee" style={{ justifyContent: "space-between", minWidth: "250px" }} variant="contained">Gestion des employés <SettingsIcon></SettingsIcon></Button>
          <br />
          <TextField
             id="email"
