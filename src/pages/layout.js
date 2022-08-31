@@ -19,11 +19,18 @@ import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Dr
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
-const pages = [
+
+const token = getToken();
+
+const loggedPages = [
   {link: 'home', text: 'Home', icon: <InboxIcon />},
   {link: 'manageEmployee', text: 'Employee'},
   {link: 'profile', text: 'Profile'}
 ];
+
+const unLoggedPages = [{link: 'home', text: 'Home', icon: <InboxIcon />}]
+
+const pages = token == null ? unLoggedPages : loggedPages;
 
 
 const Layout = () => {
@@ -54,7 +61,6 @@ const Layout = () => {
   );
 
   const navigate = useNavigate();
-  const token = getToken();
   const user = getUser();
   
   const [anchorElNav, setAnchorElNav] = React.useState(null);
