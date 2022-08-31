@@ -12,9 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { getToken, getUser } from '../auth';
-
 import { Outlet, Link, useNavigate } from "react-router-dom";
-
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Drawer } from "@mui/material";
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
@@ -31,7 +29,6 @@ const loggedPages = [
 const unLoggedPages = [{link: 'home', text: 'Home', icon: <InboxIcon />}]
 
 const pages = token == null ? unLoggedPages : loggedPages;
-
 
 const Layout = () => {
 
