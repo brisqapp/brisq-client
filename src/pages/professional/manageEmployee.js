@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ModeIcon from '@mui/icons-material/Mode';
 import { DataGrid } from '@mui/x-data-grid';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Link } from "react-router-dom";
 import { useGridApiRef } from '@mui/x-data-grid-pro';
 import { Typography, Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box } from "@mui/material";
 import { FormatAlignJustify } from '@mui/icons-material';
@@ -61,7 +62,7 @@ const EmployeeManagement = () => {
         renderCell: () => {
             return (
                 <Box>
-                    <IconButton aria-label="delete"><ModeIcon /></IconButton>
+                    <IconButton component={Link} to="/employeeDetails" aria-label="delete"><ModeIcon /></IconButton>
                     <IconButton aria-label="delete" onClick={handleDeleteRow} ><DeleteIcon /></IconButton>
                 </Box>
             );
