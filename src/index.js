@@ -9,6 +9,7 @@ import Contact from "./pages/contact";
 import NoPage from "./pages/layout/noPage";
 import Login from "./pages/authentification/login";
 import Register from "./pages/authentification/register";
+import EmployeeDetails from "./pages/employeeDetails";
 
 import './index.css';
 import { getToken } from "./auth/index.js";
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="blogs" element = {token == null ? <Navigate to="/login" /> : <Blogs /> } />
           <Route path="contact" element={<Contact />} />
           <Route path="*" element={<NoPage />} />
+          <Route path="employeeDetails" element={<EmployeeDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>
