@@ -55,7 +55,6 @@ const EmployeeManagement = () => {
     };
 
     const columns = [
-<<<<<<< HEAD
         { field: 'id', headerName: 'Id', flex: 0.2 },
         { field: 'name', headerName: 'Nom', flex: 0.5 },
         {
@@ -70,25 +69,11 @@ const EmployeeManagement = () => {
             renderCell: () => {
                 return (
                     <Box style={{ justifyContent: "end" }}>
-                        <IconButton aria-label="delete"><ModeIcon /></IconButton>
+                    <IconButton component={Link} to="/employeeDetails" aria-label="delete"><ModeIcon /></IconButton>
                         <IconButton aria-label="delete" onClick={handleDeleteRow} ><DeleteIcon /></IconButton>
                     </Box>
                 );
             }
-=======
-        { field: 'id', headerName: 'Id', flex:0.2},
-        { field: 'name', headerName: 'Nom', flex: 0.5},
-        { field: 'services', headerName: 'Services', flex: 0.5 },
-        { field: 'actions', headerName: 'Actions', flex:0.2,  
-        renderCell: () => {
-            return (
-                <Box>
-                    <IconButton component={Link} to="/employeeDetails" aria-label="delete"><ModeIcon /></IconButton>
-                    <IconButton aria-label="delete" onClick={handleDeleteRow} ><DeleteIcon /></IconButton>
-                </Box>
-            );
-          }
->>>>>>> 13-creation-page-manage-one-employee
         }
     ];
 
