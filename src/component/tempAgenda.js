@@ -16,14 +16,13 @@ import {
   DateNavigator,
   Appointments,
   DayView,
-  MonthView,
   ViewSwitcher,
   Resources,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-import { salon } from './data/example';
+import { appointments } from './data/test';
 
-const LOCATIONS = salon.employe;
+const LOCATIONS = ['Room 1', 'Room 2', 'Room 3'];
 const LOCATIONS_SHORT = [1, 2, 3];
 const resources = [{
   fieldName: 'location',
@@ -35,7 +34,7 @@ const resources = [{
   ],
 }];
 
-const PREFIX = 'Demo';
+const PREFIX = 'Agenda';
 // #FOLD_BLOCK
 const classes = {
   flexibleSpace: `${PREFIX}-flexibleSpace`,
@@ -142,6 +141,28 @@ const StyledToolbarFlexibleSpace = styled(Toolbar.FlexibleSpace)(() => ({
     alignItems: 'center',
   },
 }));
+// #FOLD_BLOCK
+const StyledWeekViewTimeTableCell = styled(WeekView.TimeTableCell)(({
+  theme: { palette },
+}) => ({
+  [`&.${classes.weekendCell}`]: {
+    backgroundColor: alpha(palette.action.disabledBackground, 0.04),
+    '&:hover': {
+      backgroundColor: alpha(palette.action.disabledBackground, 0.04),
+    },
+    '&:focus': {
+      backgroundColor: alpha(palette.action.disabledBackground, 0.04),
+    },
+  },
+}));
+// #FOLD_BLOCK
+const StyledWeekViewDayScaleCell = styled(WeekView.DayScaleCell)(({
+  theme: { palette },
+}) => ({
+  [`&.${classes.weekEnd}`]: {
+    backgroundColor: alpha(palette.action.disabledBackground, 0.06),
+  },
+}));
 
 const AppointmentContent = ({
   data, formatDate, ...restProps
@@ -201,7 +222,6 @@ const LocationSelector = ({ onLocationsChange, locations }) => (
       <Button
         className={classNames(classes.button, getButtonClass(locations, location))}
         onClick={() => onLocationsChange(handleButtonClick(location, locations))}
-        style={{width:"150px"}}
         key={location}
       >
         <React.Fragment>
@@ -219,6 +239,24 @@ const FlexibleSpace = ({ props }) => (
   </StyledToolbarFlexibleSpace>
 );
 
+const isRestTime = date => (
+  date.getDay() === 0 || date.getDay() === 6 || date.getHours() < 9 || date.getHours() >= 18
+);
+
+const TimeTableCell = (({ ...restProps }) => {
+  const { startDate } = restProps;
+  if (isRestTime(startDate)) {
+    return <StyledWeekViewTimeTableCell {...restProps} className={classes.weekendCell} />;
+  } return <StyledWeekViewTimeTableCell {...restProps} />;
+});
+
+const DayScaleCell = (({ ...restProps }) => {
+  const { startDate } = restProps;
+  if (startDate.getDay() === 0 || startDate.getDay() === 6) {
+    return <StyledWeekViewDayScaleCell {...restProps} className={classes.weekEnd} />;
+  } return <StyledWeekViewDayScaleCell {...restProps} />;
+});
+
 const SCHEDULER_STATE_CHANGE_ACTION = 'SCHEDULER_STATE_CHANGE';
 
 const SchedulerContainer = ({
@@ -229,6 +267,7 @@ const SchedulerContainer = ({
   <Paper>
     <Scheduler
       data={data}
+      height={660}
     >
       <ViewState
         currentDate={currentDate}
@@ -237,15 +276,14 @@ const SchedulerContainer = ({
         onCurrentViewNameChange={onCurrentViewNameChange}
       />
       <DayView
-        startDayHour={7}
+        startDayHour={9}
         endDayHour={19}
       />
       <WeekView
-        startDayHour={7}
+        startDayHour={8}
         endDayHour={19}
         cellDuration={60}
       />
-      <MonthView/>
 
       <Appointments
         appointmentContentComponent={AppointmentContent}
@@ -262,7 +300,7 @@ const SchedulerContainer = ({
 );
 
 const schedulerInitialState = {
-  data: salon.appointments,
+  data: appointments,
   currentDate: '2018-06-27',
   currentViewName: 'Week',
   currentFilter: '',
@@ -320,6 +358,6 @@ const store = createStore(
 
 export default () => (
   <Provider store={store}>
-    <ReduxSchedulerContainer/>
+    <ReduxSchedulerContainer />
   </Provider>
 );

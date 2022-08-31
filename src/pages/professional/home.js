@@ -1,4 +1,4 @@
-import AgendaReadOnly from "../../component/agendaReadOnly"; 
+import AgendaReadOnly from "../../component/tempAgenda"; 
 
 const Home = () => {
     return (
