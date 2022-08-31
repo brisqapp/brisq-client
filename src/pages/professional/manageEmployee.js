@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ModeIcon from '@mui/icons-material/Mode';
 import { DataGrid } from '@mui/x-data-grid';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Link } from "react-router-dom";
 import { useGridApiRef } from '@mui/x-data-grid-pro';
 import { Typography, Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box, Chip } from "@mui/material";
 import { FormatAlignJustify } from '@mui/icons-material';
@@ -54,6 +55,7 @@ const EmployeeManagement = () => {
     };
 
     const columns = [
+<<<<<<< HEAD
         { field: 'id', headerName: 'Id', flex: 0.2 },
         { field: 'name', headerName: 'Nom', flex: 0.5 },
         {
@@ -73,6 +75,20 @@ const EmployeeManagement = () => {
                     </Box>
                 );
             }
+=======
+        { field: 'id', headerName: 'Id', flex:0.2},
+        { field: 'name', headerName: 'Nom', flex: 0.5},
+        { field: 'services', headerName: 'Services', flex: 0.5 },
+        { field: 'actions', headerName: 'Actions', flex:0.2,  
+        renderCell: () => {
+            return (
+                <Box>
+                    <IconButton component={Link} to="/employeeDetails" aria-label="delete"><ModeIcon /></IconButton>
+                    <IconButton aria-label="delete" onClick={handleDeleteRow} ><DeleteIcon /></IconButton>
+                </Box>
+            );
+          }
+>>>>>>> 13-creation-page-manage-one-employee
         }
     ];
 
