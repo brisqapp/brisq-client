@@ -55,17 +55,17 @@ const EmployeeManagement = () => {
     };
 
     const columns = [
-        { field: 'id', headerName: 'Id', flex: 0.2 },
-        { field: 'name', headerName: 'Nom', flex: 0.5 },
+        { field: 'id', headerName: 'Id', width:'10' },
+        { field: 'name', headerName: 'Nom', flex: 0.4 },
         {
-            field: 'services', headerName: 'Services', flex: 0.5, renderCell: () => {
+            field: 'services', headerName: 'Services', flex: 1, renderCell: () => {
                 return (
                     <Chip label="Coupe homme" />
                 );
             }
         },
         {
-            field: 'actions', headerName: 'Actions', flex: 0.3,
+            field: 'actions', headerName: 'Actions', width:'100',
             renderCell: () => {
                 return (
                     <Box style={{ justifyContent: "end" }}>
@@ -90,7 +90,7 @@ const EmployeeManagement = () => {
                 textAlign: "center"
             }} >
                 <h1 style={{ display: "flex", justifyContent: "space-between", fontSize: "2.5em"}}> Liste des employés
-                    <Button style={{ blockSize: "fit-content", alignSelf: "end" }} variant="outlined" onClick={handleClickOpen} startIcon={<AddCircleIcon />}>
+                    <Button style={{ blockSize: "fit-content", alignSelf: "end", minInlineSize:"fit-content" }} variant="outlined" onClick={handleClickOpen} startIcon={<AddCircleIcon />}>
                         Ajouter
                     </Button>
                 </h1>
