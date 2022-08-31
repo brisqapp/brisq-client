@@ -84,6 +84,7 @@ const EmployeeManagement = () => {
                 marginLeft: "20px",
                 marginRight: "20px",
                 padding: "30px 45px 30px 45px",
+                borderBlockStartWidth: "inherit",
                 display: "block",
                 textAlign: "center"
             }} >
