@@ -28,9 +28,9 @@ const Profile = () => {
 
   const [formValues, setFormValues] = useState(defaultValues);
 
-   return <Box pl={6} pt={4} sx={{
-      '& .MuiTextField-root': { mt: 5, mr:5, width:'100%', maxWidth: '400px' },
-      '& .MuiFormControl-root': { mt: 5, mr:5, width:'100%', maxWidth: '400px' },
+   return <Box maxWidth='400px' pl={6} pt={4} sx={{display: 'flex', flexWrap: 'wrap',
+      '& .MuiTextField-root': { mt: 5, mr:5, width:'100%'},
+      '& .MuiFormControl-root': { mt: 5, mr:5, width:'100%', },
    }}>
       <h1>Profile</h1>
       <div>
@@ -45,10 +45,6 @@ const Profile = () => {
             label="Nom"
          />
          <TextField
-            id="companyName"
-            label="Nom de la compagnie"
-         />
-         <TextField
             id="email"
             label="Email"
          />
@@ -56,7 +52,15 @@ const Profile = () => {
             id="passWord"
             label="Mot de passe"
          />
-         <FormControl fullWidth style={{textAlign: "left"}} maxWidth='400px'>
+            <TextField
+            id="companyName"
+            label="Nom de la compagnie"
+         />
+          <TextField
+            id="companyAdress"
+            label="Adresse"
+         />
+         <FormControl fullWidth style={{textAlign: "left", maxWidth:'400px'}} >
                         <InputLabel id="salontype">Type de salon</InputLabel>
                         <Select
                             labelId="salontypelabel"
@@ -71,10 +75,6 @@ const Profile = () => {
                             <MenuItem value={2}>Je sais pas trop quoi</MenuItem>
                         </Select>
                     </FormControl>
-         <TextField
-            id="companyAdress"
-            label="Adresse"
-         />
          <TextField
             id="companyDescription"
             label="Description de la compagnie"
