@@ -231,7 +231,7 @@ const Layout = () => {
           {list(false)}
         </Box>
     </Drawer>
-    <Outlet />
+    <Outlet style="backgound-color: 'red'"/>
     </>
   );
 };

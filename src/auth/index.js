@@ -1,4 +1,4 @@
-import { APIregister } from "../api/company";
+import { APIregister, APILogin } from "../api/company";
 
 export function getToken(){
     const token = localStorage.getItem("token");
@@ -11,12 +11,19 @@ export function getUser(){
 }
 
 export function login(form){
-    localStorage.setItem("token", "asdf");
-    localStorage.setItem("user", JSON.stringify({
-        id: 1,
-        name: "Temp"
-    }))
-    window.location.replace("/");
+    APILogin(form)
+    .then((data) => {
+        console.log(data);
+        localStorage.setItem("token", data.data.token);
+
+        localStorage.setItem("user", JSON.stringify({
+            id: data.data.user.id,
+            name: data.data.user.firstName + " " + data.data.user.lastName
+        }))
+        window.location.replace("/");
+    }).catch((error) => {
+        console.log(error);
+    })
 }
 
 export async function register(form){
@@ -26,11 +33,11 @@ export async function register(form){
         localStorage.setItem("token", data.data.token);
 
         localStorage.setItem("user", JSON.stringify({
-            id: data.data.user.id,
-            name: data.data.user.name
+            id: data.data.company.id,
+            name: data.data.company.firstName + " " + data.data.company.lastName
         }))
-        //window.location.replace("/");
+        window.location.replace("/");
     }).catch((error) => {
-        alert("ça marche pas");
+        console.log(error);
     })
 }
