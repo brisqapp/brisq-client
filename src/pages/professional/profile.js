@@ -1,43 +1,85 @@
-import { TextField, Box, Button, Stack } from '@mui/material';
+import { TextField, Box, FormControl, Select, InputLabel, MenuItem, Button, Stack } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from "react-router-dom";
+import { useState } from "react";
+
 
 
 const Profile = () => {
 
-   const widthItems = '50ch'
+   const defaultValues = {
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      salonType: 0,
+      companyName: "",
+      companyAddress: ""
+  };
+
+  const handleInputChange = (e) => {
+   const { name, value } = e.target;
+   setFormValues({
+       ...formValues,
+       [name]: value,
+   });
+};
+
+  const [formValues, setFormValues] = useState(defaultValues);
 
    return <Box pl={6} pt={4} sx={{
-      '& .MuiTextField-root': { mt: 5, width: widthItems },
+      '& .MuiTextField-root': { mt: 5, mr:5, width:'100%', maxWidth: '400px' },
+      '& .MuiFormControl-root': { mt: 5, mr:5, width:'100%', maxWidth: '400px' },
    }}>
       <h1>Profile</h1>
       <div>
-         <Button component={Link} to="/manageEmployee" style={{ justifyContent: "space-between", minWidth: "250px" }} variant="contained">Gestion des employés <SettingsIcon></SettingsIcon></Button>
+         <Button component={Link} to="/manageEmployee" style={{ justifyContent: "space-between" }} variant="contained">Gestion des employés <SettingsIcon></SettingsIcon></Button>
          <br />
          <TextField
-            id="email"
-            label="Email"
-            defaultValue="Hello World"
+            id="firstName"
+            label="Prénom"
          />
-         <br />
+         <TextField
+            id="lastName"
+            label="Nom"
+         />
          <TextField
             id="companyName"
             label="Nom de la compagnie"
-            defaultValue="Hello World"
          />
-         <br />
+         <TextField
+            id="email"
+            label="Email"
+         />
+         <TextField
+            id="passWord"
+            label="Mot de passe"
+         />
+         <FormControl fullWidth style={{textAlign: "left"}} maxWidth='400px'>
+                        <InputLabel id="salontype">Type de salon</InputLabel>
+                        <Select
+                            labelId="salontypelabel"
+                            id="salontypeselect"
+                            label="Type de salon"
+                            name="salonType"
+                            value={formValues.salonType} 
+                            onChange={handleInputChange} 
+                        >
+                            <MenuItem value={0} disabled>Sélectionner un type</MenuItem>
+                            <MenuItem value={1}>Coiffure</MenuItem>
+                            <MenuItem value={2}>Je sais pas trop quoi</MenuItem>
+                        </Select>
+                    </FormControl>
          <TextField
             id="companyAdress"
             label="Adresse"
-            defaultValue="Hello World"
          />
-         <br />
          <TextField
             id="companyDescription"
             label="Description de la compagnie"
             multiline
             rows={4}
-            defaultValue="Default Value"
          />
          <Stack direction="row" marginTop="20px" >
             <Button variant="contained" component="label">
