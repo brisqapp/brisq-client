@@ -11,7 +11,7 @@ body {
   padding-left: 260px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   body {
     padding-top: 40px;
     padding-left: 0px;
