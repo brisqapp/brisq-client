@@ -1,9 +1,13 @@
 import axios from "axios";
 
-const url = "https://api-dev.brisq.app/";
+const url = "http://localhost:8080/api";
+
+export function URL() {
+    return url;
+}
 
 export function test() {
-    return axios.get(url, {
+    return axios.get(URL, {
         crossDomain: true
     })
 }

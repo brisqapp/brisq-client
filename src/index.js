@@ -6,6 +6,7 @@ import Home from "./pages/professional/home";
 import Profile from "./pages/professional/profile";
 import NoPage from "./pages/noPage";
 import Login from "./pages/authentification/login";
+import EmployeeDetails from "./pages/employeeDetails";
 import Register from "./pages/authentification/register";
 import './index.css';
 import { getToken } from "./auth/index.js";
@@ -16,11 +17,12 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
         <Route path="/" element={<Layout />} >
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
           <Route index element={<Home />} />
           <Route path="home" element={<Home />} />
+          <Route path="employeeDetails" element={<EmployeeDetails />} />
           <Route path="manageEmployee" element={<EmployeeManagement />} />
           <Route path="profile" element={<Profile />} />
           <Route path="*" element={<NoPage />} />
