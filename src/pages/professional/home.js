@@ -1,5 +1,11 @@
+import AgendaReadOnly from "../../component/agendaReadOnly"; 
+
 const Home = () => {
-    return <h1>Home</h1>;
+    return (
+    <div style={{margin:"45px 30px"}}>
+        <AgendaReadOnly />
+    </div>
+    );
 };
   
 export default Home;
