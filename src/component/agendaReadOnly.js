@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import { styled, alpha } from '@mui/material/styles';
-import { teal, orange, red } from '@mui/material/colors';
+import { teal, orange, red, blue } from '@mui/material/colors';
 import classNames from 'clsx';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
@@ -21,21 +21,26 @@ import {
   Resources,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-import { salon } from './data/example';
+import { getReservations } from '../api/reservation';
 
+const salon = getReservations();
+
+const colors = [teal, orange, red, blue];
 const LOCATIONS = salon.employe;
-const LOCATIONS_SHORT = [1, 2, 3];
+//const LOCATIONS = ["Room 1", "Room 2", "Room 3"]
+const LOCATIONS_SHORT = salon.employe.map(e => {return e[0]});
+const instances = [];
+for(let i = 0; i < LOCATIONS.length; i++){
+  instances.push({id: LOCATIONS[i], text: LOCATIONS[i], color: colors[i%(colors.length)]});
+}
+
 const resources = [{
   fieldName: 'location',
   title: 'Location',
-  instances: [
-    { id: LOCATIONS[0], text: LOCATIONS[0], color: teal },
-    { id: LOCATIONS[1], text: LOCATIONS[1], color: orange },
-    { id: LOCATIONS[2], text: LOCATIONS[2], color: red },
-  ],
+  instances: instances,
 }];
 
-const PREFIX = 'Demo';
+const PREFIX = 'Agenda';
 // #FOLD_BLOCK
 const classes = {
   flexibleSpace: `${PREFIX}-flexibleSpace`,
@@ -115,7 +120,7 @@ const StyledButtonGroup = styled(ButtonGroup)(({
   [`& .${classes.button}`]: {
     paddingLeft: spacing(1),
     paddingRight: spacing(1),
-    width: spacing(10),
+    width: spacing(16),
     '@media (max-width: 800px)': {
       width: spacing(2),
       fontSize: '0.75rem',
@@ -140,6 +145,28 @@ const StyledToolbarFlexibleSpace = styled(Toolbar.FlexibleSpace)(() => ({
     margin: '0 auto 0 0',
     display: 'flex',
     alignItems: 'center',
+  },
+}));
+// #FOLD_BLOCK
+const StyledWeekViewTimeTableCell = styled(WeekView.TimeTableCell)(({
+  theme: { palette },
+}) => ({
+  [`&.${classes.weekendCell}`]: {
+    backgroundColor: alpha(palette.action.disabledBackground, 0.04),
+    '&:hover': {
+      backgroundColor: alpha(palette.action.disabledBackground, 0.04),
+    },
+    '&:focus': {
+      backgroundColor: alpha(palette.action.disabledBackground, 0.04),
+    },
+  },
+}));
+// #FOLD_BLOCK
+const StyledWeekViewDayScaleCell = styled(WeekView.DayScaleCell)(({
+  theme: { palette },
+}) => ({
+  [`&.${classes.weekEnd}`]: {
+    backgroundColor: alpha(palette.action.disabledBackground, 0.06),
   },
 }));
 
@@ -183,6 +210,7 @@ const Filter = ({ onCurrentFilterChange, currentFilter }) => (
 );
 
 const handleButtonClick = (locationName, locations) => {
+  console.log(locationName, locations);
   if (locations.indexOf(locationName) > -1) {
     return locations.filter(location => location !== locationName);
   }
@@ -201,7 +229,6 @@ const LocationSelector = ({ onLocationsChange, locations }) => (
       <Button
         className={classNames(classes.button, getButtonClass(locations, location))}
         onClick={() => onLocationsChange(handleButtonClick(location, locations))}
-        style={{width:"150px"}}
         key={location}
       >
         <React.Fragment>
@@ -219,6 +246,24 @@ const FlexibleSpace = ({ props }) => (
   </StyledToolbarFlexibleSpace>
 );
 
+const isRestTime = date => (
+  date.getDay() === 0 || date.getDay() === 6 || date.getHours() < 9 || date.getHours() >= 18
+);
+
+const TimeTableCell = (({ ...restProps }) => {
+  const { startDate } = restProps;
+  if (isRestTime(startDate)) {
+    return <StyledWeekViewTimeTableCell {...restProps} className={classes.weekendCell} />;
+  } return <StyledWeekViewTimeTableCell {...restProps} />;
+});
+
+const DayScaleCell = (({ ...restProps }) => {
+  const { startDate } = restProps;
+  if (startDate.getDay() === 0 || startDate.getDay() === 6) {
+    return <StyledWeekViewDayScaleCell {...restProps} className={classes.weekEnd} />;
+  } return <StyledWeekViewDayScaleCell {...restProps} />;
+});
+
 const SCHEDULER_STATE_CHANGE_ACTION = 'SCHEDULER_STATE_CHANGE';
 
 const SchedulerContainer = ({
@@ -229,6 +274,7 @@ const SchedulerContainer = ({
   <Paper>
     <Scheduler
       data={data}
+      height={660}
     >
       <ViewState
         currentDate={currentDate}
@@ -237,11 +283,11 @@ const SchedulerContainer = ({
         onCurrentViewNameChange={onCurrentViewNameChange}
       />
       <DayView
-        startDayHour={7}
+        startDayHour={9}
         endDayHour={19}
       />
       <WeekView
-        startDayHour={7}
+        startDayHour={8}
         endDayHour={19}
         cellDuration={60}
       />
@@ -320,6 +366,6 @@ const store = createStore(
 
 export default () => (
   <Provider store={store}>
-    <ReduxSchedulerContainer/>
+    <ReduxSchedulerContainer />
   </Provider>
 );
