@@ -84,6 +84,10 @@ const Layout = () => {
     setAnchorElUser(null);
   };
 
+  const handleClickProfile = () => {
+    window.location.replace("/profile");
+  }
+
   const navigateClick = (link) => {
     navigate(link, {replace: true})
     handleCloseNavMenu();
@@ -204,7 +208,7 @@ const Layout = () => {
               onClose={handleCloseUserMenu}
             >
 
-              <MenuItem key={"profile"} onClick={handleCloseUserMenu}>
+              <MenuItem key={"profile"} onClick={handleClickProfile}>
                 <Typography textAlign="center">Profile</Typography>
               </MenuItem>
               <MenuItem key={"logout"} onClick={logout}>

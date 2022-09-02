@@ -18,6 +18,9 @@ const Profile = () => {
       companyAddress: ""
   };
 
+  const [formValues, setFormValues] = useState(defaultValues);
+
+
   const handleInputChange = (e) => {
    const { name, value } = e.target;
    setFormValues({
@@ -26,7 +29,6 @@ const Profile = () => {
    });
 };
 
-  const [formValues, setFormValues] = useState(defaultValues);
 
    return <Box maxWidth='400px' pl={6} pt={4} sx={{display: 'flex', flexWrap: 'wrap',
       '& .MuiTextField-root': { mt: 5, mr:5, width:'100%'},
