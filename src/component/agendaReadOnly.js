@@ -19,6 +19,7 @@ import {
   MonthView,
   ViewSwitcher,
   Resources,
+  AppointmentTooltip
 } from '@devexpress/dx-react-scheduler-material-ui';
 
 import { getReservations } from '../api/reservation';
@@ -275,6 +276,7 @@ const SchedulerContainer = ({
     <Scheduler
       data={data}
       height={660}
+      locale={"fr-FR"}
     >
       <ViewState
         currentDate={currentDate}
@@ -296,6 +298,11 @@ const SchedulerContainer = ({
       <Appointments
         appointmentContentComponent={AppointmentContent}
       />
+
+      <AppointmentTooltip
+        showCloseButton
+      />
+
       <Resources
         data={resources}
       />
