@@ -11,6 +11,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import HomeIcon from '@mui/icons-material/Home';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { getToken, getUser } from '../auth';
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Drawer } from "@mui/material";
@@ -18,17 +20,11 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
 
-const token = getToken();
-
-const loggedPages = [
-  {link: 'home', text: 'Home', icon: <InboxIcon />},
-  {link: 'manageEmployee', text: 'Employee'},
-  {link: 'profile', text: 'Profile'}
+const pages = [
+  {link: 'home', text: 'Home', icon: <HomeIcon />},
+  {link: 'manageEmployee', text: 'Employés', icon: <PeopleAltIcon />},
 ];
 
-const unLoggedPages = [{link: 'home', text: 'Home', icon: <InboxIcon />}]
-
-const pages = token == null ? unLoggedPages : loggedPages;
 
 const Layout = () => {
 
@@ -58,6 +54,7 @@ const Layout = () => {
   );
 
   const navigate = useNavigate();
+  const token = getToken();
   const user = getUser();
   
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -233,7 +230,7 @@ const Layout = () => {
           {list(false)}
         </Box>
     </Drawer>
-    <Outlet />
+    <Outlet style="backgound-color: 'red'"/>
     </>
   );
 };
