@@ -59,25 +59,23 @@ const Reservation = () => {
     };
 
     return (
-    <div>
-        <Paper elevation={3} style={{margin: "30px", padding: "30px"}}>
-            <Typography variant="h3"> Réservation </Typography>
-            <Typography variant="h5"> {info.name} </Typography><br />
-            <FormControl fullWidth style={{maxWidth:"400px"}}>
-                <InputLabel>Employé</InputLabel>
-                <Select
-                    name="employe"
-                    value={formValues.employe}
-                    label="Employé"
-                    onChange={handleInputChange}
-                >
-                    {info.employes.map(e => {
-                        return(<MenuItem key={e.id} value={e.id}>{e.name}</MenuItem>)
-                    })}
-                </Select>
-            </FormControl>
-            <AgendaReservation data={getAppointementsByIdEmploye(info.employes, formValues.employe)}/>
-        </Paper>
+    <div style={{padding: "30px"}}>
+        <Typography variant="h3"> Réservation </Typography>
+        <Typography variant="h5"> {info.name} </Typography><br />
+        <FormControl fullWidth style={{maxWidth:"400px"}}>
+            <InputLabel>Employé</InputLabel>
+            <Select
+                name="employe"
+                value={formValues.employe}
+                label="Employé"
+                onChange={handleInputChange}
+            >
+                {info.employes.map(e => {
+                    return(<MenuItem key={e.id} value={e.id}>{e.name}</MenuItem>)
+                })}
+            </Select>
+        </FormControl>
+        <AgendaReservation data={getAppointementsByIdEmploye(info.employes, formValues.employe)}/>
     </div>
     );
 };

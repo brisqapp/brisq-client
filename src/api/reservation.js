@@ -41,3 +41,7 @@ export function getReservationsByEmploye(){
     }
     return {employes: employes, appoitments: r};
 }
+
+export function makeReservation(form){
+    console.log(form);
+}
