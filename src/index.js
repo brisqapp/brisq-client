@@ -10,6 +10,7 @@ import EmployeeDetails from "./pages/employeeDetails";
 import Register from "./pages/authentification/register";
 import './index.css';
 import { getToken } from "./auth/index.js";
+import Reservation from "./pages/client/reservation";
 
 const token = getToken();
 
@@ -19,6 +20,7 @@ export default function App() {
       <Routes>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="reservation/:id" element={<Reservation/>} /> 
         <Route path="/" element={<Layout />} >
           <Route index element={<Home />} />
           <Route path="home" element={<Home />} />

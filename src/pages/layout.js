@@ -28,6 +28,9 @@ const pages = [
 
 
 const Layout = () => {
+  React.useEffect(() => {
+    document.body.classList.add('nav-padding');
+  })
 
   const [openDrawer, setOpenDrawer] = React.useState(false);
   
