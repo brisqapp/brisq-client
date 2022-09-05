@@ -14,17 +14,24 @@ import MenuItem from '@mui/material/MenuItem';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { getToken, getUser } from '../auth';
-
 import { Outlet, Link, useNavigate } from "react-router-dom";
-
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Drawer } from "@mui/material";
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
-const pages = [
+
+const token = getToken();
+
+const loggedPages = [
   {link: 'home', text: 'Home', icon: <HomeIcon />},
-  {link: 'manageEmployee', text: 'Employés', icon: <PeopleAltIcon />},
+  {link: 'manageEmployee', text: 'Employee', icon: <PeopleAltIcon />},
+  {link: 'profile', text: 'Profile'}
+
 ];
+
+const unLoggedPages = [{link: 'home', text: 'Home', icon: <HomeIcon />}]
+
+const pages = token == null ? unLoggedPages : loggedPages;
 
 
 const Layout = () => {
@@ -87,6 +94,10 @@ const Layout = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleClickProfile = () => {
+    window.location.replace("/profile");
+  }
 
   const navigateClick = (link) => {
     navigate(link, {replace: true})
@@ -208,7 +219,7 @@ const Layout = () => {
               onClose={handleCloseUserMenu}
             >
 
-              <MenuItem key={"profile"} onClick={handleCloseUserMenu}>
+              <MenuItem key={"profile"} onClick={handleClickProfile}>
                 <Typography textAlign="center">Profile</Typography>
               </MenuItem>
               <MenuItem key={"logout"} onClick={logout}>
