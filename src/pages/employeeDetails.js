@@ -125,7 +125,7 @@ const EmployeeDetails = () => {
             width: "100%",
             display: "block",
             textAlign: "center"}}>
-            <h1  style = {{textAlign: "left" }}>Employee Details</h1>
+            <h1  style = {{textAlign: "left" }}>Détail de l'employé</h1>
 
             <div style={{
                 margin:'auto',
