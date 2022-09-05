@@ -1,3 +1,10 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : agendaReservation.js
+ * Description    : 
+ */
+
 import * as React from 'react';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {

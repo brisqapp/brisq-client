@@ -1,3 +1,13 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : layout.js
+ * Description    : Gestion des vues selon l'accès d'un client ou d'un employeur.
+ *                  Le client perçoit uniquement une page de rendez-vous alors que
+ *                  l'employeur a accès à diverses autres pour gérer la compagnie.
+ */
+
+
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';

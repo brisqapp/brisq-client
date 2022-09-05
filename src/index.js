@@ -1,7 +1,7 @@
 /**
  * Projet brisq
  * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
- * Nom de fichier : index.js
+ * Nom de fichier : src/index.js
  * Description    : Gestion des routes et des liens disponibles sur l'ensemble de l'application
  */
 

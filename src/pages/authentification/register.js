@@ -1,3 +1,11 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : register.js
+ * Description    : Gestion de la page d'enregistrement pour un nouveau    
+ *                  compte d'une compagnie.
+ */
+
 import { Paper, Typography, TextField, Button, Link, Snackbar, Alert } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";

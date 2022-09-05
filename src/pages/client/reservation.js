@@ -1,3 +1,10 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : client/reservation.js
+ * Description    :  
+ */
+
 import { Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { FormControl, Select, InputLabel, MenuItem , Paper} from "@mui/material";

@@ -1,3 +1,12 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : api/reservation.js
+ * Description    : Cette page a pour but de montrer au client sa réservation.
+ *                  Il peut y voir l'heure du rendez-vous, l'employé qui lui   
+ *                  est attribué ainsi que l'agenda de cette compagnie.
+ */
+
 export function getReservations(){
     return {
         employe: ["R Justin", "P Vincent", "D Dimitri", "T Olivier"],

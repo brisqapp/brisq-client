@@ -1,3 +1,10 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : agendaReadOnly.js
+ * Description    : 
+ */
+
 import * as React from 'react';
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';

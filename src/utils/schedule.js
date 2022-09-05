@@ -1,3 +1,10 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : schedule.js
+ * Description    : Gestion des horaires de la compagnie.
+ */
+
 function getHourMinuteFromString(str){
     return str.split(":");
 }

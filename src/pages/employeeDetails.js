@@ -4,9 +4,9 @@
  * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
  * Nom de fichier : employeeDetails.js
  * Description    : Cette page contient les informations d'un employé tel que son nom, 
- *                  les services qu'il peut entreprendre, et son emploi du temps. 
- *                  L'employeur est dirigé sur cette page lorsqu'il modifie l'un de
- *                  ses employés.
+ *                  les services qu'il peut entreprendre et son emploi du temps. 
+ *                  L'employeur est dirigé sur cette page lorsqu'il souhaite modifier l'un de
+ *                  ses employés depuis la liste des employés de la page manageEmployee.
  *                  
  */
 

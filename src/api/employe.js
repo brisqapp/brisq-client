@@ -1,3 +1,10 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : employe.js
+ * Description    : Gestion de la liste des employés d'une compagnie.
+ */
+
 export function getEmploye(id){
 
 }

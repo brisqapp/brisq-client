@@ -1,3 +1,11 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : auth/index.js
+ * Description    : Gestion de l'enregistrement d'un nouveau compte d'une   
+ *                  compagnie, ou d'un login de compagnie existante.
+ */
+
 import { APIregister, APILogin } from "../api/company";
 
 export function getToken(){
