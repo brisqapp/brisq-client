@@ -73,6 +73,7 @@ const EmployeeDetails = () => {
     const [availableServices, setServices] = React.useState(services);
     const [tempService, setTempService] = React.useState({name:"", duration:0});
     const [displayTimes, setDisplayTimes] = React.useState(schedule[selectedDay]);
+    const [name, setName] = React.useState(employee.name);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -115,8 +116,30 @@ const EmployeeDetails = () => {
         setDisplayTimes(schedule[selectedDay]);
     };
 
-    const handleAmFromChange = (event) => {
-        schedule[selectedDay].am.start = event.target.value;
+    const handleAmChange = (event) => {
+        const {name,value} = event.target;
+        schedule[selectedDay].am[name] = value;
+        setDisplayTimes({... displayTimes, am:{[name]:value}});
+        console.log(name, value);
+    }
+
+    const handlePmChange = (event) => {
+        const {name,value} = event.target;
+        schedule[selectedDay].pm[name] = value;
+        setDisplayTimes({... displayTimes, pm:{[name]:value}});
+        console.log(name, value);
+    }
+
+    const handleSaveClick = () => {
+        employee.schedule = schedule;
+        employee.services = list;
+        console.log(employee);
+    }
+
+    const handleNameChange = (event) => {
+        setName(event.target.value);
+        employee.name = event.target.value;
+        console.log(event.target.value);
     }
 
     return (
@@ -135,9 +158,9 @@ const EmployeeDetails = () => {
                     margin: '16px auto',
                     padding: '1px 16px 16px 16px',
                 }}>
-                    <h2 style={{textAlign: "left" }}>Nom</h2>
-                    <TextField label='Prénom' value={employee.name}/>
-                    <TextField label='Nom' value={employee.name}/>
+
+                    <h2 style={{textAlign: "left" }}>Employee</h2>
+                    <TextField name='nameTextField' label='nom' value={name} onChange={handleNameChange}/>
                 </Paper>
 
                 <Paper style = {{
@@ -151,7 +174,7 @@ const EmployeeDetails = () => {
                     <Button onClick={handleClickOpen}>Add</Button>
                 </Paper>
 
-                <Dialog open={open} onClose={handleClose} >
+                <Dialog open={open} onClose={handleClose}>
                     <DialogContent>
                         <FormControl fullWidth={true}>
                             <InputLabel id="demo-simple-select-label">Service name</InputLabel>
@@ -184,14 +207,14 @@ const EmployeeDetails = () => {
                     <Button name={6} onClick={handleDayChange}>Dim</Button>
 
                     <h3 style={{textAlign: "left"}}>Matin</h3>
-                    <TextField label='De' value={displayTimes.am.start}/>
-                    <TextField label='à' value={displayTimes.am.end}/>
+                    <TextField name='start' label='De' value={displayTimes.am.start} onChange={handleAmChange}/>
+                    <TextField name='end' label='à' value={displayTimes.am.end} onChange={handleAmChange}/>
 
                     <h3 style={{textAlign: "left"}}>Après-midi</h3>
-                    <TextField label='De' value={displayTimes.pm.start}/>
-                    <TextField label='à' value={displayTimes.pm.end}/>
+                    <TextField name='start' label='De' value={displayTimes.pm.start} onChange={handlePmChange}/>
+                    <TextField name='end'   label='à' value={displayTimes.pm.end} onChange={handlePmChange}/>
                 </Paper>
-                <Button>Enregistrer</Button>
+                <Button onClick={handleSaveClick}>Enregistrer</Button>
             </div>
         </div>
     )
