@@ -9,7 +9,7 @@ import Login from "./pages/authentification/login";
 import EmployeeDetails from "./pages/employeeDetails";
 import Register from "./pages/authentification/register";
 import './index.css';
-import {getToken} from "./auth/index.js";
+import { getToken } from "./auth/index.js";
 import { Navigate } from "react-router-dom";
 import Reservation from "./pages/client/reservation";
 
@@ -33,6 +33,7 @@ export default function App() {
           <Route path="employeeDetails" element= {sessionAccess(<EmployeeDetails/>)} />
           <Route path="manageEmployee" element= {sessionAccess(<EmployeeManagement />)} />
           <Route path="profile" element= {sessionAccess(<Profile />)} />
+
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>

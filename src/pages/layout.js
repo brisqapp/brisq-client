@@ -33,6 +33,7 @@ const unLoggedPages = [{link: 'home', text: 'Home', icon: <HomeIcon />}]
 
 const pages = token == null ? unLoggedPages : loggedPages;
 
+
 const Layout = () => {
   React.useEffect(() => {
     document.body.classList.add('nav-padding');
@@ -64,6 +65,7 @@ const Layout = () => {
   );
 
   const navigate = useNavigate();
+  const token = getToken();
   const user = getUser();
   
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -92,6 +94,10 @@ const Layout = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleClickProfile = () => {
+    window.location.replace("/profile");
+  }
 
   const navigateClick = (link) => {
     navigate(link, {replace: true})
@@ -213,7 +219,7 @@ const Layout = () => {
               onClose={handleCloseUserMenu}
             >
 
-              <MenuItem key={"profile"} onClick={handleCloseUserMenu}>
+              <MenuItem key={"profile"} onClick={handleClickProfile}>
                 <Typography textAlign="center">Profile</Typography>
               </MenuItem>
               <MenuItem key={"logout"} onClick={logout}>
