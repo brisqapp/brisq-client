@@ -1,16 +1,23 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : profile.js
+ * Description    : Contient les données d'une compagnie. L'employeur peut modifier ses données sur cette page, 
+ *                   ainsi qu'accéder à la page manageEmployee qui permet de gérer la liste d'employé.
+ */
+
 import { TextField, Box, FormControl, Select, InputLabel, MenuItem, Button, Stack } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { selectionStateInitializer } from '@mui/x-data-grid/internals';
+
 
 const url = "http://localhost:8080/api";
 
 export function URL() {
     return url;
 }
-
 
 export function test() {
    return axios.get(URL, {
@@ -33,7 +40,6 @@ const Profile = () => {
    };
 
    const [formValues, setFormValues] = useState(defaultValues);
-
 
    const handleInputChange = (e) => {
       const { name, value } = e.target;

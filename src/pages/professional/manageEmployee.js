@@ -1,13 +1,21 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : manageEmployee.js
+ * Description    : Gestion de la page des employés d'une compagnie. Permet d'ajouter un nouvel employé,
+ *                  de modifier un employé existant en étant redirigé vers une page dédiée ainsi que la suppression
+ *                  d'un employé.
+ */
+
+
 import * as React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeIcon from '@mui/icons-material/Mode';
 import { DataGrid } from '@mui/x-data-grid';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Link } from "react-router-dom";
-import { useGridApiRef } from '@mui/x-data-grid-pro';
-import { Typography, Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box, Chip } from "@mui/material";
-import { FormatAlignJustify } from '@mui/icons-material';
-import { getEmployes } from '../../api/employe';
+import { Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box, Chip } from "@mui/material";
+
 
 const employeesList = [
     { id: 1, name: "Ariana Grande" },
@@ -17,9 +25,7 @@ const employeesList = [
 const EmployeeManagement = () => {
 
     const [open, setOpen] = React.useState(false);
-
     const [employeList, setEmployeList] = React.useState(employeesList);
-
     const [tempEmployeName, setTempEmployeName] = React.useState("");
 
     const handleClickOpen = () => {
@@ -55,7 +61,7 @@ const EmployeeManagement = () => {
     };
 
     const columns = [
-        { field: 'id', headerName: 'Id', width:'10' },
+        { field: 'id', headerName: 'Id', width: '10' },
         { field: 'name', headerName: 'Nom', flex: 0.4 },
         {
             field: 'services', headerName: 'Services', flex: 1, renderCell: () => {
@@ -65,11 +71,11 @@ const EmployeeManagement = () => {
             }
         },
         {
-            field: 'actions', headerName: 'Actions', width:'100',
+            field: 'actions', headerName: 'Actions', width: '100',
             renderCell: () => {
                 return (
                     <Box style={{ justifyContent: "end" }}>
-                    <IconButton component={Link} to="/employeeDetails" aria-label="delete"><ModeIcon /></IconButton>
+                        <IconButton component={Link} to="/employeeDetails" aria-label="delete"><ModeIcon /></IconButton>
                         <IconButton aria-label="delete" onClick={handleDeleteRow} ><DeleteIcon /></IconButton>
                     </Box>
                 );
@@ -89,8 +95,8 @@ const EmployeeManagement = () => {
                 display: "block",
                 textAlign: "center"
             }} >
-                <h1 style={{ display: "flex", justifyContent: "space-between", fontSize: "2.5em"}}> Liste des employés
-                    <Button style={{ blockSize: "fit-content", alignSelf: "end", minInlineSize:"fit-content" }} variant="outlined" onClick={handleClickOpen} startIcon={<AddCircleIcon />}>
+                <h1 style={{ display: "flex", justifyContent: "space-between", fontSize: "2.5em" }}> Liste des employés
+                    <Button style={{ blockSize: "fit-content", alignSelf: "end", minInlineSize: "fit-content" }} variant="outlined" onClick={handleClickOpen} startIcon={<AddCircleIcon />}>
                         Ajouter
                     </Button>
                 </h1>

@@ -1,8 +1,18 @@
 
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : employeeDetails.js
+ * Description    : Cette page contient les informations d'un employé tel que son nom, 
+ *                  les services qu'il peut entreprendre, et son emploi du temps. 
+ *                  L'employeur est dirigé sur cette page lorsqu'il modifie l'un de
+ *                  ses employés.
+ *                  
+ */
+
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
