@@ -1,5 +1,6 @@
 import axios from "axios";
 import { URL } from ".";
+import { getToken } from "../auth";
 
 export function getEmploye(id){
     const result = axios.get(URL() + "/employees/" + id);
@@ -7,12 +8,12 @@ export function getEmploye(id){
 }
 
 export function getEmployes(){
-    const result = axios.get(URL() + "/employees");
+    const result = axios.get(URL() + "/employees", {headers: {authorization: getToken()}});
     return result;
 }
 
-export function createEmploye(data){
-    const result = axios.post(URL() + "/employees", data);
+export function createEmploye(data){    
+    const result = axios.post(URL() + "/employees", data, {headers: {authorization: getToken()}});
     return result;
 }
 

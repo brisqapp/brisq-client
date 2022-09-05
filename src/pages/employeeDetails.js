@@ -15,7 +15,7 @@ let newId = -1;
 
 const employeExemple = {
         name: "Toto",
-        schedule: [
+        schedules: [
             {
                 weekday: 1,
                 morningStart: "09:00",
@@ -64,6 +64,7 @@ const EmployeeDetails = () => {
     React.useEffect(()=>{
         getEmploye(id).then((data) => {
             setEmploye(data.data);
+            console.log(data.data);
         })
     },[]);
 
@@ -72,7 +73,7 @@ const EmployeeDetails = () => {
     const [employe, setEmploye] = React.useState(employeExemple);
     const [services, setServices] = React.useState(servicesExemple);
     const [newService, setNewService] = React.useState();
-    const [selectedDay, setSelectedDay] = React.useState(0);
+    const [selectedDay, setSelectedDay] = React.useState(1);
     const [open, setOpen] = React.useState(false);
     
     const getServiceNameById = (id) => {
@@ -137,13 +138,20 @@ const EmployeeDetails = () => {
     };
 
     const handleScheduleChange = (event) => {
-        const tempSchedule = employe.schedule;
+        const tempSchedule = employe.schedules;
         const {name,value} = event.target;
         tempSchedule[selectedDay][name] = value;
         setEmploye({
             ...employe,
             schedule: tempSchedule
         })
+    }
+
+    const getDaySchedule = () => {
+        for(schedule of employe.schedules){
+            if(schedule.weekday == selectedDay) return schedule;
+        }
+        return null;
     }
 
     const handleSaveClick = () => {
@@ -213,21 +221,21 @@ const EmployeeDetails = () => {
                     padding: '1px 16px 16px 16px',
                 }}>
                     <h2 style={{textAlign: "left" }}>Emploi du temps</h2>
-                    <Button name={0} onClick={handleDayChange}>Lun</Button>
-                    <Button name={1} onClick={handleDayChange}>Mar</Button>
-                    <Button name={2} onClick={handleDayChange}>Mer</Button>
-                    <Button name={3} onClick={handleDayChange}>Jeu</Button>
-                    <Button name={4} onClick={handleDayChange}>Ven</Button>
-                    <Button name={5} onClick={handleDayChange}>Sam</Button>
-                    <Button name={6} onClick={handleDayChange}>Dim</Button>
+                    <Button name={1} onClick={handleDayChange}>Lun</Button>
+                    <Button name={2} onClick={handleDayChange}>Mar</Button>
+                    <Button name={3} onClick={handleDayChange}>Mer</Button>
+                    <Button name={4} onClick={handleDayChange}>Jeu</Button>
+                    <Button name={5} onClick={handleDayChange}>Ven</Button>
+                    <Button name={6} onClick={handleDayChange}>Sam</Button>
+                    <Button name={7} onClick={handleDayChange}>Dim</Button>
 
                     <h3 style={{textAlign: "left"}}>Matin</h3>
-                    <TextField name='morningStart' label='De' value={employe.schedule[selectedDay].morningStart} onChange={handleScheduleChange}/>
-                    <TextField name='morningEnd' label='à' value={employe.schedule[selectedDay].morningEnd} onChange={handleScheduleChange}/>
+                    <TextField name='morningStart' label='De' value={getDaySchedule()?.morningStart} onChange={handleScheduleChange}/>
+                    <TextField name='morningEnd' label='à' value={getDaySchedule()?.morningEnd} onChange={handleScheduleChange}/>
 
                     <h3 style={{textAlign: "left"}}>Après-midi</h3>
-                    <TextField name='afternoonStart' label='De' value={employe.schedule[selectedDay].afternoonStart} onChange={handleScheduleChange}/>
-                    <TextField name='afternoonEnd'   label='à' value={employe.schedule[selectedDay].afternoonEnd} onChange={handleScheduleChange}/>
+                    <TextField name='afternoonStart' label='De' value={getDaySchedule()?.afternoonStart} onChange={handleScheduleChange}/>
+                    <TextField name='afternoonEnd'   label='à' value={getDaySchedule()?.afternoonEnd} onChange={handleScheduleChange}/>
                 </Paper>
                 <Button onClick={handleSaveClick}>Enregistrer</Button>
             </div>

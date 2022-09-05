@@ -16,7 +16,8 @@ const EmployeeManagement = () => {
     
     useEffect(()=>{
         getEmployes().then((data) => {
-            setEmployeList(data.data);
+            console.log(data.data.employees);
+            setEmployeList(data.data.employees);
         })
     },[]);
 
@@ -41,7 +42,7 @@ const EmployeeManagement = () => {
     const handleNewEmployee = () => {
         createEmploye({name: tempEmployeName}).then(() => {            
             getEmployes().then((data) => {
-                setEmployeList(data.data);
+                setEmployeList(data.data.employees);
             })
         })
         setTempEmployeName("");
@@ -51,7 +52,7 @@ const EmployeeManagement = () => {
     const handleDeleteRow = (id) => {
         deleteEmploye(id).then(() => {            
             getEmployes().then((data) => {
-                setEmployeList(data.data);
+                setEmployeList(data.data.employees);
             })
         })
     };
@@ -60,9 +61,11 @@ const EmployeeManagement = () => {
         { field: 'id', headerName: 'Id', width:'10' },
         { field: 'name', headerName: 'Nom', flex: 0.4 },
         {
-            field: 'services', headerName: 'Services', flex: 1, renderCell: () => {
+            field: 'services', headerName: 'Services', flex: 1, renderCell: (rowData) => {
                 return (
-                    <Chip label="Coupe homme" />
+                    rowData.row.serviceName.map((service) => {
+                        <Chip label={service} />
+                    })
                 );
             }
         },
