@@ -1,17 +1,26 @@
-import { Paper, Typography, TextField, Button, Link } from "@mui/material";
+import { Paper, Typography, TextField, Button, Link, Snackbar, Alert } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../auth";
 
 const Login = () => {
+
+    const [openError, setOpenError] = useState(false);
+
     const navigate = useNavigate();
 
     const navigateClick = (link) => {
         navigate(link, {replace: true})
     };
 
+    const handleCloseError = () => {
+        setOpenError(false);
+    };
+
     const handleLogin = (event) => {
-        login(formValues);
+        login(formValues).catch(() => {
+            setOpenError(true)
+        });
     }
 
     const defaultValues = {
@@ -30,6 +39,7 @@ const Login = () => {
     }
 
     return (
+        <>
         <Paper elevation={2} style={{
             marginTop: "50px",
             marginLeft: "auto",
@@ -53,6 +63,13 @@ const Login = () => {
             <br />
             <Link style={{cursor: "pointer"}} onClick={() => navigateClick("/register")}>Ou créer un compte</Link>
         </Paper>
+
+        <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError}>
+        <Alert variant="filled" severity="error" sx={{ width: '100%' }}>
+            Mot de passe ou nom d'utilisateur non valide
+        </Alert>
+        </Snackbar>
+        </>
     );
 };
   

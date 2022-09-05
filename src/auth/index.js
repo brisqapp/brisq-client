@@ -11,8 +11,8 @@ export function getUser(){
 }
 
 export function login(form){
-    APILogin(form)
-    .then((data) => {
+    const result = APILogin(form);
+    result.then((data) => {
         console.log(data);
         localStorage.setItem("token", data.data.token);
 
@@ -24,12 +24,12 @@ export function login(form){
     }).catch((error) => {
         console.log(error);
     })
+    return result;
 }
 
 export async function register(form){
-    APIregister(form)
-    .then((data) => {
-        console.log(data);
+    const result = APIregister(form);
+    result.then((data) => {
         localStorage.setItem("token", data.data.token);
 
         localStorage.setItem("user", JSON.stringify({
@@ -40,4 +40,5 @@ export async function register(form){
     }).catch((error) => {
         console.log(error);
     })
+    return result;
 }
