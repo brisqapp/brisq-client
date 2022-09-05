@@ -7,139 +7,154 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
-import {FormControl, InputLabel, Select, MenuItem, Button, Paper} from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem, Button, Paper } from "@mui/material";
+import { getEmploye } from '../api/employe';
+import { useParams } from 'react-router-dom';
 
-const employee = {
+let newId = -1;
+
+const employeExemple = {
         name: "Toto",
         schedule: [
             {
-                day: 1,
-                am: {
-                    start:"07:00",
-                    end: "11:00"
-                },
-                pm: {
-                    start:"08:00",
-                    end: "12:00"
-                },
+                weekday: 1,
+                morningStart: "09:00",
+                morningEnd: "12:00",
+                afternoonStart: "13:00",
+                afternoonEnd: "17:00"
             },
             {
-                day: 2,
-                am: {
-                    start:"08:00",
-                    end: "12:00"
-                },
-                pm: {
-                    start:"09:00",
-                    end: "13:00"
-                },
+                weekday: 2,
+                morningStart: "08:00",
+                morningEnd: "12:00",
+                afternoonStart: "13:00",
+                afternoonEnd: "17:00"
             },
             {
-                day: 3,
-                am: {
-                    start:"08:00",
-                    end: "12:00"
-                },
-                pm: {
-                    start:"08:00",
-                    end: "12:00"
-                },
+                weekday: 3,
+                morningStart: "08:00",
+                morningEnd: "12:00",
+                afternoonStart: "13:00",
+                afternoonEnd: "17:00"
             },
             {
-                day: 4,
-                am: {
-                    start:"06:00",
-                    end: "12:00"
-                },
-                pm: {
-                    start:"05:00",
-                    end: "12:00"
-                },
-            }
+                weekday: 4,
+                morningStart: "08:00",
+                morningEnd: "12:00",
+                afternoonStart: "13:00",
+                afternoonEnd: "17:00"
+            },
+            {
+                weekday: 5,
+                morningStart: "08:00",
+                morningEnd: "12:00",
+                afternoonStart: "13:00",
+                afternoonEnd: "17:00"
+            },
         ],
-        services: [{name: "Coiffure", duration: 120 }]
+        services: [{id: 10, idService: 1, name: "coupe homme", duration: 180}, {id: 11, idService: 2, name: "coupe femme", duration: 150}]
 }
 
-const services = ['Coupe homme', 'Coupe femme', 'couleur']
+const servicesExemple = [{id: 1, name: 'Coupe homme'}, {id: 2, name: 'Coupe femme'}, {id: 3, name: 'couleur'}]
 
 const EmployeeDetails = () => {
 
-    let schedule = employee.schedule;
-    let selectedDay = 0;
+    const { id } = useParams();
+    
+    React.useEffect(()=>{
+        getEmploye(id).then((data) => {
+            setEmploye(data.data);
+        })
+    },[]);
 
-    // popup
+    let schedule = employeExemple.schedule;
+
+    const [employe, setEmploye] = React.useState(employeExemple);
+    const [services, setServices] = React.useState(servicesExemple);
+    const [newService, setNewService] = React.useState();
+    const [selectedDay, setSelectedDay] = React.useState(0);
     const [open, setOpen] = React.useState(false);
-    const [list, setList] = React.useState(employee.services);
-    const [availableServices, setServices] = React.useState(services);
-    const [tempService, setTempService] = React.useState({name:"", duration:0});
-    const [displayTimes, setDisplayTimes] = React.useState(schedule[selectedDay]);
-    const [name, setName] = React.useState(employee.name);
+    
+    const getServiceNameById = (id) => {
+        for(const service of services){
+            if(service.id == id) return service.name;
+        }
+        return "";
+    }
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleChangeService = (event) => {
-        setTempService({name:event.target.value, duration: 0});
+        const id = event.target.value
+        setNewService({id: newId, serviceId: id, name: getServiceNameById(id), duration: 0});
     };
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const handleDelete = (event) => {
-        const tempList = list.filter(service => service.name !== event.currentTarget.id);
-        setList(tempList);
+    const handleDelete = (id) => {
+        const tempList = employe.services;
+        for(let i = 0; i < tempList.length; i++){
+            if(tempList[i].id == id) {
+                tempList.splice(i, 1);
+                break;
+            }
+        }
+        setEmploye({
+            ...employe,
+            services: tempList
+        });
     }
 
     function addService() {
-        const tempList = list;
-        tempList.push(tempService);
-        setList(tempList);
+        const tempList = employe.services;
+        tempList.push(newService);
+        setEmploye({
+            ...employe,
+            services: tempList
+        });
+        newId --;
         setOpen(false);
     }
 
-    const listServices = list.map((list) =>
-        <li key={list.name} style={{listStyle: 'none'}}>
-            <span style={{display: 'inline-block', width: '150px'}}>{list.name} </span>
-            <TextField id={list.name} label="Durée" variant="outlined" defaultValue={list.duration}/>
-            <Button id={list.name} style={{color:'red', height:'100%'}} onClick={handleDelete}>X</Button>
+    const listServices = employe.services.map((service) =>
+        <li key={service.id} style={{listStyle: 'none'}}>
+            <span style={{display: 'inline-block', width: '150px'}}>{service.name} </span>
+            <TextField id={"txt-" + service.id} label="Durée" variant="outlined" defaultValue={service.duration}/>
+            <Button id={"btn-" + service.id} style={{color:'red', height:'100%'}} onClick={() => {handleDelete(service.id)}}>X</Button>
         </li>
     );
 
-    const listAvailableServices = availableServices.map((availableServices) =>
-        <MenuItem value={availableServices}>{availableServices}</MenuItem>
+    const listAvailableServices = services.map((service) =>
+        <MenuItem value={service.id}>{service.name}</MenuItem>
     );
 
     const handleDayChange = (event) => {
-        selectedDay = event.currentTarget.name;
-        setDisplayTimes(schedule[selectedDay]);
+        setSelectedDay(event.currentTarget.name);
     };
 
-    const handleAmChange = (event) => {
+    const handleScheduleChange = (event) => {
+        const tempSchedule = employe.schedule;
         const {name,value} = event.target;
-        schedule[selectedDay].am[name] = value;
-        setDisplayTimes({... displayTimes, am:{[name]:value}});
-        console.log(name, value);
-    }
-
-    const handlePmChange = (event) => {
-        const {name,value} = event.target;
-        schedule[selectedDay].pm[name] = value;
-        setDisplayTimes({... displayTimes, pm:{[name]:value}});
-        console.log(name, value);
+        tempSchedule[selectedDay][name] = value;
+        setEmploye({
+            ...employe,
+            schedule: tempSchedule
+        })
     }
 
     const handleSaveClick = () => {
-        employee.schedule = schedule;
-        employee.services = list;
-        console.log(employee);
+        console.log(employe);
     }
 
     const handleNameChange = (event) => {
-        setName(event.target.value);
-        employee.name = event.target.value;
-        console.log(event.target.value);
+        setEmploye({
+            ...employe,
+            name: event.target.value
+        });
     }
 
     return (
@@ -159,8 +174,8 @@ const EmployeeDetails = () => {
                     padding: '1px 16px 16px 16px',
                 }}>
 
-                    <h2 style={{textAlign: "left" }}>Employee</h2>
-                    <TextField name='nameTextField' label='nom' value={name} onChange={handleNameChange}/>
+                    <h2 style={{textAlign: "left" }}>Employé</h2>
+                    <TextField name='nameTextField' label='Nom' value={employe.name} onChange={handleNameChange}/>
                 </Paper>
 
                 <Paper style = {{
@@ -171,7 +186,7 @@ const EmployeeDetails = () => {
                     <Stack component="form" noValidate spacing={3}>
                         {listServices}
                     </Stack>
-                    <Button onClick={handleClickOpen}>Add</Button>
+                    <Button onClick={handleClickOpen}>Ajouter</Button>
                 </Paper>
 
                 <Dialog open={open} onClose={handleClose}>
@@ -181,7 +196,7 @@ const EmployeeDetails = () => {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={tempService}
+                                value={newService}
                                 label="Age"
                                 onChange={handleChangeService}>
                                     {listAvailableServices}
@@ -207,12 +222,12 @@ const EmployeeDetails = () => {
                     <Button name={6} onClick={handleDayChange}>Dim</Button>
 
                     <h3 style={{textAlign: "left"}}>Matin</h3>
-                    <TextField name='start' label='De' value={displayTimes.am.start} onChange={handleAmChange}/>
-                    <TextField name='end' label='à' value={displayTimes.am.end} onChange={handleAmChange}/>
+                    <TextField name='morningStart' label='De' value={employe.schedule[selectedDay].morningStart} onChange={handleScheduleChange}/>
+                    <TextField name='morningEnd' label='à' value={employe.schedule[selectedDay].morningEnd} onChange={handleScheduleChange}/>
 
                     <h3 style={{textAlign: "left"}}>Après-midi</h3>
-                    <TextField name='start' label='De' value={displayTimes.pm.start} onChange={handlePmChange}/>
-                    <TextField name='end'   label='à' value={displayTimes.pm.end} onChange={handlePmChange}/>
+                    <TextField name='afternoonStart' label='De' value={employe.schedule[selectedDay].afternoonStart} onChange={handleScheduleChange}/>
+                    <TextField name='afternoonEnd'   label='à' value={employe.schedule[selectedDay].afternoonEnd} onChange={handleScheduleChange}/>
                 </Paper>
                 <Button onClick={handleSaveClick}>Enregistrer</Button>
             </div>

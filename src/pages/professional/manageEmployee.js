@@ -7,18 +7,22 @@ import { Link } from "react-router-dom";
 import { useGridApiRef } from '@mui/x-data-grid-pro';
 import { Typography, Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box, Chip } from "@mui/material";
 import { FormatAlignJustify } from '@mui/icons-material';
-import { getEmployes } from '../../api/employe';
+import { createEmploye, deleteEmploye, getEmployes } from '../../api/employe';
+import { useEffect } from 'react';
 
-const employeesList = [
-    { id: 1, name: "Ariana Grande" },
-    { id: 2, name: "Joe Biden" }
-]
+
 
 const EmployeeManagement = () => {
+    
+    useEffect(()=>{
+        getEmployes().then((data) => {
+            setEmployeList(data.data);
+        })
+    },[]);
 
     const [open, setOpen] = React.useState(false);
 
-    const [employeList, setEmployeList] = React.useState(employeesList);
+    const [employeList, setEmployeList] = React.useState([]);
 
     const [tempEmployeName, setTempEmployeName] = React.useState("");
 
@@ -35,23 +39,21 @@ const EmployeeManagement = () => {
     }
 
     const handleNewEmployee = () => {
-        let tempList = employeList;
-        const emp = { id: 3, name: tempEmployeName };
-        console.log(emp.name);
-        tempList = [...tempList, emp];
-        setEmployeList(tempList);
+        createEmploye({name: tempEmployeName}).then(() => {            
+            getEmployes().then((data) => {
+                setEmployeList(data.data);
+            })
+        })
         setTempEmployeName("");
         handleClose();
     };
 
-    const handleDeleteRow = () => {
-        setEmployeList(() => {
-            const rowToDeleteIndex = 1;
-            return [
-                ...employeList.slice(0, rowToDeleteIndex),
-                ...employeList.slice(rowToDeleteIndex + 1),
-            ];
-        });
+    const handleDeleteRow = (id) => {
+        deleteEmploye(id).then(() => {            
+            getEmployes().then((data) => {
+                setEmployeList(data.data);
+            })
+        })
     };
 
     const columns = [
@@ -66,11 +68,11 @@ const EmployeeManagement = () => {
         },
         {
             field: 'actions', headerName: 'Actions', width:'100',
-            renderCell: () => {
+            renderCell: (rowData) => {
                 return (
                     <Box style={{ justifyContent: "end" }}>
-                    <IconButton component={Link} to="/employeeDetails" aria-label="delete"><ModeIcon /></IconButton>
-                        <IconButton aria-label="delete" onClick={handleDeleteRow} ><DeleteIcon /></IconButton>
+                    <IconButton component={Link} to={"/employeeDetails/" + rowData.id} aria-label="delete"><ModeIcon /></IconButton>
+                        <IconButton aria-label="delete" onClick={() => handleDeleteRow(rowData.id)} ><DeleteIcon /></IconButton>
                     </Box>
                 );
             }

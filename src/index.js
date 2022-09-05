@@ -34,15 +34,15 @@ export default function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="reservation/:id" element={<Reservation />} />
+        <Route path="*" element={<NoPage />} />
         <Route path="/" element={<Layout />} >
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route index element={sessionAccess(<Home />)} />
           <Route path="home" element={sessionAccess(<Home />)} />
-          <Route path="employeeDetails" element={sessionAccess(<EmployeeDetails />)} />
+          <Route path="employeeDetails/:id" element={sessionAccess(<EmployeeDetails />)} />
           <Route path="manageEmployee" element={sessionAccess(<EmployeeManagement />)} />
           <Route path="profile" element={sessionAccess(<Profile />)} />
-          <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
