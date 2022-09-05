@@ -5,16 +5,18 @@ import AgendaReadOnly from "../../component/agendaReadOnly";
 import AgendaReservation from "../../component/agendaReservation";
 import { getReservationsByEmploye } from "../../api/reservation";
 import { useState } from "react";
+import { scheduleToAppoitments } from "../../utils/schedule";
+
+
 
 const getAppointementsByIdEmploye = (employes, id) => {
+    let appointements = [];
     for(const employe of employes){
-        if(employe.id == id) return employe.appointements;
+        if(employe.id == id) {
+            appointements = [...employe.appointements, ...scheduleToAppoitments(employe)];
+        }
     }
-    return [];
-}
-
-const handleSelectChange = (event) => {
-
+    return appointements;
 }
 
 const Reservation = () => {
@@ -25,16 +27,35 @@ const Reservation = () => {
             {
                 id: 1,
                 name: "Olivier Tissot", 
-                appointements: [{
-                    title: 'Réservé',
-                    startDate: new Date(2022, 8, 3, 9, 35),
-                    endDate: new Date(2022, 8, 3, 11, 30),
-                    id: 0,
-                }]
+                schedule: [
+                    {
+                        weekday: 1,
+                        morningBegin: "10:30",
+                        morningEnd: "12:30",
+                        afternoonBegin: "13:30",
+                        afternoonEnd: "18:30",
+                    },
+                    {
+                        weekday: 3,
+                        morningBegin: "08:30",
+                        morningEnd: "12:30",
+                        afternoonBegin: "13:30",
+                        afternoonEnd: "16:30",
+                    }
+                ],
+                appointements: [
+                    {
+                        title: 'Réservé',
+                        startDate: new Date(2022, 8, 3, 9, 35),
+                        endDate: new Date(2022, 8, 3, 11, 30),
+                        id: 0,
+                    }
+                ]
             },
             {
                 id: 2,
                 name: "Peer Vincent", 
+                schedule: [],
                 appointements: [{
                     title: 'Réservé',
                     startDate: new Date(2022, 8, 2, 9, 35),
