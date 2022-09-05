@@ -25,8 +25,6 @@ const token = getToken();
 const loggedPages = [
   {link: 'home', text: 'Home', icon: <HomeIcon />},
   {link: 'manageEmployee', text: 'Employee', icon: <PeopleAltIcon />},
-  {link: 'profile', text: 'Profile'}
-
 ];
 
 const unLoggedPages = [{link: 'home', text: 'Home', icon: <HomeIcon />}]

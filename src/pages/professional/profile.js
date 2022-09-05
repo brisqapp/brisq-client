@@ -3,6 +3,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { selectionStateInitializer } from '@mui/x-data-grid/internals';
 
 const url = "http://localhost:8080/api";
 
@@ -21,14 +22,14 @@ export function test() {
 const Profile = () => {
 
    const defaultValues = {
-      firstname: "",
-      lastname: "",
-      email: "aa",
+      firstName: "",
+      lastName: "",
+      email: "",
       password: "",
-      confirmPassword: "",
-      salonType: 0,
       companyName: "",
-      companyAddress: ""
+      companyAddress: "",
+      salonType: 0,
+      companyDescription:""
    };
 
    const [formValues, setFormValues] = useState(defaultValues);
@@ -42,10 +43,12 @@ const Profile = () => {
       });
    };
 
-   
+   const handleSave = () => {
+      console.log(formValues);
+   }
 
 
-   return <Box maxWidth='400px' pl={6} pt={4} sx={{
+   return <Box maxWidth='400px' pl={6} pt={4} pb={4} sx={{
       display: 'flex', flexWrap: 'wrap',
       '& .MuiTextField-root': { mt: 5, mr: 5, width: '100%' },
       '& .MuiFormControl-root': { mt: 5, mr: 5, width: '100%', },
@@ -56,27 +59,39 @@ const Profile = () => {
          <br />
          <TextField
             id="firstName"
+            name="firstName"
             label="Prénom"
+            onChange={handleInputChange}
          />
          <TextField
             id="lastName"
+            name="lastName"
             label="Nom"
+            onChange={handleInputChange}
          />
          <TextField
             id="email"
+            name="email"
             label="Email"
+            onChange={handleInputChange}
          />
          <TextField
-            id="passWord"
+            id="password"
+            name="password"
             label="Mot de passe"
+            onChange={handleInputChange}
          />
          <TextField
             id="companyName"
+            name="companyName"
             label="Nom de la compagnie"
+            onChange={handleInputChange}
          />
          <TextField
-            id="companyAdress"
+            id="companyAddress"
+            name="companyAddress"
             label="Adresse"
+            onChange={handleInputChange}
          />
          <FormControl fullWidth style={{ textAlign: "left", maxWidth: '400px' }} >
             <InputLabel id="salontype">Type de salon</InputLabel>
@@ -95,13 +110,15 @@ const Profile = () => {
          </FormControl>
          <TextField
             id="companyDescription"
+            name="companyDescription"
             label="Description de la compagnie"
             multiline
             rows={4}
+            onChange={handleInputChange}
          />
          <Stack direction="row" marginTop="20px" >
-            <Button variant="contained" component="label">
-               Sauvegarder
+            <Button variant="contained" component="label" onClick={handleSave}>
+               Enregistrer
             </Button>
          </Stack>
       </div>

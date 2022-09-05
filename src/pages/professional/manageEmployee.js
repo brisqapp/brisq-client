@@ -37,7 +37,7 @@ const EmployeeManagement = () => {
     const handleNewEmployee = () => {
         let tempList = employeList;
         const emp = { id: 3, name: tempEmployeName };
-        console.log(emp);
+        console.log(emp.name);
         tempList = [...tempList, emp];
         setEmployeList(tempList);
         setTempEmployeName("");
@@ -111,7 +111,7 @@ const EmployeeManagement = () => {
                 <Dialog open={open} onClose={handleClose}>
                     <DialogContent>
                         <DialogContentText>
-                            Enter employee's name
+                            Nom de l'employé
                         </DialogContentText>
                         <TextField
                             autoFocus
