@@ -11,7 +11,7 @@ import Register from "./pages/authentification/register";
 import './index.css';
 import {getToken} from "./auth/index.js";
 import { Navigate } from "react-router-dom";
-
+import Reservation from "./pages/client/reservation";
 
 const token = getToken();
 
@@ -22,6 +22,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="reservation/:id" element={<Reservation/>} /> 
         <Route path="/" element={<Layout />} >
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

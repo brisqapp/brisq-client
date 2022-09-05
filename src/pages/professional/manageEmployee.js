@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useGridApiRef } from '@mui/x-data-grid-pro';
 import { Typography, Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box, Chip } from "@mui/material";
 import { FormatAlignJustify } from '@mui/icons-material';
-
+import { getEmployes } from '../../api/employe';
 
 const employeesList = [
     { id: 1, name: "Ariana Grande" },

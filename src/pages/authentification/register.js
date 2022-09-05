@@ -12,14 +12,16 @@ const Register = () => {
     const navigate = useNavigate();
 
     const defaultValues = {
-        firstname: "",
-        lastname: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
         confirmPassword: "",
-        salonType: 0,
+        companyTypeId: 0,
         companyName: "",
-        companyAddress: ""
+        address: "",
+        postalCode: "",
+        city: ""
     }
 
     const [formValues, setFormValues] = useState(defaultValues)
@@ -65,13 +67,13 @@ const Register = () => {
                     <Typography variant="h4" style={{textAlign: "center"}}>Créer un compte</Typography>
                     <br />
                     <br />
-                    <TextField name="firstname" value={formValues.firstname} onChange={handleInputChange} id="firstname" label="Prénom" variant="filled" style={{width: "100%"}}/>
+                    <TextField name="firstName" value={formValues.firstName} onChange={handleInputChange} id="firstName" label="Prénom" variant="filled" style={{width: "100%"}}/>
                     <br />
                     <br />
-                    <TextField name="lastname" value={formValues.lastname} onChange={handleInputChange}  id="lastname" label="Nom" variant="filled" style={{width: "100%"}}/>
+                    <TextField name="lastName" value={formValues.lastName} onChange={handleInputChange}  id="lastName" label="Nom" variant="filled" style={{width: "100%"}}/>
                     <br />
                     <br />
-                    <TextField name="email" value={formValues.email} onChange={handleInputChange}  id="email" label="E-mail" variant="filled" style={{width: "100%"}}/>
+                    <TextField name="email" type="email" value={formValues.email} onChange={handleInputChange}  id="email" label="E-mail" variant="filled" style={{width: "100%"}}/>
                     <br />
                     <br />
                     <TextField name="password" value={formValues.password} onChange={handleInputChange}  id="password" type="password" label="Mot de passe" variant="filled" style={{width: "100%"}}/>
@@ -85,13 +87,13 @@ const Register = () => {
                     <br />
                     <br />
                     <FormControl fullWidth style={{textAlign: "left"}}>
-                        <InputLabel id="salontype">Type de salon</InputLabel>
+                        <InputLabel id="companyTypeIdLabel">Type de salon</InputLabel>
                         <Select
-                            labelId="salontypelabel"
-                            id="salontypeselect"
+                            labelId="companyTypeIdLabel"
+                            id="companyTypeIdSelect"
                             label="Type de salon"
-                            name="salonType"
-                            value={formValues.salonType} 
+                            name="companyTypeId"
+                            value={formValues.companyTypeId} 
                             onChange={handleInputChange} 
                         >
                             <MenuItem value={0} disabled>Sélectionner un type</MenuItem>
@@ -104,7 +106,13 @@ const Register = () => {
                     <TextField name="companyName" value={formValues.companyName} onChange={handleInputChange}  id="companyname" label="Nom du salon" variant="filled" style={{width: "100%"}}/>
                     <br />
                     <br />
-                    <TextField name="companyAddress" value={formValues.companyAddress} onChange={handleInputChange}  id="companyaddress" label="Adresse du salon" variant="filled" style={{width: "100%"}}/>
+                    <TextField name="postalCode" type="number" value={formValues.postalCode} onChange={handleInputChange}  id="postalCode" label="Code postal" variant="filled" style={{width: "100%"}}/>
+                    <br />
+                    <br />
+                    <TextField name="city" value={formValues.city} onChange={handleInputChange}  id="city" label="Ville" variant="filled" style={{width: "100%"}}/>
+                    <br />
+                    <br />
+                    <TextField name="address" value={formValues.address} onChange={handleInputChange}  id="address" label="Adresse du salon" variant="filled" style={{width: "100%"}}/>
                     <br />
                     <br />
                     <Button variant="contained" onClick={handleRegister} style={{width: "100%"}}>Créer un compte</Button>

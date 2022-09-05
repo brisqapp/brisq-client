@@ -7,12 +7,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body.nav-padding {
   padding-top: 50px;
   padding-left: 260px;
 }
 
-@media screen and (max-width: 768px) {
-  body {
+@media screen and (max-width: 900px) {
+  body.nav-padding {
     padding-top: 40px;
     padding-left: 0px;
   }
