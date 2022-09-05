@@ -7,9 +7,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-
-import { Typography, Button, Paper } from "@mui/material";
+import {FormControl, InputLabel, Select, MenuItem, Button, Paper} from "@mui/material";
 
 const employee = {
         name: "Toto",
@@ -17,37 +15,81 @@ const employee = {
             {
                 day: 1,
                 am: {
-                    debut:"08:00",
-                    fin: "12:00"
+                    start:"07:00",
+                    end: "11:00"
                 },
                 pm: {
-                    debut:"08:00",
-                    fin: "12:00"
+                    start:"08:00",
+                    end: "12:00"
+                },
+            },
+            {
+                day: 2,
+                am: {
+                    start:"08:00",
+                    end: "12:00"
+                },
+                pm: {
+                    start:"09:00",
+                    end: "13:00"
+                },
+            },
+            {
+                day: 3,
+                am: {
+                    start:"08:00",
+                    end: "12:00"
+                },
+                pm: {
+                    start:"08:00",
+                    end: "12:00"
+                },
+            },
+            {
+                day: 4,
+                am: {
+                    start:"06:00",
+                    end: "12:00"
+                },
+                pm: {
+                    start:"05:00",
+                    end: "12:00"
                 },
             }
         ],
         services: [{name: "Coiffure", duration: 120 }]
 }
 
+const services = ['Coupe homme', 'Coupe femme', 'couleur']
+
 const EmployeeDetails = () => {
+
+    let schedule = employee.schedule;
+    let selectedDay = 0;
 
     // popup
     const [open, setOpen] = React.useState(false);
     const [list, setList] = React.useState(employee.services);
-
-    const [tempService, setTempService] = React.useState(0);
+    const [availableServices, setServices] = React.useState(services);
+    const [tempService, setTempService] = React.useState({name:"", duration:0});
+    const [displayTimes, setDisplayTimes] = React.useState(schedule[selectedDay]);
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleChangeService = (event) => {
-        setTempService(event.target.value);
+        setTempService({name:event.target.value, duration: 0});
     };
 
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleDelete = (event) => {
+        const tempList = list.filter(service => service.name !== event.currentTarget.id);
+        setList(tempList);
+    }
 
     function addService() {
         const tempList = list;
@@ -57,51 +99,100 @@ const EmployeeDetails = () => {
     }
 
     const listServices = list.map((list) =>
-        <li key={list.name}>
-            <TextField id={list.name} label="Name" variant="outlined" defaultValue={list.name}/>
-            <TextField id={list.name} label="Duration" variant="outlined" defaultValue={list.duration}/>
-            <Button id={list.name} style={{color:'red', height:'100%'}}>X</Button>
+        <li key={list.name} style={{listStyle: 'none'}}>
+            <span style={{display: 'inline-block', width: '150px'}}>{list.name} </span>
+            <TextField id={list.name} label="Durée" variant="outlined" defaultValue={list.duration}/>
+            <Button id={list.name} style={{color:'red', height:'100%'}} onClick={handleDelete}>X</Button>
         </li>
     );
 
+    const listAvailableServices = availableServices.map((availableServices) =>
+        <MenuItem value={availableServices}>{availableServices}</MenuItem>
+    );
+
+    const handleDayChange = (event) => {
+        selectedDay = event.currentTarget.name;
+        setDisplayTimes(schedule[selectedDay]);
+    };
+
+    const handleAmFromChange = (event) => {
+        schedule[selectedDay].am.start = event.target.value;
+    }
+
     return (
         <div variant="outlined" style = {{
-            marginTop: "50px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            padding: "30px 45px 30px 45px",
-            width: "fit-content",
+            margin : "16px",
+            width: "100%",
             display: "block",
-            textAlign: "center" }}>
-            <h1>Manage {employee.name}</h1>
-            <Stack component="form" noValidate spacing={3}>
-                {listServices}
-            </Stack>
-            <h2 onClick={ handleClickOpen } >Add a service</h2>
+            textAlign: "center"}}>
+            <h1  style = {{textAlign: "left" }}>Employee Details</h1>
 
-            <Dialog open={open} onClose={handleClose}>
-                <DialogContent>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={tempService}
-                            label="Age"
-                            onChange={handleChangeService}
-                        >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                    </FormControl>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={addService}>Add</Button>
-                </DialogActions>
-            </Dialog>
+            <div style={{
+                margin:'auto',
+                width:'fit-content'
+            }}>
+                <Paper style = {{
+                    margin: '16px auto',
+                    padding: '1px 16px 16px 16px',
+                }}>
+                    <h2 style={{textAlign: "left" }}>Nom</h2>
+                    <TextField label='Prénom' value={employee.name}/>
+                    <TextField label='Nom' value={employee.name}/>
+                </Paper>
 
+                <Paper style = {{
+                    margin: '16px auto',
+                    padding: '1px 16px 16px 16px',
+                }}>
+                    <h2 style={{textAlign: "left" }}>Services</h2>
+                    <Stack component="form" noValidate spacing={3}>
+                        {listServices}
+                    </Stack>
+                    <Button onClick={handleClickOpen}>Add</Button>
+                </Paper>
+
+                <Dialog open={open} onClose={handleClose} >
+                    <DialogContent>
+                        <FormControl fullWidth={true}>
+                            <InputLabel id="demo-simple-select-label">Service name</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={tempService}
+                                label="Age"
+                                onChange={handleChangeService}>
+                                    {listAvailableServices}
+                            </Select>
+                        </FormControl>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={addService}>Add</Button>
+                    </DialogActions>
+                </Dialog>
+                <Paper style = {{
+                    margin: '16px auto',
+                    padding: '1px 16px 16px 16px',
+                }}>
+                    <h2 style={{textAlign: "left" }}>Emploi du temps</h2>
+                    <Button name={0} onClick={handleDayChange}>Lun</Button>
+                    <Button name={1} onClick={handleDayChange}>Mar</Button>
+                    <Button name={2} onClick={handleDayChange}>Mer</Button>
+                    <Button name={3} onClick={handleDayChange}>Jeu</Button>
+                    <Button name={4} onClick={handleDayChange}>Ven</Button>
+                    <Button name={5} onClick={handleDayChange}>Sam</Button>
+                    <Button name={6} onClick={handleDayChange}>Dim</Button>
+
+                    <h3 style={{textAlign: "left"}}>Matin</h3>
+                    <TextField label='De' value={displayTimes.am.start}/>
+                    <TextField label='à' value={displayTimes.am.end}/>
+
+                    <h3 style={{textAlign: "left"}}>Après-midi</h3>
+                    <TextField label='De' value={displayTimes.pm.start}/>
+                    <TextField label='à' value={displayTimes.pm.end}/>
+                </Paper>
+                <Button>Enregistrer</Button>
+            </div>
         </div>
     )
 };
