@@ -1,4 +1,4 @@
-import { Paper, Typography, TextField, Button, Link } from "@mui/material";
+import { Paper, Typography, TextField, Button, Link, Snackbar, Alert } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import * as React from 'react';
@@ -28,6 +28,8 @@ const Register = () => {
 
     const [activeStep, setActiveStep] = React.useState(0);
 
+    const [openError, setOpenError] = React.useState(false);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
@@ -48,10 +50,18 @@ const Register = () => {
         navigate(link, {replace: true})
     };
 
-    const handleRegister = (event) => {
-        register(formValues);
+    const handleCloseError = () => {
+        setOpenError(false);
     }
+
+    const handleRegister = (event) => {
+        register(formValues).catch(() => {
+            setOpenError(true);
+        })
+    }
+
     return (
+        <>
         <Paper elevation={2} style={{
             marginTop: "50px",
             marginLeft: "auto",
@@ -140,6 +150,13 @@ const Register = () => {
             />
             <Link style={{cursor: "pointer"}} onClick={() => navigateClick("/login")}>Ou se connecter</Link>
         </Paper>
+
+        <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError}>
+        <Alert variant="filled" severity="error" sx={{ width: '100%' }}>
+            Une erreur est survenue
+        </Alert>
+        </Snackbar>
+        </>
     );
 };
   

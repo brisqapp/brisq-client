@@ -279,7 +279,6 @@ const SchedulerContainer = ({
       locale={"fr-FR"}
     >
       <ViewState
-        currentDate={currentDate}
         onCurrentDateChange={onCurrentDateChange}
         currentViewName={currentViewName}
         onCurrentViewNameChange={onCurrentViewNameChange}
