@@ -36,7 +36,23 @@ import { makeReservation } from '../api/reservation';
 
 const Appointment = ({
     children, style, ...restProps
-  }) => (
+  }) => {
+    if(restProps?.data?.schedule){
+        return (
+            <Appointments.Appointment
+            {...restProps}
+            style={{
+                ...style,
+                backgroundColor: '#b7bcc9',
+                borderRadius: '8px',
+            }}
+            >
+            {children}
+            </Appointments.Appointment>
+        )
+    }
+        
+    return (
     <Appointments.Appointment
       {...restProps}
       style={{
@@ -47,7 +63,8 @@ const Appointment = ({
     >
       {children}
     </Appointments.Appointment>
-  );
+  )
+};
 
 export default (props) => {
     const defaultValues = {
