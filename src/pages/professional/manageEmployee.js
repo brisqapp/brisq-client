@@ -124,8 +124,8 @@ const EmployeeManagement = () => {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={handleNewEmployee} >Add</Button>
+                        <Button onClick={handleClose}>Annuler</Button>
+                        <Button onClick={handleNewEmployee} >Ajouter</Button>
                     </DialogActions>
                 </Dialog>
             </div>
