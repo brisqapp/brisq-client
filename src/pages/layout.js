@@ -20,13 +20,18 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
 
-const pages = [
+const token = getToken();
+
+const loggedPages = [
   {link: 'home', text: 'Home', icon: <HomeIcon />},
-  {link: 'manageEmployee', text: 'Employés', icon: <PeopleAltIcon />},
+  {link: 'manageEmployee', text: 'Employee', icon: <PeopleAltIcon />},
+  {link: 'profile', text: 'Profile'}
+
 ];
 
-const unLoggedPages = [{link: 'home', text: 'Home', icon: <InboxIcon />}]
+const unLoggedPages = [{link: 'home', text: 'Home', icon: <HomeIcon />}]
 
+const pages = token == null ? unLoggedPages : loggedPages;
 
 const Layout = () => {
   React.useEffect(() => {
