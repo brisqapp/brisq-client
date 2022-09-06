@@ -14,7 +14,6 @@ export function scheduleToAppoitments(employe){
     let appointements = [];
     let idSchedule = 0;
     const schedules = employe.schedule;
-    console.log(schedules);
 
     for(let day = 1; day <= 7; day++){
         let schedule = schedules[idSchedule];
@@ -103,6 +102,5 @@ export function scheduleToAppoitments(employe){
             })
         }
     }
-    console.log(appointements);
     return appointements;
 }

@@ -13,7 +13,6 @@ export function getUser(){
 export function login(form){
     const result = APILogin(form);
     result.then((data) => {
-        console.log(data);
         localStorage.setItem("token", data.data.token);
 
         localStorage.setItem("user", JSON.stringify({

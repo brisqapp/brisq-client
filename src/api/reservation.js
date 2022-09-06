@@ -1,3 +1,6 @@
+import axios from "axios";
+import { URL } from ".";
+
 export function getReservations(){
     return {
         employe: ["R Justin", "P Vincent", "D Dimitri", "T Olivier"],
@@ -43,5 +46,17 @@ export function getReservationsByEmploye(){
 }
 
 export function makeReservation(form){
-    console.log(form);
+    const hours = ('0'+(form.date.getHours())).slice(-2);
+    const minutes =('0'+(form.date.getMinutes())).slice(-2);
+    const month = ('0'+(form.date.getMonth())).slice(-2);
+    const day = ('0'+(form.date.getDate())).slice(-2);
+    const startHour =  hours + ":" + minutes;
+    const date = form.date.getFullYear() + "-" + month + "-" + day;
+    const modifiedForm = {
+        ...form,
+        date: date,
+        startHour: startHour
+    }
+    console.log(modifiedForm)
+    return axios.post(URL() + "/reservations", modifiedForm)
 }

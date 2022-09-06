@@ -38,7 +38,7 @@ const EmployeeDetails = () => {
 
     const [employe, setEmploye] = React.useState(employeExemple);
     const [services, setServices] = React.useState(servicesExemple);
-    const [newService, setNewService] = React.useState({serviceId: 1});
+    const [newService, setNewService] = React.useState({serviceId: 0});
     const [selectedDay, setSelectedDay] = React.useState(1);
     const [open, setOpen] = React.useState(false);
     
@@ -128,7 +128,7 @@ const EmployeeDetails = () => {
         }
         setEmploye({
             ...employe,
-            schedule: tempSchedules
+            schedules: tempSchedules
         })
     }
 
@@ -139,11 +139,15 @@ const EmployeeDetails = () => {
         return -1;
     }
 
-    const getDaySchedule = () => {
+    const getDaySchedule = (day) => {
         for(const schedule of employe.schedules){
-            if(schedule.weekday == selectedDay) return schedule;
+            if(schedule.weekday == selectedDay) {
+                if(schedule[day] == undefined)
+                    return "";
+                return schedule[day];
+            }
         }
-        return null;
+        return "";
     }
 
     const handleSaveClick = () => {
@@ -160,8 +164,7 @@ const EmployeeDetails = () => {
 
     return (
         <div variant="outlined" style = {{
-            margin : "16px",
-            width: "100%",
+            padding : "16px",
             display: "block",
             textAlign: "center"}}>
             <h1  style = {{textAlign: "left" }}>Détail de l'employé</h1>
@@ -224,12 +227,12 @@ const EmployeeDetails = () => {
                     <Button name={7} onClick={handleDayChange}>Dim</Button>
 
                     <h3 style={{textAlign: "left"}}>Matin</h3>
-                    <TextField name='morningStart' label='De' value={getDaySchedule()?.morningStart} onChange={handleScheduleChange}/>
-                    <TextField name='morningEnd' label='à' value={getDaySchedule()?.morningEnd} onChange={handleScheduleChange}/>
+                    <TextField name='morningBegin' label='De' value={getDaySchedule('morningBegin')} onChange={handleScheduleChange}/>
+                    <TextField name='morningEnd' label='à' value={getDaySchedule('morningEnd')} onChange={handleScheduleChange}/>
 
                     <h3 style={{textAlign: "left"}}>Après-midi</h3>
-                    <TextField name='afternoonStart' label='De' value={getDaySchedule()?.afternoonStart} onChange={handleScheduleChange}/>
-                    <TextField name='afternoonEnd'   label='à' value={getDaySchedule()?.afternoonEnd} onChange={handleScheduleChange}/>
+                    <TextField name='afternoonBegin' label='De' value={getDaySchedule('afternoonBegin')} onChange={handleScheduleChange}/>
+                    <TextField name='afternoonEnd'   label='à' value={getDaySchedule('afternoonEnd')} onChange={handleScheduleChange}/>
                 </Paper>
                 <Button onClick={handleSaveClick}>Enregistrer</Button>
             </div>

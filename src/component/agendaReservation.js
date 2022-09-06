@@ -71,7 +71,8 @@ export default (props) => {
         date: null,
         firstName: "",
         lastName: "",
-        email: ""
+        email: "",
+        serviceEmployeeId: props.serviceEmployeeId
     }
 
     const [openDialog, setOpenDialog] = React.useState(false);
@@ -93,8 +94,11 @@ export default (props) => {
     }
 
     const handleReservation = () => {
-        makeReservation(formValues);
-        setOpenError(true);
+        makeReservation(formValues).then(() => {            
+            setOpenSuccess(true);
+        }).catch(() => {
+            setOpenError(true);
+        });
         setOpenDialog(false);
     }
 

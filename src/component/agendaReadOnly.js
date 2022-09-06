@@ -211,7 +211,6 @@ const Filter = ({ onCurrentFilterChange, currentFilter }) => (
 );
 
 const handleButtonClick = (locationName, locations) => {
-  console.log(locationName, locations);
   if (locations.indexOf(locationName) > -1) {
     return locations.filter(location => location !== locationName);
   }

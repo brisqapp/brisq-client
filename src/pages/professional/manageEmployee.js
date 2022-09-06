@@ -16,7 +16,6 @@ const EmployeeManagement = () => {
     
     useEffect(()=>{
         getEmployes().then((data) => {
-            console.log(data.data.employees);
             setEmployeList(data.data.employees);
         })
     },[]);
