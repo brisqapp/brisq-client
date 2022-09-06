@@ -42,6 +42,9 @@ const EmployeeManagement = () => {
         setTempEmployeName(event.target.value);
     }
 
+    /**
+     * Ajoute un nouvel employé dans la liste d'employé actuelle
+     */
     const handleNewEmployee = () => {
         let tempList = employeList;
         const emp = { id: 3, name: tempEmployeName };
@@ -52,7 +55,10 @@ const EmployeeManagement = () => {
         handleClose();
     };
 
-    const handleDeleteRow = () => {
+    /**
+     * Supprime un employé
+     */
+    const handleDeleteEmployee = () => {
         setEmployeList(() => {
             const rowToDeleteIndex = 1;
             return [
@@ -62,6 +68,8 @@ const EmployeeManagement = () => {
         });
     };
 
+    // Gestion des colonnes du tableau liste employé, ainsi que les bouttons de modif
+    // et suppression d'employé
     const columns = [
         { field: 'id', headerName: 'Id', width: '10' },
         { field: 'name', headerName: 'Nom', flex: 0.4 },
@@ -78,14 +86,14 @@ const EmployeeManagement = () => {
                 return (
                     <Box style={{ justifyContent: "end" }}>
                         <IconButton component={Link} to="/employeeDetails" aria-label="delete"><ModeIcon /></IconButton>
-                        <IconButton aria-label="delete" onClick={handleDeleteRow} ><DeleteIcon /></IconButton>
+                        <IconButton aria-label="delete" onClick={handleDeleteEmployee} ><DeleteIcon /></IconButton>
                     </Box>
                 );
             }
         }
     ];
 
-
+    // Contenu html de la page
     return (
         <div style={{ width: "100%" }}>
             <Paper textalign="center" variant="outlined" style={{
@@ -111,10 +119,8 @@ const EmployeeManagement = () => {
                         rowsPerPageOptions={[5]}
                     />
                 </div>
-
                 <br />
             </Paper>
-
             <div>
                 <Dialog open={open} onClose={handleClose}>
                     <DialogContent>

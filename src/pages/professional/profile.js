@@ -25,9 +25,10 @@ export function test() {
    })
 }
 
-
+// Profile d'une compagnie
 const Profile = () => {
 
+   // Champ de donnée d'une compagnie
    const defaultValues = {
       firstName: "",
       lastName: "",
@@ -39,8 +40,10 @@ const Profile = () => {
       companyDescription:""
    };
 
+   // Variable d'état pour gérer une éventuelle modification des données de la compagnie
    const [formValues, setFormValues] = useState(defaultValues);
 
+   // Gestion d'un champ modifié
    const handleInputChange = (e) => {
       const { name, value } = e.target;
       setFormValues({
@@ -49,11 +52,12 @@ const Profile = () => {
       });
    };
 
+   // Envoie du formulaire de données qui sera récupéré pour la base de donnée 
    const handleSave = () => {
       console.log(formValues);
    }
 
-
+   // Retourne le contenu html de la page
    return <Box maxWidth='400px' pl={6} pt={4} pb={4} sx={{
       display: 'flex', flexWrap: 'wrap',
       '& .MuiTextField-root': { mt: 5, mr: 5, width: '100%' },
