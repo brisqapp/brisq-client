@@ -42,9 +42,8 @@ const EmployeeManagement = () => {
         setTempEmployeName(event.target.value);
     }
 
-    /**
-     * Ajoute un nouvel employé dans la liste d'employé actuelle
-     */
+
+    // Ajoute un nouvel employé dans la liste d'employé actuelle
     const handleNewEmployee = () => {
         let tempList = employeList;
         const emp = { id: 3, name: tempEmployeName };
@@ -55,9 +54,8 @@ const EmployeeManagement = () => {
         handleClose();
     };
 
-    /**
-     * Supprime un employé
-     */
+
+    // Supprime un employé
     const handleDeleteEmployee = () => {
         setEmployeList(() => {
             const rowToDeleteIndex = 1;

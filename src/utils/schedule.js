@@ -5,10 +5,12 @@
  * Description    : Gestion des horaires de la compagnie.
  */
 
+// Lis le temps à partir d'un string et sépare les unités
 function getHourMinuteFromString(str){
     return str.split(":");
 }
 
+// Valeur de base pour une journée de travail
 const startDayHour = "07:00";
 const endDayHour = "19:00";
 const monday = {
@@ -17,12 +19,14 @@ const monday = {
     day: 6
 }
 
+// Etabli le calendrier pour chaque jour de la semaine
 export function scheduleToAppoitments(employe){
     let appointements = [];
     let idSchedule = 0;
     const schedules = employe.schedule;
     console.log(schedules);
 
+    // Génère pour chaque jour les horaires et les plages de disponibilité aux services
     for(let day = 1; day <= 7; day++){
         let schedule = schedules[idSchedule];
         if(day == schedule?.weekday){

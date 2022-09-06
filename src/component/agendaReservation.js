@@ -2,7 +2,7 @@
  * Projet brisq
  * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
  * Nom de fichier : agendaReservation.js
- * Description    : 
+ * Description    : Gère l'affichage de l'agenda
  */
 
 import * as React from 'react';
