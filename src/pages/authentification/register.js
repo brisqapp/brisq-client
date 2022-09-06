@@ -53,26 +53,40 @@ const Register = () => {
         });
     };
 
-    // Navigation en avant
+
+    /**
+     * Navigation en avant
+     */
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-    // Navigation en arriere
+    /**
+     * Navigation en arriere
+     */
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
+    /**
+     * Ouvre le lien donné
+     * @param link a ouvrir
+     */
     const navigateClick = (link) => {
         navigate(link, {replace: true})
     };
 
-    // Ferme le message d'erreur
+
+    /**
+     *  Ferme le message d'erreur
+     */
     const handleCloseError = () => {
         setOpenError(false);
     }
 
-    // Tente de cree un compte avec les information du formulaire
+    /**
+     * Tente de cree un compte avec les information du formulaire
+     */
     const handleRegister = () => {
         register(formValues).catch(() => {
             // Affiche un message d'erreur

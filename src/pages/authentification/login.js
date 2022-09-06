@@ -45,7 +45,10 @@ const Login = () => {
     // Valeurs du formulaire
     const [formValues, setFormValues] = useState(defaultValues)
 
-    // Update les valeurs du formulaires lors de modification
+    /**
+     * Update les valeurs du formulaires lors de modification
+     * @param e évènement déclancheur
+     */
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
