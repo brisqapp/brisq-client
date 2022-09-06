@@ -7,10 +7,8 @@
 
 import { Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { FormControl, Select, InputLabel, MenuItem , Paper} from "@mui/material";
-import AgendaReadOnly from "../../component/agendaReadOnly";
+import { FormControl, Select, InputLabel, MenuItem} from "@mui/material";
 import AgendaReservation from "../../component/agendaReservation";
-import { getReservationsByEmploye } from "../../api/reservation";
 import { useState } from "react";
 import { scheduleToAppoitments } from "../../utils/schedule";
 
@@ -80,15 +78,23 @@ const Reservation = () => {
         ]
     }
 
-    // Selection du 1er employé par default
+    /**
+     * Selection du 1er employé par default
+     * @type {{employe: number}}
+     */
     const defaultValues = {
         employe: 1
     }
 
-    // Variable de selection d'employé dans la liste
+    /**
+     * Variable de selection d'employé dans la liste
+     */
     const [formValues, setFormValues] = useState(defaultValues)
 
-    // Modifie l'employé actuellement selectioné
+    /**
+     * Modifie l'employé actuellement selectioné
+     * @param e évènement déclancheur
+     */
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormValues({

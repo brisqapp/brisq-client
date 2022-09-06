@@ -73,34 +73,59 @@ const services = ['Coupe homme', 'Coupe femme', 'couleur']
 
 const EmployeeDetails = () => {
 
-    let schedule = employee.schedule;
+    // Jour selectionne dans l'employ du temps
     let selectedDay = 0;
 
-    // popup
+    // Variable pour la fermeture/ouverture du popup ajout service
     const [open, setOpen] = React.useState(false);
+
+    // Liste des services de l'employé
     const [list, setList] = React.useState(employee.services);
-    const [availableServices, setServices] = React.useState(services);
+
+    // Variable temporaire pour la liste des services
     const [tempService, setTempService] = React.useState({name:"", duration:0});
-    const [displayTimes, setDisplayTimes] = React.useState(schedule[selectedDay]);
+
+    // Variable contant les horaire de la journée selectionnée
+    const [displayTimes, setDisplayTimes] = React.useState(employee.schedule[selectedDay]);
+
+    // Nom de l'employé
     const [name, setName] = React.useState(employee.name);
 
+    /**
+     * Ouvre le popup d'ajout de service
+     */
     const handleClickOpen = () => {
         setOpen(true);
     };
 
-    const handleChangeService = (event) => {
-        setTempService({name:event.target.value, duration: 0});
-    };
-
+    /**
+     * Ferme le popup d'ajout de service
+     */
     const handleClose = () => {
         setOpen(false);
     };
 
+    /**
+     * Met a jour la liste des services de l'employé
+     * @param event  évènement déclancheur
+     */
+    const handleChangeService = (event) => {
+        setTempService({name:event.target.value, duration: 0});
+    };
+
+
+    /**
+     * Suprime un service de l'employé
+     * @param event évènement déclancheur
+     */
     const handleDelete = (event) => {
         const tempList = list.filter(service => service.name !== event.currentTarget.id);
         setList(tempList);
     }
 
+    /**
+     * Ajout un service
+     */
     function addService() {
         const tempList = list;
         tempList.push(tempService);
@@ -108,6 +133,10 @@ const EmployeeDetails = () => {
         setOpen(false);
     }
 
+    /**
+     * Formatage pour l'affichage de la liste de services
+     * @type {unknown[]}
+     */
     const listServices = list.map((list) =>
         <li key={list.name} style={{listStyle: 'none'}}>
             <span style={{display: 'inline-block', width: '150px'}}>{list.name} </span>
@@ -116,35 +145,57 @@ const EmployeeDetails = () => {
         </li>
     );
 
-    const listAvailableServices = availableServices.map((availableServices) =>
-        <MenuItem value={availableServices}>{availableServices}</MenuItem>
+    /**
+     * Formatage pour l'affichage de la liste de services que l'on peut ajouter
+     * @type {unknown[]} liste des services
+     */
+    const listAvailableServices = services.map((services) =>
+        <MenuItem value={services}>{services}</MenuItem>
     );
 
+    /**
+     * Change les horaire afficher selon la journée selectionée
+     * @param event évènement déclancheur
+     */
     const handleDayChange = (event) => {
         selectedDay = event.currentTarget.name;
-        setDisplayTimes(schedule[selectedDay]);
+        setDisplayTimes(employee.schedule[selectedDay]);
     };
 
+    /**
+     * Update un horraire modifier (matin)
+     * @param event évènement déclancheur
+     */
     const handleAmChange = (event) => {
         const {name,value} = event.target;
-        schedule[selectedDay].am[name] = value;
+        employee.schedule[selectedDay].am[name] = value;
         setDisplayTimes({... displayTimes, am:{[name]:value}});
         console.log(name, value);
     }
 
+    /**
+     * Update un horraire modifier (soir)
+     * @param event évènement déclancheur
+     */
     const handlePmChange = (event) => {
         const {name,value} = event.target;
-        schedule[selectedDay].pm[name] = value;
+        employee.schedule[selectedDay].pm[name] = value;
         setDisplayTimes({... displayTimes, pm:{[name]:value}});
         console.log(name, value);
     }
 
+    /**
+     * Sauve les modifications effectués
+     */
     const handleSaveClick = () => {
-        employee.schedule = schedule;
         employee.services = list;
         console.log(employee);
     }
 
+    /**
+     * Update le nom de l'employé
+     * @param event évènement déclancheur
+     */
     const handleNameChange = (event) => {
         setName(event.target.value);
         employee.name = event.target.value;
@@ -152,7 +203,7 @@ const EmployeeDetails = () => {
     }
 
     return (
-        <div variant="outlined" style = {{
+        <div style = {{
             margin : "16px",
             width: "100%",
             display: "block",
