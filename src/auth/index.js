@@ -8,16 +8,25 @@
 
 import { APIregister, APILogin } from "../api/company";
 
+/**
+ * Récupère 
+ */
 export function getToken(){
     const token = localStorage.getItem("token");
     return token;
 }
 
+/**
+ * Récupère 
+ */
 export function getUser(){
     const user = JSON.parse(localStorage.getItem("user"));
     return user;
 }
 
+/**
+ * 
+ */
 export function login(form){
     const result = APILogin(form);
     result.then((data) => {
@@ -35,6 +44,9 @@ export function login(form){
     return result;
 }
 
+/**
+ * 
+ */
 export async function register(form){
     const result = APIregister(form);
     result.then((data) => {

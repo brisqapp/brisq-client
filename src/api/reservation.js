@@ -7,6 +7,9 @@
  *                  est attribué ainsi que l'agenda de cette compagnie.
  */
 
+/**
+ * 
+ */
 export function getReservations(){
     return {
         employe: ["R Justin", "P Vincent", "D Dimitri", "T Olivier"],

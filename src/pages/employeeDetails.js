@@ -7,7 +7,6 @@
  *                  les services qu'il peut entreprendre et son emploi du temps. 
  *                  L'employeur est dirigé sur cette page lorsqu'il souhaite modifier l'un de
  *                  ses employés depuis la liste des employés de la page manageEmployee.
- *                  
  */
 
 import * as React from 'react';

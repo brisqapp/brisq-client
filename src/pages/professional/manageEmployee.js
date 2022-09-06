@@ -22,8 +22,10 @@ const employeesList = [
     { id: 2, name: "Joe Biden" }
 ]
 
+
 const EmployeeManagement = () => {
 
+    // Variables d'états mettre à jour la liste des employés
     const [open, setOpen] = React.useState(false);
     const [employeList, setEmployeList] = React.useState(employeesList);
     const [tempEmployeName, setTempEmployeName] = React.useState("");
