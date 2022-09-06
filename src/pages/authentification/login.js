@@ -12,31 +12,40 @@ import { login } from "../../auth";
 
 const Login = () => {
 
+    // Variable pour prompter une erreur de login
     const [openError, setOpenError] = useState(false);
 
+    // Variable de navigation
     const navigate = useNavigate();
 
+    // Ouvre le lien de la page creation d'un compte
     const navigateClick = (link) => {
-        navigate(link, {replace: true})
+        navigate(link, {replace: true});
     };
 
+    // Ferme la notification d'erreur
     const handleCloseError = () => {
         setOpenError(false);
     };
 
-    const handleLogin = (event) => {
+    // Essaye de logger sur le compte
+    const handleLogin = () => {
         login(formValues).catch(() => {
-            setOpenError(true)
+            // Ouvre le message d'erreur
+            setOpenError(true);
         });
     }
 
+    // valeurs par default du formulaire
     const defaultValues = {
         email: "",
         password: ""
     }
 
+    // Valeurs du formulaire
     const [formValues, setFormValues] = useState(defaultValues)
 
+    // Update les valeurs du formulaires lors de modification
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
@@ -45,6 +54,7 @@ const Login = () => {
         });
     }
 
+    // Retour de la mise en page
     return (
         <>
         <Paper elevation={2} style={{

@@ -17,8 +17,11 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { register } from "../../auth";
 
 const Register = () => {
+
+    // Variable de navigation
     const navigate = useNavigate();
 
+    // Valeurs par default du formulaire
     const defaultValues = {
         firstName: "",
         lastName: "",
@@ -32,12 +35,16 @@ const Register = () => {
         city: ""
     }
 
+    // Valeurs du formulaire
     const [formValues, setFormValues] = useState(defaultValues)
 
+    // Variable pour la navigation (back/forward)
     const [activeStep, setActiveStep] = React.useState(0);
 
+    // Variable de gestion de message d'erreur
     const [openError, setOpenError] = React.useState(false);
 
+    // Update les valeurs du formulaire
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
@@ -46,10 +53,12 @@ const Register = () => {
         });
     };
 
+    // Navigation en avant
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
+    // Navigation en arriere
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
@@ -58,16 +67,20 @@ const Register = () => {
         navigate(link, {replace: true})
     };
 
+    // Ferme le message d'erreur
     const handleCloseError = () => {
         setOpenError(false);
     }
 
-    const handleRegister = (event) => {
+    // Tente de cree un compte avec les information du formulaire
+    const handleRegister = () => {
         register(formValues).catch(() => {
+            // Affiche un message d'erreur
             setOpenError(true);
         })
     }
 
+    // Retour de la mise en page
     return (
         <>
         <Paper elevation={2} style={{
