@@ -15,9 +15,16 @@ import { useState } from "react";
 import { scheduleToAppoitments } from "../../utils/schedule";
 
 
-
+/**
+ * Retourne les rendez-vous d'un employé choisi
+ * @param employes liste des employés
+ * @param id identifiant de l'employé voulus
+ * @returns {*[]} liste des rendez-vous de cet employé
+ */
 const getAppointementsByIdEmploye = (employes, id) => {
     let appointements = [];
+
+    // Remplis notre array avec les rendez-vous de l'employé
     for(const employe of employes){
         if(employe.id == id) {
             appointements = [...employe.appointements, ...scheduleToAppoitments(employe)];
@@ -72,12 +79,16 @@ const Reservation = () => {
             }
         ]
     }
+
+    // Selection du 1er employé par default
     const defaultValues = {
         employe: 1
     }
 
+    // Variable de selection d'employé dans la liste
     const [formValues, setFormValues] = useState(defaultValues)
 
+    // Modifie l'employé actuellement selectioné
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
