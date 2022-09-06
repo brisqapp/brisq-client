@@ -2,7 +2,9 @@
  * Projet brisq
  * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
  * Nom de fichier : agendaReadOnly.js
- * Description    : 
+ * Description    : Contenu de la page d'acceuil d'une entreprise, l'emploi du temps
+ *                  de la compagnie, pour chaque employé est présenté sous forme d'un
+ *                  calendrier avec des zones de réservation.
  */
 
 import * as React from 'react';

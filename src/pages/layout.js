@@ -26,29 +26,30 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { getToken, getUser } from '../auth';
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Drawer } from "@mui/material";
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-
 
 const token = getToken();
 
+// Les pages à afficher pour un employeur logué
 const loggedPages = [
   {link: 'home', text: 'Home', icon: <HomeIcon />},
   {link: 'manageEmployee', text: 'Employee', icon: <PeopleAltIcon />},
 ];
 
+// Les pages à afficher pour un client non logué
 const unLoggedPages = [{link: 'home', text: 'Home', icon: <HomeIcon />}]
 
 const pages = token == null ? unLoggedPages : loggedPages;
 
-
+// Gestion de l'affichage de l'ensemble de l'application
 const Layout = () => {
   React.useEffect(() => {
     document.body.classList.add('nav-padding');
   })
 
-  const [openDrawer, setOpenDrawer] = React.useState(false);
+  // Variable d'état pour le volet ouvrant d'un compte logué
+  const [openDrawer, setOpenDrawer] = React.useState(false); 
   
+  // Adaptation de l'affichage selon que l'utilisateur est sur modile ou non
   const list = (mobile) => (
     
     <Box
@@ -79,6 +80,7 @@ const Layout = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  // Déconnecte un utilisateur
   const logout = (envent) => {
     localStorage.removeItem("token");
     window.location.replace("/login");
@@ -88,6 +90,7 @@ const Layout = () => {
     setOpenDrawer(!openDrawer);
   };
 
+  // Les handle à venir gèrent les ouvertures et fermetures du menu
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -103,15 +106,18 @@ const Layout = () => {
     setAnchorElUser(null);
   };
 
+  // Redirige vers le profile après un clic sur le bouton profile
   const handleClickProfile = () => {
     window.location.replace("/profile");
   }
 
+  // Remplace l'url actuel par un éventuel lien ciblé par un clic
   const navigateClick = (link) => {
     navigate(link, {replace: true})
     handleCloseNavMenu();
   };
 
+  // Retourne le contenu html
   return (
     <>    
     <Drawer
