@@ -7,72 +7,49 @@
 
 import * as React from 'react';
 import { ViewState } from '@devexpress/dx-react-scheduler';
-import {
-  Scheduler,
-  WeekView,
-  MonthView,
-  Appointments,
-  Toolbar,
-  ViewSwitcher,
-  DateNavigator,
-  TodayButton  ,
-  AppointmentForm
-} from '@devexpress/dx-react-scheduler-material-ui';
-
-import { 
-    Dialog, 
-    DialogTitle, 
-    DialogContent, 
-    TextField,
-    DialogActions, 
-    Button, 
-    Grid,
-    Snackbar,
-    Alert
-} from '@mui/material';
-
-
+import { Scheduler, WeekView, MonthView, Appointments, Toolbar, ViewSwitcher, DateNavigator, TodayButton }
+    from '@devexpress/dx-react-scheduler-material-ui';
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Grid, Snackbar, Alert }
+    from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
-import { 
-    DesktopDatePicker,
-    TimePicker
-} from '@mui/x-date-pickers';
+import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers';
 import { makeReservation } from '../api/reservation';
 
+// Donnée de rendez-vous, retourne la zone de rendez-vous
 const Appointment = ({
     children, style, ...restProps
-  }) => {
-    if(restProps?.data?.schedule){
+}) => {
+    if (restProps?.data?.schedule) {
         return (
             <Appointments.Appointment
-            {...restProps}
-            style={{
-                ...style,
-                backgroundColor: '#b7bcc9',
-                borderRadius: '8px',
-            }}
+                {...restProps}
+                style={{
+                    ...style,
+                    backgroundColor: '#b7bcc9',
+                    borderRadius: '8px',
+                }}
             >
-            {children}
+                {children}
             </Appointments.Appointment>
         )
     }
-        
+
     return (
-    <Appointments.Appointment
-      {...restProps}
-      style={{
-        ...style,
-        backgroundColor: '#606060',
-        borderRadius: '8px',
-      }}
-    >
-      {children}
-    </Appointments.Appointment>
-  )
+        <Appointments.Appointment
+            {...restProps}
+            style={{
+                ...style,
+                backgroundColor: '#606060',
+                borderRadius: '8px',
+            }}
+        >
+            {children}
+        </Appointments.Appointment>
+    )
 };
 
+// Agenda exporté pour la page d'acceuil de l'employé
 export default (props) => {
     const defaultValues = {
         date: null,
@@ -81,14 +58,16 @@ export default (props) => {
         email: ""
     }
 
+    // Gère les variables d'états qui peuvent être amenées à être modifiée sur l'agenda
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openError, setOpenError] = React.useState(false);
     const [openSuccess, setOpenSuccess] = React.useState(false);
     const [formValues, setFormValues] = React.useState(defaultValues);
     const data = props.data;
 
+    // Met à jour l'agenda en cas de changement
     const handleFormChange = (event) => {
-        const {name, value} = event.target;
+        const { name, value } = event.target;
         setFormValues({
             ...formValues,
             [name]: value,
@@ -99,20 +78,22 @@ export default (props) => {
         setOpenDialog(false);
     }
 
+    // Gère les réservations et leur donnée
     const handleReservation = () => {
         makeReservation(formValues);
         setOpenError(true);
         setOpenDialog(false);
     }
 
+    // Gère les changements de date
     const handleTimeChange = (newValue) => {
-
         setFormValues({
             ...formValues,
             date: newValue,
         });
     }
 
+    // Gestion cellule d'un agenda
     const TimeTableCell = ({ onDoubleClick, ...restProps }) => {
         const openDialog = (startDate) => {
             setOpenDialog(true);
@@ -122,11 +103,11 @@ export default (props) => {
                 date: startDate,
             });
         }
-    
+
         return (
             <WeekView.TimeTableCell
-            {...restProps}
-            onDoubleClick={() => {openDialog(restProps.startDate)} }
+                {...restProps}
+                onDoubleClick={() => { openDialog(restProps.startDate) }}
             />
         )
     }
@@ -139,13 +120,14 @@ export default (props) => {
         setOpenError(false);
     }
 
+    // Retourve le contenu html de la page
     return (<>
         <Scheduler
             data={data}
             locale={"fr-FR"}
         >
-            <ViewState/>
-            <WeekView 
+            <ViewState />
+            <WeekView
                 cellDuration={60}
                 startDayHour={7}
                 endDayHour={19}
@@ -161,25 +143,25 @@ export default (props) => {
             />
         </Scheduler>
 
-        
+
         <Snackbar open={openSuccess} autoHideDuration={6000} onClose={handleCloseSuccess}>
-        <Alert variant="filled" severity="success" sx={{ width: '100%' }}>
-            Réservation enregistrée!
-        </Alert>
+            <Alert variant="filled" severity="success" sx={{ width: '100%' }}>
+                Réservation enregistrée!
+            </Alert>
         </Snackbar>
-        
+
         <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError}>
-        <Alert variant="filled" severity="error" sx={{ width: '100%' }}>
-            Une erreur est survenue
-        </Alert>
+            <Alert variant="filled" severity="error" sx={{ width: '100%' }}>
+                Une erreur est survenue
+            </Alert>
         </Snackbar>
 
         <Dialog open={openDialog} onClose={handleCloseDialog}>
             <DialogTitle>Continuer la réservation</DialogTitle>
-            <DialogContent style={{paddingTop: "10px"}}>
+            <DialogContent style={{ paddingTop: "10px" }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 16 }}>
-                        <Grid item xs={2} sm={4} md={8}>                            
+                        <Grid item xs={2} sm={4} md={8}>
                             <DesktopDatePicker
                                 label="Date"
                                 name="date"
@@ -190,7 +172,7 @@ export default (props) => {
                                 renderInput={(params) => <TextField {...params} />}
                             />
                         </Grid>
-                        <Grid item xs={2} sm={4} md={8}>                            
+                        <Grid item xs={2} sm={4} md={8}>
                             <TimePicker
                                 label="Heure"
                                 name="date"

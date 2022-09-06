@@ -9,7 +9,7 @@
 import { APIregister, APILogin } from "../api/company";
 
 /**
- * Récupère 
+ * Récupère les tokens du serveur
  */
 export function getToken(){
     const token = localStorage.getItem("token");
@@ -17,7 +17,7 @@ export function getToken(){
 }
 
 /**
- * Récupère 
+ * Récupère l'utilisateur 
  */
 export function getUser(){
     const user = JSON.parse(localStorage.getItem("user"));
@@ -25,14 +25,13 @@ export function getUser(){
 }
 
 /**
- * 
+ * Gestion du login d'un employeur
  */
 export function login(form){
     const result = APILogin(form);
     result.then((data) => {
         console.log(data);
         localStorage.setItem("token", data.data.token);
-
         localStorage.setItem("user", JSON.stringify({
             id: data.data.user.id,
             name: data.data.user.firstName + " " + data.data.user.lastName
@@ -45,7 +44,7 @@ export function login(form){
 }
 
 /**
- * 
+ * Gestion de l'enregistrement d'un nouvel employeur
  */
 export async function register(form){
     const result = APIregister(form);
