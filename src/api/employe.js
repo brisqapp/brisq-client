@@ -18,7 +18,7 @@ export function createEmploye(data){
 }
 
 export function updateEmploye(data, id){
-    const result = axios.post(URL() + "/employees/" + id, data);
+    const result = axios.put(URL() + "/employees/" + id, data);
     return result;
 }
 

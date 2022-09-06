@@ -8,54 +8,19 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
 import { FormControl, InputLabel, Select, MenuItem, Button, Paper } from "@mui/material";
-import { getEmploye } from '../api/employe';
+import { getEmploye, updateEmploye } from '../api/employe';
 import { useParams } from 'react-router-dom';
+import { getAllServices } from '../api/service';
 
 let newId = -1;
 
 const employeExemple = {
-        name: "Toto",
-        schedules: [
-            {
-                weekday: 1,
-                morningStart: "09:00",
-                morningEnd: "12:00",
-                afternoonStart: "13:00",
-                afternoonEnd: "17:00"
-            },
-            {
-                weekday: 2,
-                morningStart: "08:00",
-                morningEnd: "12:00",
-                afternoonStart: "13:00",
-                afternoonEnd: "17:00"
-            },
-            {
-                weekday: 3,
-                morningStart: "08:00",
-                morningEnd: "12:00",
-                afternoonStart: "13:00",
-                afternoonEnd: "17:00"
-            },
-            {
-                weekday: 4,
-                morningStart: "08:00",
-                morningEnd: "12:00",
-                afternoonStart: "13:00",
-                afternoonEnd: "17:00"
-            },
-            {
-                weekday: 5,
-                morningStart: "08:00",
-                morningEnd: "12:00",
-                afternoonStart: "13:00",
-                afternoonEnd: "17:00"
-            },
-        ],
-        services: [{id: 10, idService: 1, name: "coupe homme", duration: 180}, {id: 11, idService: 2, name: "coupe femme", duration: 150}]
+    name: "",
+    schedules: [],
+    services: []
 }
 
-const servicesExemple = [{id: 1, name: 'Coupe homme'}, {id: 2, name: 'Coupe femme'}, {id: 3, name: 'couleur'}]
+const servicesExemple = [];
 
 const EmployeeDetails = () => {
 
@@ -64,15 +29,16 @@ const EmployeeDetails = () => {
     React.useEffect(()=>{
         getEmploye(id).then((data) => {
             setEmploye(data.data);
-            console.log(data.data);
+        })
+
+        getAllServices().then((data) => {
+            setServices(data.data);
         })
     },[]);
 
-    let schedule = employeExemple.schedule;
-
     const [employe, setEmploye] = React.useState(employeExemple);
     const [services, setServices] = React.useState(servicesExemple);
-    const [newService, setNewService] = React.useState();
+    const [newService, setNewService] = React.useState({serviceId: 1});
     const [selectedDay, setSelectedDay] = React.useState(1);
     const [open, setOpen] = React.useState(false);
     
@@ -95,6 +61,17 @@ const EmployeeDetails = () => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleDureeChange = (event, id) => {
+        const tempServices = employe.services;
+        for(const service of tempServices){
+            if(service.id == id) service.duration = event.target.value;
+        }
+        setEmploye({
+            ...employe,
+            services: tempServices
+        });
+    }
 
     const handleDelete = (id) => {
         const tempList = employe.services;
@@ -124,13 +101,13 @@ const EmployeeDetails = () => {
     const listServices = employe.services.map((service) =>
         <li key={service.id} style={{listStyle: 'none'}}>
             <span style={{display: 'inline-block', width: '150px'}}>{service.name} </span>
-            <TextField id={"txt-" + service.id} label="Durée" variant="outlined" defaultValue={service.duration}/>
+            <TextField id={"txt-" + service.id} label="Durée" variant="outlined" onChange={(e) => {handleDureeChange(e, service.id)}} value={service.duration}/>
             <Button id={"btn-" + service.id} style={{color:'red', height:'100%'}} onClick={() => {handleDelete(service.id)}}>X</Button>
         </li>
     );
 
     const listAvailableServices = services.map((service) =>
-        <MenuItem value={service.id}>{service.name}</MenuItem>
+        <MenuItem key={service.id} value={service.id}>{service.name}</MenuItem>
     );
 
     const handleDayChange = (event) => {
@@ -138,23 +115,39 @@ const EmployeeDetails = () => {
     };
 
     const handleScheduleChange = (event) => {
-        const tempSchedule = employe.schedules;
         const {name,value} = event.target;
-        tempSchedule[selectedDay][name] = value;
+        const id = getDayScheduleId();
+        const tempSchedules = employe.schedules;
+        if(id == -1) {
+            tempSchedules.push({
+                weekday: selectedDay,
+                [name]: value
+            })
+        } else {
+            tempSchedules[id][name] = value;
+        }
         setEmploye({
             ...employe,
-            schedule: tempSchedule
+            schedule: tempSchedules
         })
     }
 
+    const getDayScheduleId = () => {
+        for(let i = 0; i < employe.schedules.length; i++){
+            if(employe.schedules[i].weekday == selectedDay) return i;
+        }
+        return -1;
+    }
+
     const getDaySchedule = () => {
-        for(schedule of employe.schedules){
+        for(const schedule of employe.schedules){
             if(schedule.weekday == selectedDay) return schedule;
         }
         return null;
     }
 
     const handleSaveClick = () => {
+        updateEmploye(employe, id);
         console.log(employe);
     }
 
@@ -204,10 +197,11 @@ const EmployeeDetails = () => {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={newService}
-                                label="Age"
-                                onChange={handleChangeService}>
-                                    {listAvailableServices}
+                                value={newService.serviceId}
+                                label="Service name"
+                                onChange={handleChangeService}
+                            >
+                                {listAvailableServices}
                             </Select>
                         </FormControl>
                     </DialogContent>
