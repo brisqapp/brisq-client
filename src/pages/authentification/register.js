@@ -7,7 +7,7 @@ import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { register } from "../../auth";
-import { getAllServices } from "../../api/service";
+import { getAllCompanyTypes } from "../../api/companyType";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Register = () => {
     }
 
     React.useEffect(()=>{
-        getAllServices().then((data) => {
+        getAllCompanyTypes().then((data) => {
             setServices(data.data);
         })
     },[]);
