@@ -30,7 +30,6 @@ const Reservation = () => {
     
     useEffect(()=>{
         getCompanyDetails(id).then((data) => {
-            console.log(data.data.employees[0]);
             setData(data.data);
             setFormValues({
                 ...formValues,

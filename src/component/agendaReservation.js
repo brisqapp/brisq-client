@@ -101,6 +101,7 @@ export default (props) => {
     const handleReservation = () => {
         makeReservation(formValues).then(() => {            
             setOpenSuccess(true);
+            setTimeout("location.reload(true);",500);
         }).catch(() => {
             setOpenError(true);
         });
