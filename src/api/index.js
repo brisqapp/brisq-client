@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "https://api-dev.brisq.app";
+const url = "https://api-dev.brisq.app/api/";
 
 export function URL() {
     return url;
