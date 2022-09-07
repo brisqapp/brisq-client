@@ -8,13 +8,14 @@ import { useEffect, useState } from "react";
 import { scheduleToAppoitments } from "../../utils/schedule";
 import { getCompanyDetails } from "../../api/company";
 
-
-
 const getAppointmentsByIdEmploye = (employes, id) => {
     let appointments = [];
     for(const employe of employes){
         if(employe.id == id) {
-            appointments = [...employe.appointments, ...scheduleToAppoitments(employe)];
+            for(const appointment of appointments){
+                if(appointment != null) appointments.push(appointment);
+            }
+            appointments = [...appointments, ...scheduleToAppoitments(employe)];
         }
     }
     return appointments;
@@ -45,6 +46,14 @@ const Reservation = () => {
     const [formValues, setFormValues] = useState(defaultValues)
     const [data, setData] = useState(info);
 
+    const getEmployeeById = (id) => {
+        for(const employee of data.employees){
+            if(employee.id == id)
+                return employee;
+        }
+        return null;
+    }
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
@@ -70,7 +79,7 @@ const Reservation = () => {
                 })}
             </Select>
         </FormControl>
-        <AgendaReservation data={getAppointmentsByIdEmploye(data.employees, formValues.employe)} serviceEmployeeId={formValues.employe}/>
+        <AgendaReservation data={getAppointmentsByIdEmploye(data.employees, formValues.employe)} employe={getEmployeeById(formValues.employe)}/>
     </div>
     );
 };
