@@ -10,7 +10,10 @@ import { useParams } from "react-router-dom";
 import { FormControl, Select, InputLabel, MenuItem} from "@mui/material";
 import AgendaReservation from "../../component/agendaReservation";
 import { useState } from "react";
+import { getReservationsByEmploye } from "../../api/reservation";
+import { useEffect, useState } from "react";
 import { scheduleToAppoitments } from "../../utils/schedule";
+import { getCompanyDetails } from "../../api/company";
 
 
 /**
@@ -22,60 +25,37 @@ import { scheduleToAppoitments } from "../../utils/schedule";
 const getAppointementsByIdEmploye = (employes, id) => {
     let appointements = [];
 
-    // Remplis notre array avec les rendez-vous de l'employé
+// Remplis notre array avec les rendez-vous de l'employé
+const getAppointmentsByIdEmploye = (employes, id) => {
+    let appointments = [];
     for(const employe of employes){
         if(employe.id == id) {
-            appointements = [...employe.appointements, ...scheduleToAppoitments(employe)];
+            for(const appointment of appointments){
+                if(appointment != null) appointments.push(appointment);
+            }
+            appointments = [...appointments, ...scheduleToAppoitments(employe)];
         }
     }
-    return appointements;
+    return appointments;
 }
 
 const Reservation = () => {
-    const { id } = useParams();
+    const { id } = useParams();   
+    
+    useEffect(()=>{
+        getCompanyDetails(id).then((data) => {
+            setData(data.data);
+            setFormValues({
+                ...formValues,
+                employe: data.data.employees[0]?.id
+            })
+        })
+    },[]);
+
+
     const info = {
-        name: "Test Salon",
-        employes: [
-            {
-                id: 1,
-                name: "Olivier Tissot", 
-                schedule: [
-                    {
-                        weekday: 1,
-                        morningBegin: "10:30",
-                        morningEnd: "12:30",
-                        afternoonBegin: "13:30",
-                        afternoonEnd: "18:30",
-                    },
-                    {
-                        weekday: 3,
-                        morningBegin: "08:30",
-                        morningEnd: "12:30",
-                        afternoonBegin: "13:30",
-                        afternoonEnd: "16:30",
-                    }
-                ],
-                appointements: [
-                    {
-                        title: 'Réservé',
-                        startDate: new Date(2022, 8, 3, 9, 35),
-                        endDate: new Date(2022, 8, 3, 11, 30),
-                        id: 0,
-                    }
-                ]
-            },
-            {
-                id: 2,
-                name: "Peer Vincent", 
-                schedule: [],
-                appointements: [{
-                    title: 'Réservé',
-                    startDate: new Date(2022, 8, 2, 9, 35),
-                    endDate: new Date(2022, 8, 2, 11, 30),
-                    id: 0,
-                }]
-            }
-        ]
+        company: "",
+        employees: []
     }
 
     /**
@@ -90,6 +70,15 @@ const Reservation = () => {
      * Variable de selection d'employé dans la liste
      */
     const [formValues, setFormValues] = useState(defaultValues)
+    const [data, setData] = useState(info);
+
+    const getEmployeeById = (id) => {
+        for(const employee of data.employees){
+            if(employee.id == id)
+                return employee;
+        }
+        return null;
+    }
 
     /**
      * Modifie l'employé actuellement selectioné
@@ -106,7 +95,7 @@ const Reservation = () => {
     return (
     <div style={{padding: "30px"}}>
         <Typography variant="h3"> Réservation </Typography>
-        <Typography variant="h5"> {info.name} </Typography><br />
+        <Typography variant="h5"> {data.company} </Typography><br />
         <FormControl fullWidth style={{maxWidth:"400px"}}>
             <InputLabel>Employé</InputLabel>
             <Select
@@ -115,12 +104,12 @@ const Reservation = () => {
                 label="Employé"
                 onChange={handleInputChange}
             >
-                {info.employes.map(e => {
+                {data.employees.map(e => {
                     return(<MenuItem key={e.id} value={e.id}>{e.name}</MenuItem>)
                 })}
             </Select>
         </FormControl>
-        <AgendaReservation data={getAppointementsByIdEmploye(info.employes, formValues.employe)}/>
+        <AgendaReservation data={getAppointmentsByIdEmploye(data.employees, formValues.employe)} employe={getEmployeeById(formValues.employe)}/>
     </div>
     );
 };

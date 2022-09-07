@@ -7,10 +7,41 @@
 
 import * as React from 'react';
 import { ViewState } from '@devexpress/dx-react-scheduler';
+<<<<<<< HEAD
 import { Scheduler, WeekView, MonthView, Appointments, Toolbar, ViewSwitcher, DateNavigator, TodayButton }
     from '@devexpress/dx-react-scheduler-material-ui';
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Grid, Snackbar, Alert }
     from '@mui/material';
+=======
+import {
+  Scheduler,
+  WeekView,
+  MonthView,
+  Appointments,
+  Toolbar,
+  ViewSwitcher,
+  DateNavigator,
+  TodayButton  ,
+  AppointmentForm
+} from '@devexpress/dx-react-scheduler-material-ui';
+
+import { 
+    Dialog, 
+    DialogTitle, 
+    DialogContent, 
+    TextField,
+    DialogActions, 
+    Button, 
+    Grid,
+    Snackbar,
+    Alert,
+    MenuItem,
+    Select,
+    InputLabel
+} from '@mui/material';
+
+
+>>>>>>> main
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers';
@@ -55,10 +86,16 @@ export default (props) => {
         date: null,
         firstName: "",
         lastName: "",
-        email: ""
+        email: "",
+        serviceEmployeeId: 0,
     }
 
+<<<<<<< HEAD
     // Gère les variables d'états qui peuvent être amenées à être modifiée sur l'agenda
+=======
+    const servicesEmploye = props.employe == undefined ? [] : props.employe.services;
+
+>>>>>>> main
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openError, setOpenError] = React.useState(false);
     const [openSuccess, setOpenSuccess] = React.useState(false);
@@ -80,8 +117,11 @@ export default (props) => {
 
     // Gère les réservations et leur donnée
     const handleReservation = () => {
-        makeReservation(formValues);
-        setOpenError(true);
+        makeReservation(formValues).then(() => {            
+            setOpenSuccess(true);
+        }).catch(() => {
+            setOpenError(true);
+        });
         setOpenDialog(false);
     }
 
@@ -198,6 +238,23 @@ export default (props) => {
                                 value={formValues.lastName}
                                 onChange={handleFormChange}
                             />
+                        </Grid>
+                        <Grid item xs={2} sm={4} md={16}>
+                            <InputLabel id="ServiceEmployeLabelId">Service</InputLabel>
+                            <Select
+                                labelId="ServiceEmployeLabelId"
+                                id="serviceEmployeSelectId"
+                                label="Service"
+                                name="serviceEmployeeId"
+                                value={formValues.serviceEmployeeId} 
+                                fullWidth
+                                onChange={handleFormChange} 
+                            >
+                                <MenuItem value={0} disabled>Sélectionner un service</MenuItem>
+                                {servicesEmploye.map((serviceEmploye) => {
+                                    return (<MenuItem value={serviceEmploye.id} key={serviceEmploye.id}>{serviceEmploye.name}</MenuItem>)
+                                })}
+                            </Select>
                         </Grid>
                         <Grid item xs={2} sm={4} md={16}>
                             <TextField

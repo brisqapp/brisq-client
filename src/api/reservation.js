@@ -7,38 +7,18 @@
  *                  est attribué ainsi que l'agenda de cette compagnie.
  */
 
-// Renvoie les réservations et indique le type, la date et durée
-// ainsi que l'employé
+
+import axios from "axios";
+import { URL } from ".";
+import { getToken } from "../auth";
+
+
 export function getReservations(){
-    return {
-        employe: ["R Justin", "P Vincent", "D Dimitri", "T Olivier"],
-        appointments: [
-            {
-                title: 'Coasdfupe femme',
-                startDate: new Date(2022, 9, 2, 9, 35),
-                endDate: new Date(2022, 9, 2, 11, 30),
-                id: 0,
-                location: 'R Justin',
-            },
-            {
-                title: 'Coupe homme',
-                startDate: new Date(2022, 8, 3, 16, 35),
-                endDate: new Date(2022, 8, 3, 17, 30),
-                id: 1,
-                location: 'P Vincent',
-            },
-            {
-                title: 'Coupe homme',
-                startDate: new Date(2022, 9, 1, 16, 35),
-                endDate: new Date(2022, 9, 1, 17, 30),
-                id: 2,
-                location: 'T Olivier',
-            }
-        ]
-    }
+    const result = axios.get(URL() + "/reservations", {headers: {authorization: getToken()}});
+    return result;
 }
 
-// 
+
 export function getReservationsByEmploye(){
     const reservations = getReservations();
     const appointments = reservations.appointments;
@@ -54,7 +34,18 @@ export function getReservationsByEmploye(){
     return {employes: employes, appoitments: r};
 }
 
-// Effectue un log du formulaire dans la console
 export function makeReservation(form){
-    console.log(form);
+    const hours = ('0'+(form.date.getHours())).slice(-2);
+    const minutes =('0'+(form.date.getMinutes())).slice(-2);
+    const month = ('0'+(form.date.getMonth() + 1)).slice(-2);
+    const day = ('0'+(form.date.getDate())).slice(-2);
+    const startHour =  hours + ":" + minutes;
+    const date = form.date.getFullYear() + "-" + month + "-" + day;
+    const modifiedForm = {
+        ...form,
+        date: date,
+        startHour: startHour
+    }
+    console.log(modifiedForm)
+    return axios.post(URL() + "/reservations", modifiedForm)
 }

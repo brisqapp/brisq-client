@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * Projet brisq
  * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
@@ -5,26 +6,31 @@
  * Description    : Gestion de la liste des employés d'une compagnie.
  */
 
-export function getEmploye(id){
+import axios from "axios";
+import { URL } from ".";
+import { getToken } from "../auth";
 
+export function getEmploye(id){
+    const result = axios.get(URL() + "/employees/" + id);
+    return result;
 }
 
 export function getEmployes(){
-    return [
-        {id: 1, name: "Rausis Justin"},
-        {id: 2, name: "Peer Vicent"},
-        {id: 3, name: "De Blesser Dimitri"}
-    ]
+    const result = axios.get(URL() + "/employees", {headers: {authorization: getToken()}});
+    return result;
 }
 
-export function createEmploye(data){
-
+export function createEmploye(data){    
+    const result = axios.post(URL() + "/employees", data, {headers: {authorization: getToken()}});
+    return result;
 }
 
 export function updateEmploye(data, id){
-
+    const result = axios.put(URL() + "/employees/" + id, data);
+    return result;
 }
 
 export function deleteEmploye(id){
-
+    const result = axios.delete(URL() + "/employees/" + id);
+    return result;
 }

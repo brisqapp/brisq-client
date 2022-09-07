@@ -16,3 +16,7 @@ export async function APIregister(form){
 export async function APILogin(form){
     return axios.post(URL() + "/auth", form);
 }
+
+export async function getCompanyDetails(id){
+    return axios.get(URL() + "/companies/getCompanyDetails/" + id);
+}

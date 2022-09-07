@@ -19,12 +19,22 @@ const monday = {
     day: 6
 }
 
+
+function orderScheduleByWeekday( a, b ) {
+    if ( a.weekday < b.weekday ){
+      return -1;
+    }
+    if ( a.weekday > b.weekday ){
+      return 1;
+    }
+    return 0;
+}
+
 // Etabli le calendrier pour chaque jour de la semaine
 export function scheduleToAppoitments(employe){
     let appointements = [];
     let idSchedule = 0;
-    const schedules = employe.schedule;
-    console.log(schedules);
+    const schedules = employe.schedule.sort(orderScheduleByWeekday);
 
     // Génère pour chaque jour les horaires et les plages de disponibilité aux services
     for(let day = 1; day <= 7; day++){
@@ -114,6 +124,5 @@ export function scheduleToAppoitments(employe){
             })
         }
     }
-    console.log(appointements);
     return appointements;
 }
