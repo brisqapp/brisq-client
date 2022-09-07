@@ -1,3 +1,12 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : agendaReadOnly.js
+ * Description    : Contenu de la page d'acceuil d'une entreprise, l'emploi du temps
+ *                  de la compagnie, pour chaque employé est présenté sous forme d'un
+ *                  calendrier avec des zones de réservation.
+ */
+
 import * as React from 'react';
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
@@ -10,23 +19,14 @@ import { teal, orange, red, blue } from '@mui/material/colors';
 import classNames from 'clsx';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
-  Scheduler,
-  WeekView,
-  Toolbar,
-  DateNavigator,
-  Appointments,
-  DayView,
-  MonthView,
-  ViewSwitcher,
-  Resources,
-  AppointmentTooltip
+  Scheduler, WeekView, Toolbar, DateNavigator, Appointments, DayView, MonthView, ViewSwitcher, Resources, AppointmentTooltip
 } from '@devexpress/dx-react-scheduler-material-ui';
-
 import { getReservations } from '../api/reservation';
 
 
 const SCHEDULER_STATE_CHANGE_ACTION = 'SCHEDULER_STATE_CHANGE';
 
+// Créer un horaire à partir des valeurs partielles du nom et de la valeur
 export const createSchedulerAction = (partialStateName, partialStateValue) => ({
   type: SCHEDULER_STATE_CHANGE_ACTION,
   payload: {
@@ -38,28 +38,26 @@ export const createSchedulerAction = (partialStateName, partialStateValue) => ({
 export default () => {
 
   const salonExemple = {
-      employees: [],
-      reservations: []
+    employees: [],
+    reservations: []
   }
 
-     
-    
-  React.useEffect(()=>{
+
+  React.useEffect(() => {
     getReservations().then((data) => {
-        console.log(data.data);
-        setSalon(data.data);
+      console.log(data.data);
+      setSalon(data.data);
     })
-  },[]);
+  }, []);
 
+  // Toutes les constantes et variables nécessaires à l'alocation d'une réservation
   const [salon, setSalon] = React.useState(salonExemple);
-
   const colors = [teal, orange, red, blue];
   const LOCATIONS = salon.employees;
-  //const LOCATIONS = ["Room 1", "Room 2", "Room 3"]
-  const LOCATIONS_SHORT = salon.employees.map(e => {return e[0]});
+  const LOCATIONS_SHORT = salon.employees.map(e => { return e[0] });
   const instances = [];
-  for(let i = 0; i < LOCATIONS.length; i++){
-    instances.push({id: LOCATIONS[i], text: LOCATIONS[i], color: colors[i%(colors.length)]});
+  for (let i = 0; i < LOCATIONS.length; i++) {
+    instances.push({ id: LOCATIONS[i], text: LOCATIONS[i], color: colors[i % (colors.length)] });
   }
 
   const resources = [{
@@ -317,7 +315,7 @@ export default () => {
           endDayHour={19}
           cellDuration={60}
         />
-        <MonthView/>
+        <MonthView />
 
         <Appointments
           appointmentContentComponent={AppointmentContent}
@@ -388,7 +386,8 @@ export default () => {
   );
 
   return (
-  <Provider store={store}>
-    <ReduxSchedulerContainer />
-  </Provider>
-)};
+    <Provider store={store}>
+      <ReduxSchedulerContainer />
+    </Provider>
+  )
+};
