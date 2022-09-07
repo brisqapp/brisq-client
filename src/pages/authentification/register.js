@@ -7,6 +7,7 @@ import MobileStepper from '@mui/material/MobileStepper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { register } from "../../auth";
+import { getAllServices } from "../../api/service";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -24,11 +25,19 @@ const Register = () => {
         city: ""
     }
 
+    React.useEffect(()=>{
+        getAllServices().then((data) => {
+            setServices(data.data);
+        })
+    },[]);
+
     const [formValues, setFormValues] = useState(defaultValues)
 
     const [activeStep, setActiveStep] = React.useState(0);
 
     const [openError, setOpenError] = React.useState(false);
+
+    const [services, setServices] = useState([]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -107,11 +116,9 @@ const Register = () => {
                             onChange={handleInputChange} 
                         >
                             <MenuItem value={0} disabled>Sélectionner un type</MenuItem>
-                            <MenuItem value={1}>Coiffure</MenuItem>
-                            <MenuItem value={2}>Dentiste</MenuItem>
-                            <MenuItem value={2}>Barbier</MenuItem>
-                            <MenuItem value={2}>Manucure</MenuItem>
-                            <MenuItem value={2}>Esthéticien</MenuItem>
+                            {services.map((service) => {
+                                return (<MenuItem value={service.id} key={service.id}>{service.name}</MenuItem>)
+                            })}
                         </Select>
                     </FormControl>
                     <br />

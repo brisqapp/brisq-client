@@ -21,7 +21,10 @@ import {
     Button, 
     Grid,
     Snackbar,
-    Alert
+    Alert,
+    MenuItem,
+    Select,
+    InputLabel
 } from '@mui/material';
 
 
@@ -71,8 +74,11 @@ export default (props) => {
         date: null,
         firstName: "",
         lastName: "",
-        email: ""
+        email: "",
+        serviceEmployeeId: 0,
     }
+
+    const servicesEmploye = props.employe == undefined ? [] : props.employe.services;
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openError, setOpenError] = React.useState(false);
@@ -93,8 +99,11 @@ export default (props) => {
     }
 
     const handleReservation = () => {
-        makeReservation(formValues);
-        setOpenError(true);
+        makeReservation(formValues).then(() => {            
+            setOpenSuccess(true);
+        }).catch(() => {
+            setOpenError(true);
+        });
         setOpenDialog(false);
     }
 
@@ -209,6 +218,23 @@ export default (props) => {
                                 value={formValues.lastName}
                                 onChange={handleFormChange}
                             />
+                        </Grid>
+                        <Grid item xs={2} sm={4} md={16}>
+                            <InputLabel id="ServiceEmployeLabelId">Service</InputLabel>
+                            <Select
+                                labelId="ServiceEmployeLabelId"
+                                id="serviceEmployeSelectId"
+                                label="Service"
+                                name="serviceEmployeeId"
+                                value={formValues.serviceEmployeeId} 
+                                fullWidth
+                                onChange={handleFormChange} 
+                            >
+                                <MenuItem value={0} disabled>Sélectionner un service</MenuItem>
+                                {servicesEmploye.map((serviceEmploye) => {
+                                    return (<MenuItem value={serviceEmploye.id} key={serviceEmploye.id}>{serviceEmploye.name}</MenuItem>)
+                                })}
+                            </Select>
                         </Grid>
                         <Grid item xs={2} sm={4} md={16}>
                             <TextField
