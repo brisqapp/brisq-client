@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:8080/api";
+const url = "https://api-dev.brisq.app";
 
 export function URL() {
     return url;
