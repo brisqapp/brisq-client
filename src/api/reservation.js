@@ -7,9 +7,8 @@
  *                  est attribué ainsi que l'agenda de cette compagnie.
  */
 
-/**
- * 
- */
+// Renvoie les réservations et indique le type, la date et durée
+// ainsi que l'employé
 export function getReservations(){
     return {
         employe: ["R Justin", "P Vincent", "D Dimitri", "T Olivier"],
@@ -39,6 +38,7 @@ export function getReservations(){
     }
 }
 
+// 
 export function getReservationsByEmploye(){
     const reservations = getReservations();
     const appointments = reservations.appointments;
@@ -54,6 +54,7 @@ export function getReservationsByEmploye(){
     return {employes: employes, appoitments: r};
 }
 
+// Effectue un log du formulaire dans la console
 export function makeReservation(form){
     console.log(form);
 }

@@ -19,25 +19,14 @@ import { teal, orange, red, blue } from '@mui/material/colors';
 import classNames from 'clsx';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
-  Scheduler,
-  WeekView,
-  Toolbar,
-  DateNavigator,
-  Appointments,
-  DayView,
-  MonthView,
-  ViewSwitcher,
-  Resources,
-  AppointmentTooltip
+  Scheduler, WeekView, Toolbar, DateNavigator, Appointments, DayView, MonthView, ViewSwitcher, Resources, AppointmentTooltip
 } from '@devexpress/dx-react-scheduler-material-ui';
-
 import { getReservations } from '../api/reservation';
 
-const salon = getReservations();
 
+const salon = getReservations();
 const colors = [teal, orange, red, blue];
 const LOCATIONS = salon.employe;
-//const LOCATIONS = ["Room 1", "Room 2", "Room 3"]
 const LOCATIONS_SHORT = salon.employe.map(e => {return e[0]});
 const instances = [];
 for(let i = 0; i < LOCATIONS.length; i++){
