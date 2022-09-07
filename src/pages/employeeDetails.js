@@ -1,4 +1,3 @@
-
 /**
  * Projet brisq
  * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin

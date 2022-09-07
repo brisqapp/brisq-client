@@ -18,7 +18,8 @@ import { styled, alpha } from '@mui/material/styles';
 import { teal, orange, red, blue } from '@mui/material/colors';
 import classNames from 'clsx';
 import { ViewState } from '@devexpress/dx-react-scheduler';
-import {  Scheduler, WeekView, Toolbar, DateNavigator, Appointments, DayView, MonthView, ViewSwitcher, Resources, AppointmentTooltip
+import {
+  Scheduler, WeekView, Toolbar, DateNavigator, Appointments, DayView, MonthView, ViewSwitcher, Resources, AppointmentTooltip
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { getReservations } from '../api/reservation';
 
@@ -36,27 +37,27 @@ export const createSchedulerAction = (partialStateName, partialStateValue) => ({
 export default () => {
 
   const salonExemple = {
-      employees: [],
-      reservations: []
+    employees: [],
+    reservations: []
   }
 
-    
-  React.useEffect(()=>{
+
+  React.useEffect(() => {
     getReservations().then((data) => {
-        console.log(data.data);
-        setSalon(data.data);
+      console.log(data.data);
+      setSalon(data.data);
     })
-  },[]);
+  }, []);
 
   const [salon, setSalon] = React.useState(salonExemple);
 
   const colors = [teal, orange, red, blue];
   const LOCATIONS = salon.employees;
   //const LOCATIONS = ["Room 1", "Room 2", "Room 3"]
-  const LOCATIONS_SHORT = salon.employees.map(e => {return e[0]});
+  const LOCATIONS_SHORT = salon.employees.map(e => { return e[0] });
   const instances = [];
-  for(let i = 0; i < LOCATIONS.length; i++){
-    instances.push({id: LOCATIONS[i], text: LOCATIONS[i], color: colors[i%(colors.length)]});
+  for (let i = 0; i < LOCATIONS.length; i++) {
+    instances.push({ id: LOCATIONS[i], text: LOCATIONS[i], color: colors[i % (colors.length)] });
   }
 
   const resources = [{
@@ -314,7 +315,7 @@ export default () => {
           endDayHour={19}
           cellDuration={60}
         />
-        <MonthView/>
+        <MonthView />
 
         <Appointments
           appointmentContentComponent={AppointmentContent}
@@ -385,7 +386,8 @@ export default () => {
   );
 
   return (
-  <Provider store={store}>
-    <ReduxSchedulerContainer />
-  </Provider>
-)};
+    <Provider store={store}>
+      <ReduxSchedulerContainer />
+    </Provider>
+  )
+};

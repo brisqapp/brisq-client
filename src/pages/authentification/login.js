@@ -20,7 +20,7 @@ const Login = () => {
 
     // Ouvre le lien de la page creation d'un compte
     const navigateClick = (link) => {
-        navigate(link, {replace: true});
+        navigate(link, { replace: true });
     };
 
     // Ferme la notification d'erreur
@@ -60,37 +60,37 @@ const Login = () => {
     // Retour de la mise en page
     return (
         <>
-        <Paper elevation={2} style={{
-            marginTop: "50px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            padding: "30px 45px 30px 45px",
-            width: "fit-content",
-            display: "block",
-            textAlign: "center"
-        }}>       
-            <Typography variant="h4" style={{textAlign: "center"}}>Connexion</Typography>
-            <br />
-            <br />
-            <TextField name="email" value={formValues.email} onChange={handleInputChange} id="email" label="E-mail" variant="filled" />
-            <br />
-            <br />
-            <TextField name="password" value={formValues.password} onChange={handleInputChange}  id="password" type="password" label="Mot de passe" variant="filled" />
-            <br />
-            <br />
-            <Button variant="contained" onClick={handleLogin} style={{width: "100%"}}>Se connecter</Button>
-            <br />
-            <br />
-            <Link style={{cursor: "pointer"}} onClick={() => navigateClick("/register")}>Ou créer un compte</Link>
-        </Paper>
+            <Paper elevation={2} style={{
+                marginTop: "50px",
+                marginLeft: "auto",
+                marginRight: "auto",
+                padding: "30px 45px 30px 45px",
+                width: "fit-content",
+                display: "block",
+                textAlign: "center"
+            }}>
+                <Typography variant="h4" style={{ textAlign: "center" }}>Connexion</Typography>
+                <br />
+                <br />
+                <TextField name="email" value={formValues.email} onChange={handleInputChange} id="email" label="E-mail" variant="filled" />
+                <br />
+                <br />
+                <TextField name="password" value={formValues.password} onChange={handleInputChange} id="password" type="password" label="Mot de passe" variant="filled" />
+                <br />
+                <br />
+                <Button variant="contained" onClick={handleLogin} style={{ width: "100%" }}>Se connecter</Button>
+                <br />
+                <br />
+                <Link style={{ cursor: "pointer" }} onClick={() => navigateClick("/register")}>Ou créer un compte</Link>
+            </Paper>
 
-        <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError}>
-        <Alert variant="filled" severity="error" sx={{ width: '100%' }}>
-            Mot de passe ou nom d'utilisateur non valide
-        </Alert>
-        </Snackbar>
+            <Snackbar open={openError} autoHideDuration={6000} onClose={handleCloseError}>
+                <Alert variant="filled" severity="error" sx={{ width: '100%' }}>
+                    Mot de passe ou nom d'utilisateur non valide
+                </Alert>
+            </Snackbar>
         </>
     );
 };
-  
+
 export default Login;

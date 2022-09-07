@@ -14,20 +14,18 @@ import ModeIcon from '@mui/icons-material/Mode';
 import { DataGrid } from '@mui/x-data-grid';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Link } from "react-router-dom";
-import { useGridApiRef } from '@mui/x-data-grid-pro';
-import { Typography, Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box, Chip } from "@mui/material";
-import { FormatAlignJustify } from '@mui/icons-material';
+import {  Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box, Chip } from "@mui/material";
 import { createEmploye, deleteEmploye, getEmployes } from '../../api/employe';
 import { useEffect } from 'react';
 
 
 const EmployeeManagement = () => {
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         getEmployes().then((data) => {
             setEmployeList(data.data.employees);
         })
-    },[]);
+    }, []);
 
     // Variables d'états mettre à jour la liste des employés
     const [open, setOpen] = React.useState(false);
@@ -49,7 +47,7 @@ const EmployeeManagement = () => {
 
     // Ajoute un nouvel employé dans la liste d'employé actuelle
     const handleNewEmployee = () => {
-        createEmploye({name: tempEmployeName}).then(() => {            
+        createEmploye({ name: tempEmployeName }).then(() => {
             getEmployes().then((data) => {
                 setEmployeList(data.data.employees);
             })
@@ -60,7 +58,7 @@ const EmployeeManagement = () => {
 
     // Supprime un employé
     const handleDeleteRow = (id) => {
-        deleteEmploye(id).then(() => {            
+        deleteEmploye(id).then(() => {
             getEmployes().then((data) => {
                 setEmployeList(data.data.employees);
             })
@@ -82,11 +80,11 @@ const EmployeeManagement = () => {
             }
         },
         {
-            field: 'actions', headerName: 'Actions', width:'100',
+            field: 'actions', headerName: 'Actions', width: '100',
             renderCell: (rowData) => {
                 return (
                     <Box style={{ justifyContent: "end" }}>
-                    <IconButton component={Link} to={"/employeeDetails/" + rowData.id} aria-label="delete"><ModeIcon /></IconButton>
+                        <IconButton component={Link} to={"/employeeDetails/" + rowData.id} aria-label="delete"><ModeIcon /></IconButton>
                         <IconButton aria-label="delete" onClick={() => handleDeleteRow(rowData.id)} ><DeleteIcon /></IconButton>
                     </Box>
                 );

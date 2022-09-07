@@ -16,12 +16,12 @@ import axios from "axios";
 const url = "http://localhost:8080/api";
 
 export function URL() {
-    return url;
+   return url;
 }
 
 export function test() {
    return axios.get(URL, {
-       crossDomain: true
+      crossDomain: true
    })
 }
 
@@ -37,7 +37,7 @@ const Profile = () => {
       companyName: "",
       companyAddress: "",
       salonType: 0,
-      companyDescription:""
+      companyDescription: ""
    };
 
    // Variable d'état pour gérer une éventuelle modification des données de la compagnie

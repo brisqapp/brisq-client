@@ -11,7 +11,7 @@ import { APIregister, APILogin } from "../api/company";
 /**
  * Récupère les tokens du serveur
  */
-export function getToken(){
+export function getToken() {
     const token = localStorage.getItem("token");
     return token;
 }
@@ -19,7 +19,7 @@ export function getToken(){
 /**
  * Récupère l'utilisateur 
  */
-export function getUser(){
+export function getUser() {
     const user = JSON.parse(localStorage.getItem("user"));
     return user;
 }
@@ -27,7 +27,7 @@ export function getUser(){
 /**
  * Gestion du login d'un employeur
  */
-export function login(form){
+export function login(form) {
     const result = APILogin(form);
     result.then((data) => {
         localStorage.setItem("token", data.data.token);
@@ -45,7 +45,7 @@ export function login(form){
 /**
  * Gestion de l'enregistrement d'un nouvel employeur
  */
-export async function register(form){
+export async function register(form) {
     const result = APIregister(form);
     result.then((data) => {
         localStorage.setItem("token", data.data.token);

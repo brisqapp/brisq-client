@@ -24,19 +24,20 @@ import MenuItem from '@mui/material/MenuItem';
 import HomeIcon from '@mui/icons-material/Home';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { getToken, getUser } from '../auth';
-import { Outlet, Link, useNavigate } from "react-router-dom";
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Drawer } from "@mui/material";
+import { Outlet, useNavigate } from "react-router-dom";
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Drawer } from "@mui/material";
+
 
 const token = getToken();
 
 // Les pages à afficher pour un employeur logué
 const loggedPages = [
-  {link: 'home', text: 'Home', icon: <HomeIcon />},
-  {link: 'manageEmployee', text: 'Employee', icon: <PeopleAltIcon />},
+  { link: 'home', text: 'Home', icon: <HomeIcon /> },
+  { link: 'manageEmployee', text: 'Employee', icon: <PeopleAltIcon /> },
 ];
 
 // Les pages à afficher pour un client non logué
-const unLoggedPages = [{link: 'home', text: 'Home', icon: <HomeIcon />}]
+const unLoggedPages = [{ link: 'home', text: 'Home', icon: <HomeIcon /> }]
 
 const pages = token == null ? unLoggedPages : loggedPages;
 
@@ -47,16 +48,16 @@ const Layout = () => {
   })
 
   // Variable d'état pour le volet ouvrant d'un compte logué
-  const [openDrawer, setOpenDrawer] = React.useState(false); 
-  
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+
   // Adaptation de l'affichage selon que l'utilisateur est sur modile ou non
   const list = (mobile) => (
-    
+
     <Box
       sx={{ width: 250 }}
       role="presentation"
-      onClick={mobile == false ? () => {} : toggleDrawer}
-      onKeyDown={mobile == false ? () => {} : toggleDrawer}
+      onClick={mobile == false ? () => { } : toggleDrawer}
+      onKeyDown={mobile == false ? () => { } : toggleDrawer}
     >
       <List>
         {pages.map((page, index) => (
@@ -76,7 +77,6 @@ const Layout = () => {
   const navigate = useNavigate();
   const token = getToken();
   const user = getUser();
-  
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -85,8 +85,8 @@ const Layout = () => {
     localStorage.removeItem("token");
     window.location.replace("/login");
   }
-  
-  const toggleDrawer = (event) => { 
+
+  const toggleDrawer = (event) => {
     setOpenDrawer(!openDrawer);
   };
 
@@ -113,153 +113,153 @@ const Layout = () => {
 
   // Remplace l'url actuel par un éventuel lien ciblé par un clic
   const navigateClick = (link) => {
-    navigate(link, {replace: true})
+    navigate(link, { replace: true })
     handleCloseNavMenu();
   };
 
   // Retourne le contenu html
   return (
-    <>    
-    <Drawer
-      anchor={"left"}
-      open={openDrawer}
-      onClose={toggleDrawer}
-      sx={{
-        width: "260px",
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: "260px", boxSizing: 'border-box' },
-        display : {xs: 'block', md: 'none' }
-      }}
-    >
-    <Toolbar />
-      <Box sx={{ overflow: 'auto' }}>
-        {list(true)}
-      </Box>
-    </Drawer>
+    <>
+      <Drawer
+        anchor={"left"}
+        open={openDrawer}
+        onClose={toggleDrawer}
+        sx={{
+          width: "260px",
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: { width: "260px", boxSizing: 'border-box' },
+          display: { xs: 'block', md: 'none' }
+        }}
+      >
+        <Toolbar />
+        <Box sx={{ overflow: 'auto' }}>
+          {list(true)}
+        </Box>
+      </Drawer>
 
-    <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            onClick={() => navigateClick("/")}
-            sx={{
-              mr: 2,
-              fontSize: '2.5rem',
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'Nova Round',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: '#FFFFFF',
-              textDecoration: 'none',
-            }}
-          >
-            brisq
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              onClick={toggleDrawer}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Box>
-
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            onClick={() => navigateClick("/")}
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'Nova Round',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            brisq
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }} style={{display: "inherit"}}>
-            <Tooltip title="Open settings" style={{display: "inherit"}}>
-              {
-                token == null ?
-                <Box sx={{ display: {xs: 'none', md: 'flex'} }}>
-                  <Button 
-                    onClick={() => navigateClick("/login")}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
-                  >
-                    Se connecter
-                  </Button> 
-                  <Button 
-                    onClick={() => navigateClick("/register")}
-                    sx={{ my: 2, color: 'white', display: {xs: 'none', md: 'block' }}}
-                  >
-                    Créer un compte
-                  </Button> 
-                </Box>
-                :
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={user?.name} src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              }
-            </Tooltip>
-            
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              onClick={() => navigateClick("/")}
+              sx={{
+                mr: 2,
+                fontSize: '2.5rem',
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'Nova Round',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: '#FFFFFF',
+                textDecoration: 'none',
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
             >
+              brisq
+            </Typography>
 
-              <MenuItem key={"profile"} onClick={handleClickProfile}>
-                <Typography textAlign="center">Profile</Typography>
-              </MenuItem>
-              <MenuItem key={"logout"} onClick={logout}>
-                <Typography textAlign="center">Se déconnecter</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-    <Drawer
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                onClick={toggleDrawer}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
+
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              onClick={() => navigateClick("/")}
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'Nova Round',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              brisq
+            </Typography>
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }} style={{ display: "inherit" }}>
+              <Tooltip title="Open settings" style={{ display: "inherit" }}>
+                {
+                  token == null ?
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                      <Button
+                        onClick={() => navigateClick("/login")}
+                        sx={{ my: 2, color: 'white', display: 'block' }}
+                      >
+                        Se connecter
+                      </Button>
+                      <Button
+                        onClick={() => navigateClick("/register")}
+                        sx={{ my: 2, color: 'white', display: { xs: 'none', md: 'block' } }}
+                      >
+                        Créer un compte
+                      </Button>
+                    </Box>
+                    :
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt={user?.name} src="/static/images/avatar/2.jpg" />
+                    </IconButton>
+                }
+              </Tooltip>
+
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+
+                <MenuItem key={"profile"} onClick={handleClickProfile}>
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+                <MenuItem key={"logout"} onClick={logout}>
+                  <Typography textAlign="center">Se déconnecter</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Drawer
         variant="permanent"
         key="desktop"
         sx={{
           width: "260px",
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: { width: "260px", boxSizing: 'border-box' },
-          display : {xs: 'none', md: 'block' }
+          display: { xs: 'none', md: 'block' }
         }}
-    >
-      <Toolbar />
+      >
+        <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
           {list(false)}
         </Box>
-    </Drawer>
-    <Outlet style="backgound-color: 'red'"/>
+      </Drawer>
+      <Outlet style="backgound-color: 'red'" />
     </>
   );
 };
