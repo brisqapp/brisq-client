@@ -2,7 +2,7 @@
  * Projet brisq
  * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
  * Nom de fichier : client/reservation.js
- * Description    : 
+ * Description    : Gestion de la réservation possédée côté client
  */
 
 import { Typography } from "@mui/material";

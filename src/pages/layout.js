@@ -74,6 +74,7 @@ const Layout = () => {
     </Box>
   );
 
+  // Toutes les constantes et variables nécessaires à la gestion des vues
   const navigate = useNavigate();
   const token = getToken();
   const user = getUser();

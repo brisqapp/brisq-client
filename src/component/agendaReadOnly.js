@@ -26,6 +26,7 @@ import { getReservations } from '../api/reservation';
 
 const SCHEDULER_STATE_CHANGE_ACTION = 'SCHEDULER_STATE_CHANGE';
 
+// Créer un horaire à partir des valeurs partielles du nom et de la valeur
 export const createSchedulerAction = (partialStateName, partialStateValue) => ({
   type: SCHEDULER_STATE_CHANGE_ACTION,
   payload: {
@@ -49,11 +50,10 @@ export default () => {
     })
   }, []);
 
+  // Toutes les constantes et variables nécessaires à l'alocation d'une réservation
   const [salon, setSalon] = React.useState(salonExemple);
-
   const colors = [teal, orange, red, blue];
   const LOCATIONS = salon.employees;
-  //const LOCATIONS = ["Room 1", "Room 2", "Room 3"]
   const LOCATIONS_SHORT = salon.employees.map(e => { return e[0] });
   const instances = [];
   for (let i = 0; i < LOCATIONS.length; i++) {

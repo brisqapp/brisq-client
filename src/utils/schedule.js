@@ -20,7 +20,7 @@ const monday = {
     day: 6
 }
 
-
+// Mise de l'horaire de la semaine dans l'ordre conventionnel
 function orderScheduleByWeekday(a, b) {
     if (a.weekday < b.weekday) {
         return -1;

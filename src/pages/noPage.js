@@ -7,6 +7,7 @@
  */
 
 
+// Retourne le contenu de la page d'erreur
 const NoPage = () => {
     return <h1>
         UH OH!

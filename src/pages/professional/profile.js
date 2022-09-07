@@ -12,8 +12,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-
-const url = "http://localhost:8080/api";
+const url = "https://api-dev.brisq.app/api";
 
 export function URL() {
    return url;

@@ -9,7 +9,7 @@
 import { APIregister, APILogin } from "../api/company";
 
 /**
- * Récupère les tokens du serveur
+ * Récupère les tokens du serveur lors d'une communication
  */
 export function getToken() {
     const token = localStorage.getItem("token");

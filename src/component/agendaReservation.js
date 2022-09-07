@@ -36,6 +36,7 @@ const Appointment = ({
         )
     }
 
+    // Retourne le contenu de la page à afficher
     return (
         <Appointments.Appointment
             {...restProps}
@@ -60,7 +61,7 @@ export default (props) => {
         serviceEmployeeId: 0,
     }
 
-
+  // Toutes les constantes et variables nécessaires à l'alocation d'une réservation
     const servicesEmploye = props.employe == undefined ? [] : props.employe.services;
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openError, setOpenError] = React.useState(false);

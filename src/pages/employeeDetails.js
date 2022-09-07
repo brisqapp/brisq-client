@@ -14,7 +14,6 @@ import Stack from '@mui/material/Stack';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-
 import { FormControl, InputLabel, Select, MenuItem, Button, Paper } from "@mui/material";
 import { getEmploye, updateEmploye } from '../api/employe';
 import { useParams } from 'react-router-dom';
@@ -22,6 +21,7 @@ import { getAllServices } from '../api/service';
 
 let newId = -1;
 
+// Exemple d'employé 
 const employeExemple = {
     name: "",
     schedules: [],
@@ -29,7 +29,6 @@ const employeExemple = {
 }
 
 const servicesExemple = [];
-
 const EmployeeDetails = () => {
     const { id } = useParams();
 
@@ -43,12 +42,14 @@ const EmployeeDetails = () => {
         })
     }, []);
 
+      // Toutes les constantes et variables nécessaires aux données de l'employé
     const [employe, setEmploye] = React.useState(employeExemple);
     const [services, setServices] = React.useState(servicesExemple);
     const [newService, setNewService] = React.useState({ serviceId: 0 });
     const [selectedDay, setSelectedDay] = React.useState(1);
     const [open, setOpen] = React.useState(false);
 
+    // Retourne le nom d'un service selon l'id
     const getServiceNameById = (id) => {
         for (const service of services) {
             if (service.id == id) return service.name;
@@ -56,13 +57,12 @@ const EmployeeDetails = () => {
         return "";
     }
 
-    /**
-     * Ouvre le popup d'ajout de service
-     */
+    // Ouvre le popup d'ajout de service
     const handleClickOpen = () => {
         setOpen(true);
     };
 
+    // Gestion d'un changement de service
     const handleChangeService = (event) => {
         const id = event.target.value
         setNewService({ id: newId, serviceId: id, name: getServiceNameById(id), duration: 0 });
@@ -72,6 +72,7 @@ const EmployeeDetails = () => {
         setOpen(false);
     };
 
+    // Gestion d'un changement de la durée 
     const handleDureeChange = (event, id) => {
         const tempServices = employe.services;
         for (const service of tempServices) {
@@ -83,6 +84,7 @@ const EmployeeDetails = () => {
         });
     }
 
+    // Gestion de la suppression d'une employé 
     const handleDelete = (id) => {
         const tempList = employe.services;
         for (let i = 0; i < tempList.length; i++) {
@@ -97,9 +99,7 @@ const EmployeeDetails = () => {
         });
     }
 
-    /**
-     * Ajout un service
-     */
+    // Ajout d'un service
     function addService() {
         const tempList = employe.services;
         tempList.push(newService);
@@ -111,6 +111,7 @@ const EmployeeDetails = () => {
         setOpen(false);
     }
 
+    // Liste les services de la compagnie
     const listServices = employe.services.map((service) =>
         <li key={service.id} style={{ listStyle: 'none' }}>
             <span style={{ display: 'inline-block', width: '150px' }}>{service.name} </span>
@@ -131,6 +132,7 @@ const EmployeeDetails = () => {
         setSelectedDay(event.currentTarget.name);
     };
 
+    // Gestion des changement de l'horaire pour l'employé
     const handleScheduleChange = (event) => {
         const { name, value } = event.target;
         const id = getDayScheduleId();
@@ -149,6 +151,7 @@ const EmployeeDetails = () => {
         })
     }
 
+    // Retourne le jour d'une réservation selon un id
     const getDayScheduleId = () => {
         for (let i = 0; i < employe.schedules.length; i++) {
             if (employe.schedules[i].weekday == selectedDay) return i;
@@ -186,8 +189,8 @@ const EmployeeDetails = () => {
         });
     }
 
+    // Retourne le contenu de la page html
     return (
-
         <div variant="outlined" style={{
             padding: "16px",
             display: "block",

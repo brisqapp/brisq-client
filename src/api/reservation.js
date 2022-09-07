@@ -12,12 +12,13 @@ import axios from "axios";
 import { URL } from ".";
 import { getToken } from "../auth";
 
-
+// Retourne les réservations actuelles
 export function getReservations() {
     const result = axios.get(URL() + "/reservations", { headers: { authorization: getToken() } });
     return result;
 }
 
+// Retourne les réservations actuelles pour chaque employé
 export function getReservationsByEmploye() {
     const reservations = getReservations();
     const appointments = reservations.appointments;
@@ -33,6 +34,7 @@ export function getReservationsByEmploye() {
     return { employes: employes, appoitments: r };
 }
 
+// Crée une nouvelle réservation à partir d'un formulaire
 export function makeReservation(form) {
     const hours = ('0' + (form.date.getHours())).slice(-2);
     const minutes = ('0' + (form.date.getMinutes())).slice(-2);

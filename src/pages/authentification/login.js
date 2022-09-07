@@ -2,7 +2,7 @@
  * Projet brisq
  * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
  * Nom de fichier : login.js
- * Description    : Gestion de la page de login
+ * Description    : Gestion de la page de login et des champs à afficher
  */
 
 import { Paper, Typography, TextField, Button, Link, Snackbar, Alert } from "@mui/material";

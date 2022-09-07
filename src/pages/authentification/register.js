@@ -1,3 +1,10 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : register.js
+ * Description    : Gestion de la page de login et des champs à afficher
+ */
+
 import { Paper, Typography, TextField, Button, Link, Snackbar, Alert } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +19,7 @@ import { getAllCompanyTypes } from "../../api/companyType";
 const Register = () => {
     const navigate = useNavigate();
 
+    // Les champs à remplir par le nouvel employeur pour sa création de compte
     const defaultValues = {
         firstName: "",
         lastName: "",
@@ -31,14 +39,11 @@ const Register = () => {
         })
     }, []);
 
+      // Toutes les constantes et variables nécessaires à la création du compte
     const [formValues, setFormValues] = useState(defaultValues)
-
     const [activeStep, setActiveStep] = React.useState(0);
-
     const [openError, setOpenError] = React.useState(false);
-
     const [services, setServices] = useState([]);
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
@@ -69,6 +74,7 @@ const Register = () => {
         })
     }
 
+    // Retourne la page à afficher
     return (
         <>
             <Paper elevation={2} style={{

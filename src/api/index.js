@@ -2,12 +2,12 @@
  * Projet brisq
  * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
  * Nom de fichier : api/index.js
- * Description    : 
+ * Description    : Indique l'URL utilisée par notre application
  */
 
 import axios from "axios";
 
-const url = "http://localhost:8080/api";
+const url = "https://api-dev.brisq.app/api";
 
 export function URL() {
     return url;

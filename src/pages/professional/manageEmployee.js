@@ -8,19 +8,19 @@
  */
 
 
-import * as React from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ModeIcon from '@mui/icons-material/Mode';
-import { DataGrid } from '@mui/x-data-grid';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Link } from "react-router-dom";
-import {  Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box, Chip } from "@mui/material";
-import { createEmploye, deleteEmploye, getEmployes } from '../../api/employe';
-import { useEffect } from 'react';
+ import * as React from 'react';
+ import DeleteIcon from '@mui/icons-material/Delete';
+ import ModeIcon from '@mui/icons-material/Mode';
+ import { DataGrid } from '@mui/x-data-grid';
+ import AddCircleIcon from '@mui/icons-material/AddCircle';
+ import { Link } from "react-router-dom";
+ import {  Button, Paper, DialogActions, DialogContent, DialogContentText, Dialog, TextField, IconButton, Box, Chip } from "@mui/material";
+ import { createEmploye, deleteEmploye, getEmployes } from '../../api/employe';
+ import { useEffect } from 'react';
 
 
+ // Gère la liste des employés et leur modification/suppression
 const EmployeeManagement = () => {
-
     useEffect(() => {
         getEmployes().then((data) => {
             setEmployeList(data.data.employees);
