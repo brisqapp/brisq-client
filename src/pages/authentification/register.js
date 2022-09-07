@@ -1,11 +1,3 @@
-/**
- * Projet brisq
- * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
- * Nom de fichier : register.js
- * Description    : Gestion de la page d'enregistrement pour un nouveau    
- *                  compte d'une compagnie.
- */
-
 import { Paper, Typography, TextField, Button, Link, Snackbar, Alert } from "@mui/material";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -17,11 +9,8 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { register } from "../../auth";
 
 const Register = () => {
-
-    // Variable de navigation
     const navigate = useNavigate();
 
-    // Valeurs par default du formulaire
     const defaultValues = {
         firstName: "",
         lastName: "",
@@ -35,16 +24,12 @@ const Register = () => {
         city: ""
     }
 
-    // Valeurs du formulaire
     const [formValues, setFormValues] = useState(defaultValues)
 
-    // Variable pour la navigation (back/forward)
     const [activeStep, setActiveStep] = React.useState(0);
 
-    // Variable de gestion de message d'erreur
     const [openError, setOpenError] = React.useState(false);
 
-    // Update les valeurs du formulaire
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
@@ -53,48 +38,28 @@ const Register = () => {
         });
     };
 
-
-    /**
-     * Navigation en avant
-     */
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-    /**
-     * Navigation en arriere
-     */
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    /**
-     * Ouvre le lien donné
-     * @param link a ouvrir
-     */
     const navigateClick = (link) => {
         navigate(link, {replace: true})
     };
 
-
-    /**
-     *  Ferme le message d'erreur
-     */
     const handleCloseError = () => {
         setOpenError(false);
     }
 
-    /**
-     * Tente de cree un compte avec les information du formulaire
-     */
-    const handleRegister = () => {
+    const handleRegister = (event) => {
         register(formValues).catch(() => {
-            // Affiche un message d'erreur
             setOpenError(true);
         })
     }
 
-    // Retour de la mise en page
     return (
         <>
         <Paper elevation={2} style={{
@@ -143,7 +108,10 @@ const Register = () => {
                         >
                             <MenuItem value={0} disabled>Sélectionner un type</MenuItem>
                             <MenuItem value={1}>Coiffure</MenuItem>
-                            <MenuItem value={2}>Je sais pas trop quoi</MenuItem>
+                            <MenuItem value={2}>Dentiste</MenuItem>
+                            <MenuItem value={3}>Barbier</MenuItem>
+                            <MenuItem value={4}>Manucure</MenuItem>
+                            <MenuItem value={5}>Esthéticien</MenuItem>
                         </Select>
                     </FormControl>
                     <br />
