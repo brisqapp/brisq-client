@@ -8,6 +8,7 @@
 
 import { URL } from ".";
 import axios from "axios";
+import { getToken } from "../auth";
 
 // Poste un formulaire à la DB pour l'enregistrement d'une compagnie
 export async function APIregister(form) {
@@ -22,4 +23,12 @@ export async function APILogin(form) {
 // Retourve les détails d'un employé
 export async function getCompanyDetails(id) {
     return axios.get(URL() + "/companies/getCompanyDetails/" + id);
+}
+
+export async function getCompany(){
+    return axios.get(URL() + "/companies", {headers: {authorization: getToken()}})
+}
+
+export async function updateCompany(form){
+    return axios.put(URL() + "/companies", form, {headers: {authorization: getToken()}})
 }

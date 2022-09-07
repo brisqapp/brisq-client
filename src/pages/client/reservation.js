@@ -22,14 +22,18 @@ import { getCompanyDetails } from "../../api/company";
  */
 const getAppointmentsByIdEmploye = (employes, id) => {
     let appointments = [];
-    for (const employe of employes) {
-        if (employe.id == id) {
-            for (const appointment of appointments) {
-                if (appointment != null) appointments.push(appointment);
+    for(const employe of employes){
+        if(employe.id == id) {
+            for(const appointmentsService of employe.appointments){
+                for(const appointment of appointmentsService){
+                    console.log(appointment);
+                    if(appointment != null) appointments.push(appointment);
+                }
             }
             appointments = [...appointments, ...scheduleToAppoitments(employe)];
         }
     }
+    console.log(appointments);
     return appointments;
 }
 

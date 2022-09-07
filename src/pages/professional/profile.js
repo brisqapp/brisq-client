@@ -9,34 +9,35 @@
 import { TextField, Box, FormControl, Select, InputLabel, MenuItem, Button, Stack } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { selectionStateInitializer } from '@mui/x-data-grid/internals';
+import { getCompany, updateCompany } from '../../api/company';
+import { getAllCompanyTypes } from '../../api/companyType';
 
-const url = "https://api-dev.brisq.app/api";
+const Profile = () => {  
+    
+   useEffect(()=>{
+      getCompany().then((data) => {
+          setFormValues(data.data);
+      });
 
-export function URL() {
-   return url;
-}
+      getAllCompanyTypes().then((data) => {
+         setServices(data.data);
+     })
+  },[]);
 
-export function test() {
-   return axios.get(URL, {
-      crossDomain: true
-   })
-}
-
-// Profile d'une compagnie
-const Profile = () => {
+  const [services, setServices] = useState([]);
 
    // Champ de donnée d'une compagnie
    const defaultValues = {
       firstName: "",
       lastName: "",
       email: "",
-      password: "",
       companyName: "",
-      companyAddress: "",
-      salonType: 0,
-      companyDescription: ""
+      address: "",
+      companyTypeId: 0,
+      companyDescription:""
    };
 
    // Variable d'état pour gérer une éventuelle modification des données de la compagnie
@@ -54,6 +55,11 @@ const Profile = () => {
    // Envoie du formulaire de données qui sera récupéré pour la base de donnée 
    const handleSave = () => {
       console.log(formValues);
+      updateCompany(formValues).then(() => {
+         getCompany().then((data) => {
+             setFormValues(data.data);
+         });
+      })
    }
 
    // Retourne le contenu html de la page
@@ -62,7 +68,7 @@ const Profile = () => {
       '& .MuiTextField-root': { mt: 5, mr: 5, width: '100%' },
       '& .MuiFormControl-root': { mt: 5, mr: 5, width: '100%', },
    }}>
-      <h1>Profile {test} { }</h1>
+      <h1>Profile</h1>
       <div>
          <Button component={Link} to="/manageEmployee" style={{ justifyContent: "space-between" }} variant="contained">Gestion des employés <SettingsIcon></SettingsIcon></Button>
          <br />
@@ -70,60 +76,61 @@ const Profile = () => {
             id="firstName"
             name="firstName"
             label="Prénom"
+            value={formValues.firstName}
             onChange={handleInputChange}
          />
          <TextField
             id="lastName"
             name="lastName"
             label="Nom"
+            value={formValues.lastName}
             onChange={handleInputChange}
          />
          <TextField
             id="email"
             name="email"
             label="Email"
+            value={formValues.email}
             onChange={handleInputChange}
          />
-         <TextField
-            id="password"
-            name="password"
-            label="Mot de passe"
-            onChange={handleInputChange}
-         />
+         
+         <FormControl fullWidth style={{textAlign: "left"}}>
+            <InputLabel id="companyTypeIdLabel">Type de salon</InputLabel>
+            <Select
+                  labelId="companyTypeIdLabel"
+                  id="companyTypeIdSelect"
+                  label="Type de salon"
+                  name="companyTypeId"
+                  value={formValues.companyTypeId} 
+                  onChange={handleInputChange} 
+            >
+                  <MenuItem value={0} disabled>Sélectionner un type</MenuItem>
+                  {services.map((service) => {
+                     return (<MenuItem value={service.id} key={service.id}>{service.name}</MenuItem>)
+                  })}
+            </Select>
+         </FormControl>
+
          <TextField
             id="companyName"
             name="companyName"
             label="Nom de la compagnie"
+            value={formValues.companyName}
             onChange={handleInputChange}
          />
          <TextField
-            id="companyAddress"
-            name="companyAddress"
+            id="address"
+            name="address"
             label="Adresse"
+            value={formValues.address}
             onChange={handleInputChange}
          />
-         <FormControl fullWidth style={{ textAlign: "left", maxWidth: '400px' }} >
-            <InputLabel id="salontype">Type de salon</InputLabel>
-            <Select
-               labelId="salontypelabel"
-               id="salontypeselect"
-               label="Type de salon"
-               name="salonType"
-               value={formValues.salonType}
-               onChange={handleInputChange}
-            >
-               <MenuItem value={0} disabled>Sélectionner un type</MenuItem>
-               <MenuItem value={1}>Coiffure</MenuItem>
-               <MenuItem value={2}>Je sais pas trop quoi</MenuItem>
-            </Select>
-         </FormControl>
          <TextField
-            id="companyDescription"
-            name="companyDescription"
-            label="Description de la compagnie"
-            multiline
-            rows={4}
-            onChange={handleInputChange}
+            id="url"
+            name="url"
+            label="Url pour les clients"
+            disabled
+            value={"dev.brisq.app/reservation/" + formValues.id}
          />
          <Stack direction="row" marginTop="20px" >
             <Button variant="contained" component="label" onClick={handleSave}>
