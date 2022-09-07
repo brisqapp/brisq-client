@@ -1,3 +1,11 @@
+/**
+ * Projet brisq
+ * Auteurs        : De Bleser Dimitri, Peer Vincent, Rausis Justin
+ * Nom de fichier : profile.js
+ * Description    : Contient les données d'une compagnie. L'employeur peut modifier ses données sur cette page, 
+ *                   ainsi qu'accéder à la page manageEmployee qui permet de gérer la liste d'employé.
+ */
+
 import { TextField, Box, FormControl, Select, InputLabel, MenuItem, Button, Stack } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Link } from "react-router-dom";
@@ -21,6 +29,7 @@ const Profile = () => {
 
   const [services, setServices] = useState([]);
 
+   // Champ de donnée d'une compagnie
    const defaultValues = {
       firstName: "",
       lastName: "",
@@ -31,9 +40,10 @@ const Profile = () => {
       companyDescription:""
    };
 
+   // Variable d'état pour gérer une éventuelle modification des données de la compagnie
    const [formValues, setFormValues] = useState(defaultValues);
 
-
+   // Gestion d'un champ modifié
    const handleInputChange = (e) => {
       const { name, value } = e.target;
       setFormValues({
@@ -42,6 +52,7 @@ const Profile = () => {
       });
    };
 
+   // Envoie du formulaire de données qui sera récupéré pour la base de donnée 
    const handleSave = () => {
       console.log(formValues);
       updateCompany(formValues).then(() => {
@@ -51,7 +62,7 @@ const Profile = () => {
       })
    }
 
-
+   // Retourne le contenu html de la page
    return <Box maxWidth='400px' pl={6} pt={4} pb={4} sx={{
       display: 'flex', flexWrap: 'wrap',
       '& .MuiTextField-root': { mt: 5, mr: 5, width: '100%' },
