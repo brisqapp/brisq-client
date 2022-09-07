@@ -9,8 +9,6 @@ import { Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { FormControl, Select, InputLabel, MenuItem} from "@mui/material";
 import AgendaReservation from "../../component/agendaReservation";
-import { useState } from "react";
-import { getReservationsByEmploye } from "../../api/reservation";
 import { useEffect, useState } from "react";
 import { scheduleToAppoitments } from "../../utils/schedule";
 import { getCompanyDetails } from "../../api/company";
@@ -22,10 +20,6 @@ import { getCompanyDetails } from "../../api/company";
  * @param id identifiant de l'employé voulus
  * @returns {*[]} liste des rendez-vous de cet employé
  */
-const getAppointementsByIdEmploye = (employes, id) => {
-    let appointements = [];
-
-// Remplis notre array avec les rendez-vous de l'employé
 const getAppointmentsByIdEmploye = (employes, id) => {
     let appointments = [];
     for(const employe of employes){

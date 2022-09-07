@@ -7,41 +7,11 @@
 
 import * as React from 'react';
 import { ViewState } from '@devexpress/dx-react-scheduler';
-<<<<<<< HEAD
 import { Scheduler, WeekView, MonthView, Appointments, Toolbar, ViewSwitcher, DateNavigator, TodayButton }
     from '@devexpress/dx-react-scheduler-material-ui';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Grid, Snackbar, Alert }
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button, Grid, Snackbar, Alert,
+            MenuItem, Select, InputLabel }
     from '@mui/material';
-=======
-import {
-  Scheduler,
-  WeekView,
-  MonthView,
-  Appointments,
-  Toolbar,
-  ViewSwitcher,
-  DateNavigator,
-  TodayButton  ,
-  AppointmentForm
-} from '@devexpress/dx-react-scheduler-material-ui';
-
-import { 
-    Dialog, 
-    DialogTitle, 
-    DialogContent, 
-    TextField,
-    DialogActions, 
-    Button, 
-    Grid,
-    Snackbar,
-    Alert,
-    MenuItem,
-    Select,
-    InputLabel
-} from '@mui/material';
-
-
->>>>>>> main
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker, TimePicker } from '@mui/x-date-pickers';
@@ -90,12 +60,8 @@ export default (props) => {
         serviceEmployeeId: 0,
     }
 
-<<<<<<< HEAD
-    // Gère les variables d'états qui peuvent être amenées à être modifiée sur l'agenda
-=======
-    const servicesEmploye = props.employe == undefined ? [] : props.employe.services;
 
->>>>>>> main
+    const servicesEmploye = props.employe == undefined ? [] : props.employe.services;
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openError, setOpenError] = React.useState(false);
     const [openSuccess, setOpenSuccess] = React.useState(false);
