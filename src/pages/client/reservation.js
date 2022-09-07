@@ -25,9 +25,11 @@ const getAppointmentsByIdEmploye = (employes, id) => {
     for(const employe of employes){
         if(employe.id == id) {
             for(const appointmentsService of employe.appointments){
-                for(const appointment of appointmentsService){
-                    console.log(appointment);
-                    if(appointment != null) appointments.push(appointment);
+                if(appointmentsService != null){
+                    for(const appointment of appointmentsService){
+                        console.log(appointment);
+                        if(appointment != null) appointments.push(appointment);
+                    }
                 }
             }
             appointments = [...appointments, ...scheduleToAppoitments(employe)];
