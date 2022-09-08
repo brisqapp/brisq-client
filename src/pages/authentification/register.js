@@ -122,11 +122,6 @@ const Register = () => {
                                     onChange={handleInputChange}
                                 >
                                     <MenuItem value={0} disabled>Sélectionner un type</MenuItem>
-                                    <MenuItem value={1}>Coiffure</MenuItem>
-                                    <MenuItem value={2}>Dentiste</MenuItem>
-                                    <MenuItem value={3}>Barbier</MenuItem>
-                                    <MenuItem value={4}>Manucure</MenuItem>
-                                    <MenuItem value={5}>Esthéticien</MenuItem>
                                     {services.map((service) => {
                                         return (<MenuItem value={service.id} key={service.id}>{service.name}</MenuItem>)
                                     })}
