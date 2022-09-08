@@ -15,19 +15,19 @@ import { selectionStateInitializer } from '@mui/x-data-grid/internals';
 import { getCompany, updateCompany } from '../../api/company';
 import { getAllCompanyTypes } from '../../api/companyType';
 
-const Profile = () => {  
-    
-   useEffect(()=>{
+const Profile = () => {
+
+   useEffect(() => {
       getCompany().then((data) => {
-          setFormValues(data.data);
+         setFormValues(data.data);
       });
 
       getAllCompanyTypes().then((data) => {
          setServices(data.data);
-     })
-  },[]);
+      })
+   }, []);
 
-  const [services, setServices] = useState([]);
+   const [services, setServices] = useState([]);
 
    // Champ de donnée d'une compagnie
    const defaultValues = {
@@ -37,7 +37,7 @@ const Profile = () => {
       companyName: "",
       address: "",
       companyTypeId: 0,
-      companyDescription:""
+      companyDescription: ""
    };
 
    // Variable d'état pour gérer une éventuelle modification des données de la compagnie
@@ -57,7 +57,7 @@ const Profile = () => {
       console.log(formValues);
       updateCompany(formValues).then(() => {
          getCompany().then((data) => {
-             setFormValues(data.data);
+            setFormValues(data.data);
          });
       })
    }
@@ -70,8 +70,15 @@ const Profile = () => {
    }}>
       <h1>Profile</h1>
       <div>
-         <Button component={Link} to="/manageEmployee" style={{ justifyContent: "space-between" }} variant="contained">Gestion des employés <SettingsIcon></SettingsIcon></Button>
+         <Button 
+            component={Link} to="/manageEmployee"
+            style={{ justifyContent: "space-between" }}
+            variant="contained">Gestion des employés
+            <SettingsIcon></SettingsIcon>
+         </Button>
+
          <br />
+
          <TextField
             id="firstName"
             name="firstName"
@@ -79,6 +86,7 @@ const Profile = () => {
             value={formValues.firstName}
             onChange={handleInputChange}
          />
+
          <TextField
             id="lastName"
             name="lastName"
@@ -86,6 +94,7 @@ const Profile = () => {
             value={formValues.lastName}
             onChange={handleInputChange}
          />
+         
          <TextField
             id="email"
             name="email"
@@ -93,21 +102,21 @@ const Profile = () => {
             value={formValues.email}
             onChange={handleInputChange}
          />
-         
-         <FormControl fullWidth style={{textAlign: "left"}}>
+
+         <FormControl fullWidth style={{ textAlign: "left" }}>
             <InputLabel id="companyTypeIdLabel">Type de salon</InputLabel>
             <Select
-                  labelId="companyTypeIdLabel"
-                  id="companyTypeIdSelect"
-                  label="Type de salon"
-                  name="companyTypeId"
-                  value={formValues.companyTypeId} 
-                  onChange={handleInputChange} 
+               labelId="companyTypeIdLabel"
+               id="companyTypeIdSelect"
+               label="Type de salon"
+               name="companyTypeId"
+               value={formValues.companyTypeId}
+               onChange={handleInputChange}
             >
-                  <MenuItem value={0} disabled>Sélectionner un type</MenuItem>
-                  {services.map((service) => {
-                     return (<MenuItem value={service.id} key={service.id}>{service.name}</MenuItem>)
-                  })}
+               <MenuItem value={0} disabled>Sélectionner un type</MenuItem>
+               {services.map((service) => {
+                  return (<MenuItem value={service.id} key={service.id}>{service.name}</MenuItem>)
+               })}
             </Select>
          </FormControl>
 

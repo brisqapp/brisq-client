@@ -15,9 +15,9 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { FormControl, InputLabel, Select, MenuItem, Button, Paper } from "@mui/material";
-import { getEmploye, updateEmploye } from '../api/employe';
+import { getEmploye, updateEmploye } from '../../api/employe';
 import { useParams } from 'react-router-dom';
-import { getAllServices } from '../api/service';
+import { getAllServices } from '../../api/service';
 
 let newId = -1;
 

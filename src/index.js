@@ -14,7 +14,7 @@ import Home from "./pages/professional/home";
 import Profile from "./pages/professional/profile";
 import NoPage from "./pages/noPage";
 import Login from "./pages/authentification/login";
-import EmployeeDetails from "./pages/employeeDetails";
+import EmployeeDetails from "./pages/professional/employeeDetails";
 import Register from "./pages/authentification/register";
 import './index.css';
 import { getToken } from "./auth/index.js";
